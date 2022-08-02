@@ -3,12 +3,14 @@ import AboutUs from "../pages/AboutUs";
 import Login from "../pages/Account/Login";
 import Register from "../pages/Account/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "../layouts/layout";
+import Layout from "../layouts/Layout";
 import "../assets/stylesheets/style.css";
-import EventsLanding from "../pages/EventsLanding";
+import EventsLanding from "../pages/PCEvents/EventsLanding";
+import { CssBaseline } from "@mui/material";
 function App() {
   return (
     <BrowserRouter>
+      <CssBaseline />
       <div className="App">
         <Layout>
           <Routes>
@@ -16,7 +18,7 @@ function App() {
             <Route path="/events" element={<EventsLanding />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/Register" element={<Register />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Layout>
       </div>
