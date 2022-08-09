@@ -25,10 +25,12 @@ export default class RegisterForm extends React.Component {
     return (
       <Box
         sx={{
-          marginTop: 8,
+          paddingTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          backgroundColor: "background.default",
+          height: "100%"
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

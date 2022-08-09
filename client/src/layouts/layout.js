@@ -6,8 +6,9 @@ import SideBar from "../components/Sidebar";
 import GetDesignTokens from "../assets/themes/themes";
 
 import ColorModeContext from "../contexts/colorModeContext";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Outlet } from "react-router";
 
 const Layout = ({ children }) => {
   const [mode, setMode] = React.useState("light");
@@ -28,7 +29,18 @@ const Layout = ({ children }) => {
         <ThemeProvider theme={theme}>
           <Header />
           <SideBar />
-          <main>{children}</main>
+          <main>
+            <Container
+              disableGutters={{ xs: true, md: false }}
+              maxWidth="lg"
+              sx={{
+                minHeight: "80vh",
+              }}
+            >
+              {children}
+              <Outlet />
+            </Container>
+          </main>
           <Footer />
         </ThemeProvider>
       </ColorModeContext.Provider>
