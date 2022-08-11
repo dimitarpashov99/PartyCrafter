@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function EventsLanding() {
   return (
     <Grid
@@ -65,7 +65,7 @@ export default function EventsLanding() {
             Join existing event
           </Button>
           <Button color="secondary" variant="outlined">
-            Discover open events
+            Browse public events
           </Button>
         </Box>
       </Grid>

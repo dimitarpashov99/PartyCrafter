@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
           <SideBar />
           <main>
             <Container
-              disableGutters={{ xs: true, md: false }}
+              disableGutters
               maxWidth="lg"
               sx={{
                 minHeight: "80vh",

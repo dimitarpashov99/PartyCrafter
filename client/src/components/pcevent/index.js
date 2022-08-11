@@ -1,3 +1,3 @@
-import CreateEventForm from "./CreateEventForm";
+import CreateEvent from "./CreateEvent";
 
-export { CreateEventForm };
+export { CreateEvent };

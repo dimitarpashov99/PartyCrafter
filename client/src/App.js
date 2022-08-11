@@ -7,7 +7,7 @@ import Layout from "./layouts/Layout";
 import PageNotFound from "./components/PageNotFound";
 import "./assets/stylesheets/style.scss";
 import Events from "./pages/PCEvents";
-import { CreateEventForm } from "./components/pcevent";
+import { CreateEvent } from "./components/pcevent";
 import { CssBaseline } from "@mui/material";
 import EventsLanding from "./pages/PCEvents/EventsLanding";
 function App() {
@@ -17,11 +17,11 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}>
-            {/* <Navigate to="home" replace /> */}
+            <Route index element={<Navigate to="/home" replace />} />
             <Route path="home" element={<Home />} />
             <Route path="events" element={<Events />}>
               <Route index element={<EventsLanding />} />
-              <Route path="create" element={<CreateEventForm />} />
+              <Route path="create" element={<CreateEvent />} />
             </Route>
             <Route path="aboutus" element={<AboutUs />} />
             <Route path="login" element={<Login />} />
