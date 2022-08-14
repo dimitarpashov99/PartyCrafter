@@ -5,6 +5,8 @@ import Register from "./pages/Account/Register";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import PageNotFound from "./components/PageNotFound";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./assets/stylesheets/style.scss";
 import Events from "./pages/PCEvents";
 import { CreateEvent } from "./components/pcevent";

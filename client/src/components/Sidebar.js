@@ -5,6 +5,7 @@ import {
   Divider,
   Stack,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@mui/material";
 
@@ -33,6 +34,7 @@ const SideBar = () => {
     <Toolbar
       variant="regular"
       sx={{
+        zIndex: 3000,
         display: "flex",
         position: "fixed",
         marginY: "auto",
@@ -56,20 +58,22 @@ const SideBar = () => {
         divider={<Divider />}
         direction={{ md: "column" }}
       >
-        {navLinks.map(({ id, icon, link }) => {
+        {navLinks.map((navLink) => {
           return (
-            <Box key={id}>
-              <NavLink to={link} className="nav-link">
-                <Button
-                  className="nav-btn"
-                  variant="outlined"
-                  sx={{ padding: "15px", borderRadius: 16 }}
-                >
-                  <Typography variant="h4" color="inherit" component="div">
-                    {icon}
-                  </Typography>
-                </Button>
-              </NavLink>
+            <Box key={navLink.id}>
+              <Tooltip title={navLink.label} arrow placement="right">
+                <NavLink to={navLink.link} className="nav-link">
+                  <Button
+                    className="nav-btn"
+                    variant="outlined"
+                    sx={{ padding: "15px", borderRadius: 16 }}
+                  >
+                    <Typography variant="h4" color="inherit" component="div">
+                      {navLink.icon}
+                    </Typography>
+                  </Button>
+                </NavLink>
+              </Tooltip>
             </Box>
           );
         })}
