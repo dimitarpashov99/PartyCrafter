@@ -6,6 +6,7 @@ const foodMenuSchema = mongoose.Schema({
   shortDescription: { type: String, required: true },
   playlist: { type: Array, required: false },
   createdOn: { type: Date },
+  createdBy: { type: String },
   price: { type: Object },
   likes: { type: Number },
 });

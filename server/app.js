@@ -1,30 +1,25 @@
 var createError = require('http-errors');
 var express = require('express');
-// var path = require('path');
 var cookieParser = require('cookie-parser');
-// var logger = require('morgan');
 var cors = require('cors');
 var mongoose = require('mongoose');
-const uri = "mongodb+srv://dimitarpashov99:<password>@pcrcluster.awwyq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+var dotenv = require('dotenv');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var eventsRouter = require('./routes/partyEvents');
 
 var app = express();
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine());
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/events', eventsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,10 +37,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-mongoose.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+mongoose.connect(preocess.env.MONGODB_URL);
 
 module.exports = app;
