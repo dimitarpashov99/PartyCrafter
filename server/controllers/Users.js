@@ -13,8 +13,8 @@ function getById(req, res, next) {
   return next();
 }
 
-function getByCode(req, res, next) {
-  var requestedId = req.params.id;
+function getByUsername(req, res, next) {
+  var requestedId = req.params.eventCode;
   let partyEvent = User.find({
     _id: requestedId,
   });
@@ -26,18 +26,21 @@ function getByCode(req, res, next) {
   return next();
 }
 
-function create(req, res, next) {
-  var newEvent = new User({});
+function changeUsername(req, res, next) {
   return next();
 }
 
-function update(req, res, next) {
+function changeEmail(req, res, next) {
   return next();
 }
 
-function remove(req, res, next) {
-  User.findAndRemove({ _id: req.param.id });
+function changePassword(req, res, next) {
   return next();
 }
-
-module.exports = { getById, getByCode, create, remove, update };
+module.exports = {
+  getById,
+  getByUsername,
+  changeUsername,
+  changeEmail,
+  changePassword,
+};

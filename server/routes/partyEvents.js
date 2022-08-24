@@ -5,6 +5,9 @@ const eventsController = require("../controllers/PartyEvents");
 
 router.route("/create").post(eventsController.create);
 router.route("/:id").get(eventsController.getById).put(eventsController.update);
-router.route("/:code").get(eventsController.getByCode);
+router
+  .route("/:code")
+  .get(eventsController.getByCode)
+  .delete(eventsController.remove);
 
 module.exports = router;

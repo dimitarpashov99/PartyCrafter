@@ -9,4 +9,4 @@ const playlistSchema = mongoose.Schema({
   likes: {type: Number},
 });
 
-export default mongoose.model("Playlist", playlistSchema);
+export default mongoose.model("Playlist", playlistSchema, 'music-playlists');

@@ -5,9 +5,11 @@ const userSchema = mongoose.Schema({
   id: { type: String },
   name: { type: String, required: true },
   email: { type: String, required: true },
-  password: { type: String, required: false },
-  googleId: { type: String, required: false },
+  phoneNumber: { type: String },
+  passwordHash: { type: String, required: true },
   role: { type: String, enum: roles, default: "user" },
+  lastSignedIn: { type: Date },
+  registeredOn: { type: Date },
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema, 'users');
