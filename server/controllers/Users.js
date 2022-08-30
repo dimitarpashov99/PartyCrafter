@@ -1,46 +1,70 @@
-const User = require("../models/event");
+const User = require("../models/user");
 
-function getById(req, res, next) {
-  var requestedId = req.params.id;
-  let partyEvent = User.find({
-    _id: requestedId,
-  });
+const apiResponse = require("../helpers/apiResponse");
 
-  res.status(200);
-  res.json({
-    partyEvent: partyEvent,
-  });
-  return next();
-}
+const getById = (req, res, next) => {
+    try {
+        const requestedId = req.params.id;
+        const user = User.find({
+            _id: requestedId,
+        });
 
-function getByUsername(req, res, next) {
-  var requestedId = req.params.eventCode;
-  let partyEvent = User.find({
-    _id: requestedId,
-  });
+        res.status(200);
+        res.json({
+            user: user,
+        });
+    } catch (err) {
+        apiResponse.errorResponse(res, 'Service error');
+    }
+    return next();
+};
 
-  res.status(200);
-  res.json({
-    partyEvent: partyEvent,
-  });
-  return next();
-}
+const getByEmail = (req, res, next) => {
+    try {
+        let user = User.find({
+            email: req.params.email,
+        });
 
-function changeUsername(req, res, next) {
-  return next();
-}
+        res.status(200);
+        res.json({
+            user: user,
+        });
+    } catch (err) {
+        apiResponse.errorResponse(res, 'Service error');
+    }
+    return next();
+};
 
-function changeEmail(req, res, next) {
-  return next();
-}
+const changeEmail = (req, res, next) => {
+    try {
+        User.findOneAndUpdate(
+            {
+                _id: req.body.userId,
+            },
+            {
+                email: req.body.newEmail,
+            },
+            (err) => {
+                if (err) {
+                    apiResponse.errorResponse(res, "User not found!");
+                } else {
+                    apiResponse.successResponse(res, "Email changed!");
+                }
+            }
+        );
+    } catch (err) {
+        apiResponse.errorResponse(res, 'Service error');
+    }
+    return next();
+};
 
-function changePassword(req, res, next) {
-  return next();
-}
+const changePassword = (req, res, next) => {
+    return next();
+};
+
 module.exports = {
-  getById,
-  getByUsername,
-  changeUsername,
-  changeEmail,
-  changePassword,
+    getById,
+    getByEmail,
+    changeEmail,
+    changePassword,
 };

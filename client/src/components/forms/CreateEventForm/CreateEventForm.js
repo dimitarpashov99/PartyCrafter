@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { PageOne, PageTwo, PageThree } from "./FormSteps";
-import EventPreview from "../../pcevent/EventPreview";
+import EventPreview from "../../partyevent/EventPreview";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 export default class CreateEvent extends React.Component {

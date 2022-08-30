@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const locationSchema = mongoose.Schema({
   id: { type: String },
@@ -10,4 +10,4 @@ const locationSchema = mongoose.Schema({
   lat: { type: Number },
 });
 
-export default mongoose.model("Location", locationSchema, "locations");
+module.exports = mongoose.model("Location", locationSchema, "locations");

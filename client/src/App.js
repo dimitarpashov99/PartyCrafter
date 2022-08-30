@@ -9,10 +9,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./assets/stylesheets/style.scss";
 import Events from "./pages/PCEvents";
-import { CreateEvent } from "./components/pcevent";
+import { CreateEvent } from "./components/partyevent";
 import { CssBaseline } from "@mui/material";
 import EventsLanding from "./pages/PCEvents/EventsLanding";
+
 function App() {
+
   return (
     <BrowserRouter>
       <CssBaseline enableColorScheme />

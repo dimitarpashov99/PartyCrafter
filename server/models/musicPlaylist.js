@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const playlistSchema = mongoose.Schema({
   id: { type: String },
@@ -9,4 +9,4 @@ const playlistSchema = mongoose.Schema({
   likes: {type: Number},
 });
 
-export default mongoose.model("Playlist", playlistSchema, 'music-playlists');
+module.exports = mongoose.model("Playlist", playlistSchema, 'music-playlists');

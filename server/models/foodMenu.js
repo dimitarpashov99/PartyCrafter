@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const foodMenuSchema = mongoose.Schema({
   id: { type: String },
@@ -11,4 +11,4 @@ const foodMenuSchema = mongoose.Schema({
   likes: { type: Number },
 });
 
-export default mongoose.model("FoodMenu", foodMenuSchema);
+module.exports = mongoose.model("FoodMenu", foodMenuSchema);
