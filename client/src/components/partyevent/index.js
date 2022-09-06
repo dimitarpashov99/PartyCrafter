@@ -1,3 +1,1 @@
-import CreateEvent from "./CreateEvent";
-
-export { CreateEvent };
+export { CreateEvent } from "./CreateEvent";;

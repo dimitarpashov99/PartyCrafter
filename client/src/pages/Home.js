@@ -1,18 +1,18 @@
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
     const nextStep = useRef(null);
     return (
-        <Box className="landing">
+        <Paper className="landing">
             <Box
                 className="landing-banner"
                 sx={{
                     display: "flex",
                     justifyContent: "center",
                     width: "100%",
-                    minHeight: "100vh",
+                    minHeight: "80vh",
                     backgroundColor: "#CBC3E3",
                     margin: 0,
                     borderRadius: "0 0 16px 16px",
@@ -31,7 +31,7 @@ const Home = () => {
                         Party Crafter
                     </Typography>
                     <Typography variant="h4" className="landing-subtitle">
-                        An all-in-one tool for oranizing the perfect
+                        An all-in-one tool for oranizing the perfect digital
                         celebration.
                     </Typography>
                     <Button
@@ -60,6 +60,7 @@ const Home = () => {
             </Box>
             <Box
                 sx={{
+                    mx: { xs: 0, md: 8 },
                     borderRadius: "16px",
                 }}
                 ref={nextStep}
@@ -67,25 +68,70 @@ const Home = () => {
                 <Grid
                     container
                     sx={{
+                        display: "flex",
                         minHeight: "90vh",
                         marginTop: 2,
                     }}
                 >
-                    <Grid item md={6} sx={{ padding: 3, height: "100%" }}>
-                        <Box></Box>
+                    <Grid
+                        item
+                        xs={12}
+                        md={7}
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gridAutoFlow: "column",
+                            padding: 3,
+                            height: "100%",
+                            flexGrow: 1,
+                        }}
+                    >
+                        <Paper
+                            elevation={6}
+                            sx={{
+                                border: "3px solid",
+                                borderColor: "primary.main",
+                                borderRadius: "16px",
+                                flexGrow: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignContent: "center",
+                                justifyContent: "center",
+                                height: "100%",
+                            }}
+                        >
+                            <Stack
+                                direction="column"
+                                spacing={2}
+                                sx={{
+                                    minHeight: "80vh",
+                                    justifyContent: "space-evenly",
+                                }}
+                            ></Stack>
+                        </Paper>
                     </Grid>
-                    <Grid item md={6} sx={{ padding: 3, height: "100%" }}>
+                    <Grid
+                        item
+                        xs={12}
+                        md={5}
+                        sx={{ padding: 3, height: "100%" }}
+                    >
                         <Stack
                             direction="column"
                             spacing={2}
                             sx={{
+                                maxWidth: {xs:"100vw",md:'80vw'},
                                 minHeight: "80vh",
                                 justifyContent: "space-evenly",
                             }}
                         >
-                            <Box
+                            <Paper
+                                elevation={6}
                                 sx={{
-                                    backgroundColor: "#F8CB2E",
+                                    backgroundColor: (theme) =>
+                                        theme.palette.mode === "light"
+                                            ? "#fceaaa"
+                                            : "#f7c310",
                                     borderRadius: "16px",
                                     flexGrow: 1,
                                     display: "flex",
@@ -94,32 +140,39 @@ const Home = () => {
                                     justifyContent: "center",
                                 }}
                             >
-                                <Button
-                                    className="pcButton"
-                                    variant="outlined"
-                                    color="primary"
-                                    size="large"
-                                    sx={{
-                                        width: 300,
-                                        marginBottom: 2,
-                                        marginX: "auto",
-                                        borderRadius: 12,
-                                    }}
-                                >
-                                    <Link to="/events">
-                                        <Typography variant="h6">
+                                <Link to="/events/create">
+                                    <Button
+                                        className="pcButton"
+                                        variant="outlined"
+                                        color="primary"
+                                        size="large"
+                                        sx={{
+                                            width: 300,
+                                            marginBottom: 2,
+                                            marginX: "auto",
+                                            borderRadius: 12,
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="h6"
+                                            color="common.white"
+                                        >
                                             Create your party
                                         </Typography>
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
                                 <Typography variant="body1">
                                     Schedule a party event and invite your
                                     guests
                                 </Typography>
-                            </Box>
-                            <Box
+                            </Paper>
+                            <Paper
+                                elevation={6}
                                 sx={{
-                                    backgroundColor: "#006E7F",
+                                    backgroundColor: (theme) =>
+                                        theme.palette.mode === "light"
+                                            ? "#72ecff"
+                                            : "#006E7F",
                                     borderRadius: "16px",
                                     flexGrow: 1,
                                     display: "flex",
@@ -128,29 +181,33 @@ const Home = () => {
                                     justifyContent: "center",
                                 }}
                             >
-                                <Button
-                                    className="pcButton"
-                                    variant="outlined"
-                                    color="primary"
-                                    size="large"
-                                    sx={{
-                                        width: 300,
-                                        marginBottom: 2,
-                                        marginX: "auto",
-                                        borderRadius: 12,
-                                    }}
-                                >
-                                    <Link to="/events">
-                                        <Typography variant="h6">
+                                <Link to="/events/join">
+                                    <Button
+                                        className="pcButton"
+                                        variant="outlined"
+                                        color="primary"
+                                        size="large"
+                                        sx={{
+                                            width: 300,
+                                            marginBottom: 2,
+                                            marginX: "auto",
+                                            borderRadius: 12,
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="h6"
+                                            color="common.white"
+                                        >
                                             Join the party
                                         </Typography>
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
                                 <Typography variant="body1">
                                     Check out existing events
                                 </Typography>
-                            </Box>
-                            <Box
+                            </Paper>
+                            <Paper
+                                elevation={6}
                                 sx={{
                                     backgroundColor: "primary.main",
                                     borderRadius: "16px",
@@ -176,18 +233,18 @@ const Home = () => {
                                     <Link to="/events">
                                         <Typography
                                             variant="body1"
-                                            color="primary"
+                                            color="common.white"
                                         >
                                             More Options
                                         </Typography>
                                     </Link>
                                 </Button>
-                            </Box>
+                            </Paper>
                         </Stack>
                     </Grid>
                 </Grid>
             </Box>
-        </Box>
+        </Paper>
     );
 };
 

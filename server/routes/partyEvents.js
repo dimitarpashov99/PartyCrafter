@@ -3,7 +3,7 @@ var router = express.Router();
 
 const eventsController = require("../controllers/PartyEvents");
 
-router.route("/create").post(eventsController.create);
+router.route("/").post(eventsController.create);
 router.route("/:id").get(eventsController.getById);
 router
   .route("/:code")

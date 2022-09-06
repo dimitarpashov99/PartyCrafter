@@ -19,6 +19,7 @@ export default function EventsLanding() {
                     height: { md: "100%" },
                     backgroundColor: "#F8CB2E",
                     padding: 5,
+                    paddingLeft: 10,
                 }}
             >
                 <Box
@@ -67,6 +68,7 @@ export default function EventsLanding() {
                     height: { md: "100%" },
                     backgroundColor: "#006E7F",
                     padding: 5,
+                    paddingRight: 10,
                 }}
             >
                 <Box

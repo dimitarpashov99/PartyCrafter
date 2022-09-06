@@ -1,9 +1,10 @@
 import axios from "axios";
 
 import { urlencodeFormData } from "./utils";
+
 const API_URL = "http://localhost:3001/api/auth/";
 
-const register = (formData) => {
+const register = async (formData) => {
     return axios
         .post(API_URL + "signup", urlencodeFormData(formData))
         .then((response) => {
@@ -11,7 +12,7 @@ const register = (formData) => {
         });
 };
 
-const login = (email, password) => {
+const login = async (email, password) => {
     return axios
         .post(API_URL + "signin", {
             email,
@@ -21,12 +22,11 @@ const login = (email, password) => {
             if (response.data.email) {
                 localStorage.setItem("user", JSON.stringify(response.data));
             }
-
             return response.data;
         });
 };
 
-const logout = () => {
+const logout = async () => {
     localStorage.removeItem("user");
     return axios.post(API_URL + "signout").then((response) => {
         return response.data;

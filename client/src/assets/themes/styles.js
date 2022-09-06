@@ -15,12 +15,12 @@ const Styles = {
             main: "#FF9666",
         },
         background: {
-            light: "#fff",
             default: "#e6f3f8",
         },
         text: {
-            primary: "#8aadb8",
+            primary: "#fff",
             secondary: "#000",
+            disabled: '#fff'
         },
     },
     dark: {
@@ -39,7 +39,7 @@ const Styles = {
             main: "#B22727",
         },
         background: {
-            default: "#333",
+            default: "#616161",
         },
         text: {
             primary: "#fff",

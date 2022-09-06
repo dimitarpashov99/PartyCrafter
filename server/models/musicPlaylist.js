@@ -1,12 +1,25 @@
 const mongoose = require("mongoose");
 
-const playlistSchema = mongoose.Schema({
-  id: { type: String },
-  title: { type: String, required: true },
-  shortDescription: { type: String, required: true },
-  songList: { type: Array, required: false },
-  createdOn: {type: Date},
-  likes: {type: Number},
+const musicTrack = mongoose.Schema({
+    name: { type: String },
+    artist: { type: String },
+    lengthInMinutes: { type: String },
+    genre: { type: String },
 });
 
-module.exports = mongoose.model("Playlist", playlistSchema, 'music-playlists');
+const playlistSchema = mongoose.Schema({
+    title: { type: String, required: true },
+    shortDescription: { type: String },
+    songList: [musicTrack],
+    createdOn: { type: Date },
+    createdBy: { type: String },
+    likes: { type: Number, default: 0 },
+});
+
+const Playlist = mongoose.model("Playlist", playlistSchema, "music_playlists");
+const MusicTrack = mongoose.model("MusicTrack", musicTrack);
+
+module.exports = {
+    Playlist,
+    MusicTrack,
+};

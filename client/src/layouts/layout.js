@@ -46,10 +46,12 @@ const Layout = ({ children }) => {
                             <main>
                                 <Container
                                     disableGutters
-                                    maxWidth="lg"
                                     sx={{
+                                        my: 0,
+                                        maxWidth: "100vw",
                                         minHeight: "80vh",
                                     }}
+                                    maxWidth='false'
                                 >
                                     {children}
                                     <Outlet />
