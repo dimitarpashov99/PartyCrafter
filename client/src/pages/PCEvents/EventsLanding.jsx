@@ -7,7 +7,7 @@ export default function EventsLanding() {
             container
             sx={{
                 textAlign: "center",
-                height: { md: "80vh" },
+                
                 justifyContent: "center",
             }}
         >
@@ -24,8 +24,8 @@ export default function EventsLanding() {
             >
                 <Box
                     sx={{
-                        display: "flex",
-                        flexGrow: 1,
+                        // display: "flex",
+                        // flexGrow: 1,
                         height: "100%",
                         justifyContent: "center",
                         flexDirection: "column",
@@ -36,7 +36,7 @@ export default function EventsLanding() {
                         borderRadius: "12px",
                     }}
                 >
-                    <Stack direction="column" spacing={3}>
+                    <Stack direction="column" spacing={3} sx={{ flexGrow: 1 }}>
                         <Typography variant="h4" component="h2">
                             Organize an event
                         </Typography>

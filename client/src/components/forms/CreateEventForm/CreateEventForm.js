@@ -3,9 +3,11 @@ import {
     Backdrop,
     Box,
     Button,
+    Divider,
     Fade,
     Modal,
     Paper,
+    Stack,
     Stepper,
     Step,
     StepLabel,
@@ -175,21 +177,37 @@ export default class CreateEvent extends React.Component {
                                     </Paper>
                                 </Box>
                                 <Box sx={{ paddingY: 5 }}>
-                                    {this.state.activeStep !== 1 && (
-                                        <Button onClick={this._handleBack}>
-                                            Back
-                                        </Button>
-                                    )}
-                                    <Button
-                                        disabled={this.state.isSubmitting}
-                                        onClick={this._handleNext}
-                                        variant="contained"
-                                        color="primary"
+                                    <Stack
+                                        spacing={1}
+                                        divider={
+                                            <Divider
+                                                orientation="vertical"
+                                                flexItem
+                                            />
+                                        }
+                                        direction="row"
+                                        sx={{ justifyContent: "center" }}
                                     >
-                                        {this.state.activeStep === 4
-                                            ? "Create Event"
-                                            : "Next"}
-                                    </Button>
+                                        {this.state.activeStep !== 1 && (
+                                            <Button
+                                                variant="outlined"
+                                                onClick={this._handleBack}
+                                            >
+                                                Back
+                                            </Button>
+                                        )}
+
+                                        <Button
+                                            disabled={this.state.isSubmitting}
+                                            onClick={this._handleNext}
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            {this.state.activeStep === 4
+                                                ? "Create Event"
+                                                : "Next"}
+                                        </Button>
+                                    </Stack>
                                 </Box>
                             </form>
                             <Modal

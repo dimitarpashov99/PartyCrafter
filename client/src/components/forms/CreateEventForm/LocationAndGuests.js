@@ -20,7 +20,7 @@ function StepTwo(props) {
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: ["places"],
     });
-    const center = { lat: 48.8584, lng: 2.2945 };
+    const center = { lat: 42.70, lng: 23.33 };
     const [map, setMap] = useState(/** @type google.maps.Map */ (null));
     const [formState, setFormState] = useState(props.formState);
     const guests = formState.guestList || [

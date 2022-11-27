@@ -16,26 +16,18 @@ import "slick-carousel/slick/slick-theme.css";
 import "./assets/stylesheets/style.scss";
 import Events from "./pages/PCEvents";
 import { CreateEvent } from "./components/partyevent";
-import { CssBaseline } from "@mui/material";
+
 import EventsLanding from "./pages/PCEvents/EventsLanding";
 import { AuthProvider } from "./contexts/authContext";
 import { AuthConsumer } from "./contexts/authContext";
-import { useEffect, useState } from "react";
-const ProtectedRoutes = (authenticated) => {
-    return authenticated ? <Outlet /> : <Navigate to="/login" />;
+const ProtectedRoutes = () => {
+    const authContext = AuthConsumer();
+    console.log(authContext.auth);
+    return authContext.auth ? <Outlet /> : <Navigate to="/login" />;
 };
 function App() {
-  const { authenticated } = AuthConsumer();
-  const [auth, setAuth] = useState(authenticated);
-    useEffect(() => {
-        console.log(authenticated);
-        
-        console.log(auth);
-        setAuth(authenticated);
-    }, [authenticated]);
     return (
         <BrowserRouter>
-            <CssBaseline enableColorScheme />
             <div className="App">
                 <AuthProvider>
                     <Routes>
@@ -47,12 +39,7 @@ function App() {
                             <Route path="home" element={<Home />} />
                             <Route path="events" element={<Events />}>
                                 <Route index element={<EventsLanding />} />
-
-                                <Route
-                                    element={
-                                        <ProtectedRoutes authenticated={auth} />
-                                    }
-                                >
+                                <Route element={<ProtectedRoutes />}>
                                     <Route
                                         path="create"
                                         element={<CreateEvent />}

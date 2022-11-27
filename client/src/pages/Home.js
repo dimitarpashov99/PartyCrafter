@@ -1,11 +1,20 @@
-import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    ListItem,
+    Paper,
+    Stack,
+    Typography,
+} from "@mui/material";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
     const nextStep = useRef(null);
     return (
-        <Paper className="landing">
+        <Box className="landing">
             <Box
                 className="landing-banner"
                 sx={{
@@ -70,7 +79,7 @@ const Home = () => {
                     sx={{
                         display: "flex",
                         minHeight: "90vh",
-                        marginTop: 2,
+                        marginTop: 5,
                     }}
                 >
                     <Grid
@@ -95,8 +104,8 @@ const Home = () => {
                                 flexGrow: 1,
                                 display: "flex",
                                 flexDirection: "column",
-                                alignContent: "center",
-                                justifyContent: "center",
+                                alignItems: "center",
+                                justifyContent: "start",
                                 height: "100%",
                             }}
                         >
@@ -106,8 +115,22 @@ const Home = () => {
                                 sx={{
                                     minHeight: "80vh",
                                     justifyContent: "space-evenly",
+                                    textAlign: "center",
                                 }}
-                            ></Stack>
+                            >
+                                <Typography variant="h5">
+                                    How does it work?
+                                </Typography>
+                                <Typography variant="body1">
+                                    Create a digital plan for your party
+                                </Typography>
+                                <Typography variant="body1">
+                                    Send invites to your guests
+                                </Typography>
+                                <Typography variant="body1">
+                                    Spectate real time
+                                </Typography>
+                            </Stack>
                         </Paper>
                     </Grid>
                     <Grid
@@ -120,7 +143,7 @@ const Home = () => {
                             direction="column"
                             spacing={2}
                             sx={{
-                                maxWidth: {xs:"100vw",md:'80vw'},
+                                maxWidth: { xs: "100vw", md: "80vw" },
                                 minHeight: "80vh",
                                 justifyContent: "space-evenly",
                             }}
@@ -161,7 +184,7 @@ const Home = () => {
                                         </Typography>
                                     </Button>
                                 </Link>
-                                <Typography variant="body1">
+                                <Typography variant="body1" color="secondary">
                                     Schedule a party event and invite your
                                     guests
                                 </Typography>
@@ -202,7 +225,7 @@ const Home = () => {
                                         </Typography>
                                     </Button>
                                 </Link>
-                                <Typography variant="body1">
+                                <Typography variant="body1" color="secondary">
                                     Check out existing events
                                 </Typography>
                             </Paper>
@@ -244,7 +267,7 @@ const Home = () => {
                     </Grid>
                 </Grid>
             </Box>
-        </Paper>
+        </Box>
     );
 };
 

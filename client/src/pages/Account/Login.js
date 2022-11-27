@@ -9,6 +9,7 @@ export default function Login() {
     const { auth, setAuth } = AuthConsumer();
 
     const handleLogin = () => {
+        console.log(auth);
         setAuth(true);
         console.log(auth);
     };

@@ -50,7 +50,7 @@ export default class LoginForm extends React.Component {
         return (
             <Paper
                 sx={{
-                    width: { xs: "100vw", md: "80vw" },
+                    width: "100%",
                     paddingTop: 8,
                     paddingBottom: 15,
                     display: "flex",
@@ -58,6 +58,7 @@ export default class LoginForm extends React.Component {
                     alignItems: "center",
                     backgroundColor: "background.default",
                 }}
+                elevation={10}
             >
                 <Avatar sx={{ m: 2, bgcolor: "primary.main" }}>
                     <LockOutlined />

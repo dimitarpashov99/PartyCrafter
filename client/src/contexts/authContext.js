@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { useContext, useMemo } from "react";
 const AuthContext = React.createContext({
     authenticated: false,
     setAuthenticated: (auth) => {},
@@ -10,6 +10,12 @@ export default AuthContext;
 export function AuthProvider({ children }) {
     const [auth, setAuth] = React.useState(false);
 
+    // const isAuthenticated = useMemo(
+    //     () => ({
+    //         auth,
+    //     }),
+    //     [auth]
+    // );
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
             {children}
@@ -18,5 +24,7 @@ export function AuthProvider({ children }) {
 }
 
 export function AuthConsumer() {
-    return React.useContext(AuthContext);
+    var ss = useContext(AuthContext);
+    console.log(ss);
+    return ss;
 }

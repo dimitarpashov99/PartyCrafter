@@ -6,7 +6,7 @@ import SideBar from "../components/Sidebar";
 import GetDesignTokens from "../assets/themes/themes";
 
 import ColorModeContext from "../contexts/colorModeContext";
-import { Box, Container } from "@mui/material";
+import { Box, Container, CssBaseline, GlobalStyles } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Outlet } from "react-router";
 import AuthService from "../services/authService";
@@ -41,23 +41,32 @@ const Layout = ({ children }) => {
                 <ThemeProvider theme={theme}>
                     {!currentUser && (
                         <React.Fragment>
-                            <Header />
-                            <SideBar />
-                            <main>
-                                <Container
-                                    disableGutters
-                                    sx={{
-                                        my: 0,
-                                        maxWidth: "100vw",
-                                        minHeight: "80vh",
-                                    }}
-                                    maxWidth='false'
-                                >
-                                    {children}
-                                    <Outlet />
-                                </Container>
-                            </main>
-                            <Footer />
+                            <Box
+                                sx={{
+                                    backgroundColor: (theme) =>
+                                        theme.palette.mode === "light"
+                                            ? "#f5f5f5"
+                                            : "#121212",
+                                }}
+                            >
+                                <Header />
+                                <SideBar />
+                                <main>
+                                    <Container
+                                        disableGutters
+                                        sx={{
+                                            my: 0,
+                                            maxWidth: "100vw",
+                                            minHeight: "80vh",
+                                        }}
+                                        maxWidth="false"
+                                    >
+                                        {children}
+                                        <Outlet />
+                                    </Container>
+                                </main>
+                                <Footer />
+                            </Box>
                         </React.Fragment>
                     )}
                 </ThemeProvider>

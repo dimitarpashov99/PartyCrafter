@@ -48,6 +48,7 @@ function StepOne(props) {
             <Grid container>
                 <Grid
                     item
+                    xs={12}
                     md={6}
                     sx={{
                         padding: 5,
@@ -70,7 +71,7 @@ function StepOne(props) {
                         }}
                     />
 
-                    <Box sx={{ paddingTop: 5 }}>
+                    <Box sx={{ display: "flex", paddingTop: 5 }}>
                         <DateTimePicker
                             label="Event Date"
                             value={formState.eventDate}
@@ -80,11 +81,17 @@ function StepOne(props) {
                                 <TextField
                                     id="event-date"
                                     name="event-date"
-                                    fullWidth
                                     label="Event Date"
                                     {...params}
                                 />
                             )}
+                        />
+                        <TextField
+                            sx={{ flexGrow: 1 }}
+                            type="number"
+                            label="Duration (in hours)"
+                            inputProps={{ min: 1, pattern: "^[+]?d+([.]d+)?$" }}
+                            value={formState.eventDuration}
                         />
                     </Box>
                     <FormControlLabel
@@ -103,14 +110,23 @@ function StepOne(props) {
                 </Grid>
                 <Grid
                     item
+                    xs={12}
                     md={6}
                     sx={{
                         padding: 5,
                     }}
                 >
-                    <Typography variant="body1" color="primary">
-                        Event Image
-                    </Typography>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Typography variant="body1" color="primary">
+                            Event Image
+                        </Typography>
+                        {selectedFile && (
+                            <Button variant="outlined" color="error">
+                                Change
+                            </Button>
+                        )}
+                    </Box>
+
                     <Box
                         sx={{
                             display: "none",
@@ -143,19 +159,22 @@ function StepOne(props) {
                     ) : (
                         <Box
                             sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
                                 border: "3px solid",
                                 borderColor: "primary.main",
                                 borderRadius: "12px",
                                 height: "100%",
-                                alignItems: "center",
+                                alignContent: "center",
                             }}
                         >
-                            <label htmlFor="event-image-file">
-                                <Button
-                                    variant="outlined"
-                                    startIcon={<AddPhotoAlternateIcon />}
-                                >UPLOAD</Button>
-                            </label>
+                            <Button variant="outlined">
+                                <label htmlFor="event-image-file">
+                                    <AddPhotoAlternateIcon />
+                                    UPLOAD
+                                </label>
+                            </Button>
                         </Box>
                     )}
                 </Grid>
