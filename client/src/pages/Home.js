@@ -178,7 +178,7 @@ const Home = () => {
                                     >
                                         <Typography
                                             variant="h6"
-                                            color="common.white"
+                                            color="primary"
                                         >
                                             Create your party
                                         </Typography>

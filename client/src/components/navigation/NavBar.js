@@ -44,7 +44,7 @@ const NavBar = () => {
     }, [authContext]);
 
     return (
-        <AppBar position="sticky" sx={{}}>
+        <AppBar position="sticky" color="transparent">
             <Toolbar sx={{ justifyContent: "flex-end" }}>
                 <Stack
                     spacing={1}

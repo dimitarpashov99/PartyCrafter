@@ -1,6 +1,5 @@
 var createError = require("http-errors");
 var express = require("express");
-// var path = require("path");
 var bodyparser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var cors = require("cors");
@@ -35,7 +34,7 @@ mongoose
     .then(() => {
         //don't show the log when it is test
         if (process.env.NODE_ENV !== "test") {
-            console.log("Connected to" + process.env.MONGODB_URL);
+            console.log("Connected to " + process.env.MONGODB_URL);
             console.log("App is running ... \n");
             console.log("Press CTRL + C to stop the process. \n");
         }

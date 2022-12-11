@@ -2,10 +2,10 @@ const Styles = {
     light: {
         // palette values for light mode
         primary: {
-            main: "#add8e6",
+            main: "#2ba0ff",
         },
         default: {
-            main: "#add8e6",
+            main: "#2ba0ff",
         },
         secondary: {
             main: "#005461",
@@ -22,13 +22,13 @@ const Styles = {
     dark: {
         // palette values for dark mode
         primary: {
-            main: "#f7c310",
+            main: "#b8af02",
         },
         default: {
             main: "#006E7F",
         },
         secondary: {
-            main: "#B22727",
+            main: "#fff",
         },
         background: {
             default: "#121212",

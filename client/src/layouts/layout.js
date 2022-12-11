@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 
 import { Header, Footer } from "./user";
 
-import SideBar from "../components/Sidebar";
-import GetDesignTokens from "../assets/themes/themes";
+import SideBar from "../components/navigation/Sidebar";
+import GetDesignTokens from "../themes/themes";
 
 import ColorModeContext from "../contexts/colorModeContext";
-import { Box, Container, CssBaseline, GlobalStyles } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Outlet } from "react-router";
 import AuthService from "../services/authService";

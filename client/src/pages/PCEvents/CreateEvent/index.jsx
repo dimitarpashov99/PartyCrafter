@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import CreateEventForm from "../forms/CreateEventForm/CreateEventForm";
+import CreateEventForm from "../../../components/forms/CreateEventForm";
 
 const CreateEvent = () => {
     return (
@@ -18,6 +18,6 @@ const CreateEvent = () => {
             <CreateEventForm />
         </Box>
     );
-}
+};
 
-export { CreateEvent };
+export default CreateEvent;

@@ -15,14 +15,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./assets/stylesheets/style.scss";
 import Events from "./pages/PCEvents";
-import { CreateEvent } from "./components/partyevent";
+import CreateEvent from "./pages/PCEvents/CreateEvent";
+import JoinEvent from "./pages/PCEvents/JoinEvent";
 
-import EventsLanding from "./pages/PCEvents/EventsLanding";
 import { AuthProvider } from "./contexts/authContext";
 import { AuthConsumer } from "./contexts/authContext";
 const ProtectedRoutes = () => {
     const authContext = AuthConsumer();
-    console.log(authContext.auth);
     return authContext.auth ? <Outlet /> : <Navigate to="/login" />;
 };
 function App() {
@@ -38,11 +37,14 @@ function App() {
                             />
                             <Route path="home" element={<Home />} />
                             <Route path="events" element={<Events />}>
-                                <Route index element={<EventsLanding />} />
                                 <Route element={<ProtectedRoutes />}>
                                     <Route
                                         path="create"
                                         element={<CreateEvent />}
+                                    />
+                                    <Route
+                                        path="join"
+                                        element={<JoinEvent />}
                                     />
                                 </Route>
                             </Route>

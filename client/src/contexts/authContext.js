@@ -24,7 +24,5 @@ export function AuthProvider({ children }) {
 }
 
 export function AuthConsumer() {
-    var ss = useContext(AuthContext);
-    console.log(ss);
-    return ss;
+    return useContext(AuthContext);
 }

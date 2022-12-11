@@ -50,7 +50,7 @@ const SideBar = () => {
                 backgroundColor: (theme) =>
                     theme.palette.mode === "light"
                         ? theme.palette.grey[200]
-                        : theme.palette.grey[500],
+                        : theme.palette.grey[800],
             }}
         >
             <Stack
