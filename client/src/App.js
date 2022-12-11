@@ -1,7 +1,7 @@
-import Home from "./pages/Home";
-import AboutUs from "./pages/AboutUs";
-import Login from "./pages/Account/Login";
-import Register from "./pages/Account/Register";
+import Home from "./pages/home";
+import AboutUs from "./pages/aboutus";
+import Login from "./pages/authentication/Login";
+import Register from "./pages/authentication/Register";
 import {
     BrowserRouter,
     Outlet,
@@ -42,11 +42,8 @@ function App() {
                                         path="create"
                                         element={<CreateEvent />}
                                     />
-                                    <Route
-                                        path="join"
-                                        element={<JoinEvent />}
-                                    />
                                 </Route>
+                                <Route path="join" element={<JoinEvent />} />
                             </Route>
                             <Route path="aboutus" element={<AboutUs />} />
                             <Route path="login" element={<Login />} />

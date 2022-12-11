@@ -5,12 +5,12 @@ import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 const Events = () => {
     return (
-        <Box>
+        <React.Fragment>
+            <Outlet />
             <Grid
                 container
                 sx={{
                     textAlign: "center",
-
                     justifyContent: "center",
                 }}
             >
@@ -27,9 +27,6 @@ const Events = () => {
                 >
                     <Box
                         sx={{
-                            // display: "flex",
-                            // flexGrow: 1,
-                            height: "100%",
                             justifyContent: "center",
                             flexDirection: "column",
                             alignContent: "center",
@@ -47,13 +44,16 @@ const Events = () => {
                             <Typography variant="h4" component="h2">
                                 Organize an event
                             </Typography>
-                            <Button
-                                className="btn"
-                                color="primary"
-                                variant="contained"
-                            >
-                                <Link to="/events/create">Host yourself</Link>
-                            </Button>
+                            <Link to="/events/create">
+                                <Button
+                                    sx={{ width: "100%" }}
+                                    className="btn"
+                                    color="primary"
+                                    variant="contained"
+                                >
+                                    Host yourself
+                                </Button>
+                            </Link>
                             <Typography variant="h6" component="h4">
                                 OR
                             </Typography>
@@ -62,7 +62,7 @@ const Events = () => {
                                 color="secondary"
                                 variant="contained"
                             >
-                                Hire an organizer
+                                Find an organizer
                             </Button>
                         </Stack>
                     </Box>
@@ -108,9 +108,8 @@ const Events = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <Outlet />
-        </Box>
+        </React.Fragment>
     );
-}
+};
 
-export default Events
+export default Events;

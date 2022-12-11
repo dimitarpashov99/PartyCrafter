@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LoginForm from "../../components/forms/Authentication/LoginForm";
 import { useNavigate } from "react-router";
 
@@ -6,12 +6,10 @@ import { AuthConsumer } from "../../contexts/authContext";
 import { Container } from "@mui/material";
 export default function Login() {
     const navigation = useNavigate();
-    const { auth, setAuth } = AuthConsumer();
+    const { setAuth } = AuthConsumer();
 
-    const handleLogin = () => {
-        console.log(auth);
-        setAuth(true);
-        console.log(auth);
+    const handleLogin = (data) => {
+        setAuth({ authenticated: true, profile: data.profile });
     };
     return (
         <Container>

@@ -83,10 +83,7 @@ const login = [
         .not()
         .isEmpty()
         .trim()
-        .withMessage("Request must contain email.")
-        .not()
-        .isEmail()
-        .withMessage("Email must be a valid email address."),
+        .withMessage("Request must contain email."),
     body("password")
         .not()
         .isEmpty()
@@ -119,7 +116,16 @@ const login = [
                                     httpOnly: true,
                                 });
 
-                                res.json("LOGGED IN");
+                                apiResponse.successResponseWithData(
+                                    res,
+                                    "Successfuly logged in!",
+                                    {
+                                        profile: {
+                                            firstName: user.firstName,
+                                            lastName: user.lastName,
+                                        },
+                                    }
+                                );
                             }
                         });
                     } catch {

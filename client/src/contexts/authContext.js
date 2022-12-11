@@ -1,21 +1,14 @@
 import * as React from "react";
-import { useContext, useMemo } from "react";
-const AuthContext = React.createContext({
-    authenticated: false,
-    setAuthenticated: (auth) => {},
-});
+import { useContext } from "react";
 
-export default AuthContext;
+const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
-    const [auth, setAuth] = React.useState(false);
+    const [auth, setAuth] = React.useState({
+        authenticated: false,
+        profileName: null,
+    });
 
-    // const isAuthenticated = useMemo(
-    //     () => ({
-    //         auth,
-    //     }),
-    //     [auth]
-    // );
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
             {children}
@@ -26,3 +19,5 @@ export function AuthProvider({ children }) {
 export function AuthConsumer() {
     return useContext(AuthContext);
 }
+
+export default AuthContext;

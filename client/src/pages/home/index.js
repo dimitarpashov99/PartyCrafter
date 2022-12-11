@@ -1,13 +1,4 @@
-import {
-    Box,
-    Button,
-    Container,
-    Grid,
-    ListItem,
-    Paper,
-    Stack,
-    Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -161,6 +152,8 @@ const Home = () => {
                                     flexDirection: "column",
                                     alignContent: "center",
                                     justifyContent: "center",
+                                    border: "3px solid",
+                                    borderColor: "primary.main",
                                 }}
                             >
                                 <Link to="/events/create">
@@ -202,6 +195,8 @@ const Home = () => {
                                     flexDirection: "column",
                                     alignContent: "center",
                                     justifyContent: "center",
+                                    border: "3px solid",
+                                    borderColor: "primary.main"
                                 }}
                             >
                                 <Link to="/events/join">
@@ -217,10 +212,7 @@ const Home = () => {
                                             borderRadius: 12,
                                         }}
                                     >
-                                        <Typography
-                                            variant="h6"
-                                            color="common.white"
-                                        >
+                                        <Typography variant="h6">
                                             Join the party
                                         </Typography>
                                     </Button>
@@ -229,7 +221,7 @@ const Home = () => {
                                     Check out existing events
                                 </Typography>
                             </Paper>
-                            <Paper
+                            {/* <Paper
                                 elevation={6}
                                 sx={{
                                     backgroundColor: "primary.main",
@@ -262,7 +254,7 @@ const Home = () => {
                                         </Typography>
                                     </Link>
                                 </Button>
-                            </Paper>
+                            </Paper> */}
                         </Stack>
                     </Grid>
                 </Grid>

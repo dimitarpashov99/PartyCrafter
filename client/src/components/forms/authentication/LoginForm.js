@@ -40,8 +40,8 @@ export default class LoginForm extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        AuthService.login(this.state.email, this.state.password).then(() => {
-            this.handleLogin();
+        AuthService.login(this.state.email, this.state.password).then(({data}) => {
+            this.handleLogin(data);
             this.navigation("/home");
         });
     };

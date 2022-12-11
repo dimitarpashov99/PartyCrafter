@@ -10,7 +10,6 @@ import {
     IconButton,
     Menu,
     MenuItem,
-    Paper,
     Stack,
     Toolbar,
     Tooltip,
@@ -25,10 +24,12 @@ import DarkModeSwitch from "./DarkModeSwitch";
 
 import { AuthConsumer } from "../../contexts/authContext";
 import { Logout } from "@mui/icons-material";
+import LogoutDiag from "../logout";
 
 const NavBar = () => {
     const theme = useTheme();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [logoutDiagOpen, setLogoutDiagOpen] = React.useState(false);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -36,15 +37,12 @@ const NavBar = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const [auth, setAuth] = React.useState(false);
-    const authContext = AuthConsumer();
-    useEffect(() => {
-        console.log(authContext.auth);
-        setAuth(authContext.auth);
-    }, [authContext]);
-
+    const handleLogout = () => {
+        setLogoutDiagOpen(true);
+    };
+    const { auth } = AuthConsumer();
     return (
-        <AppBar position="sticky" color="transparent">
+        <AppBar position="sticky">
             <Toolbar sx={{ justifyContent: "flex-end" }}>
                 <Stack
                     spacing={1}
@@ -73,7 +71,7 @@ const NavBar = () => {
                         </ColorModeContext.Consumer>
                     </Box>
                     <Box>
-                        {!auth && (
+                        {!auth.authenticated && (
                             <NavLink to="/login">
                                 <Button
                                     color="secondary"
@@ -101,7 +99,7 @@ const NavBar = () => {
                                 </Button>
                             </NavLink>
                         )}
-                        {auth && (
+                        {auth.authenticated && (
                             <React.Fragment>
                                 <Tooltip title="Account settings">
                                     <IconButton
@@ -116,9 +114,19 @@ const NavBar = () => {
                                             open ? "true" : undefined
                                         }
                                     >
-                                        <Avatar sx={{ width: 32, height: 32 }}>
-                                            M
-                                        </Avatar>
+                                        {auth.profile && auth.profile.avatar ? (
+                                            <Avatar
+                                                src={auth.profile.avatar.src}
+                                                alt={auth.profile.firstName[0]}
+                                                sx={{ width: 32, height: 32 }}
+                                            />
+                                        ) : (
+                                            <Avatar
+                                                sx={{ width: 32, height: 32 }}
+                                            >
+                                                {auth.profile.firstName[0]}
+                                            </Avatar>
+                                        )}
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
@@ -176,15 +184,8 @@ const NavBar = () => {
                                             My Profile
                                         </Typography>
                                     </MenuItem>
-                                    <MenuItem>
-                                        <Typography
-                                            sx={{
-                                                display: {
-                                                    xs: "none",
-                                                    md: "block",
-                                                },
-                                            }}
-                                        >
+                                    <MenuItem onClick={handleLogout}>
+                                        <Typography>
                                             <Logout />
                                             Sign out
                                         </Typography>
@@ -194,6 +195,10 @@ const NavBar = () => {
                         )}
                     </Box>
                 </Stack>
+                <LogoutDiag
+                    isOpen={logoutDiagOpen}
+                    setOpen={setLogoutDiagOpen}
+                />
             </Toolbar>
         </AppBar>
     );
