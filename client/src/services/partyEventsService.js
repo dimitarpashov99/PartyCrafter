@@ -1,7 +1,7 @@
 import axios from "axios";
 const API_URL = "http://localhost:3001/api/events";
 
-const getPartyEventByCode = (eventCode) => {
+const searchEventByCode = (eventCode) => {
     return axios.get(API_URL, {
         params: {
             code: eventCode,
@@ -19,7 +19,6 @@ const getOpenPartyEvents = (eventCode) => {
 
 const createPartyEvent = (user, partyEventData) => {
     return axios.post(API_URL, {
-        user: user,
         partyEventData: partyEventData,
     });
 };
@@ -41,14 +40,10 @@ const cancelPartyEvent = (eventCode) => {
 
 // const getSuggestedMusicPlaylists = (user) => {};
 
-
-
-const sendMusicRequest = (user) => {
-
-};
+const sendMusicRequest = (user) => {};
 
 export {
-    getPartyEventByCode,
+    searchEventByCode,
     getOpenPartyEvents,
     createPartyEvent,
     updatePartyEvent,

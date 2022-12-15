@@ -7,7 +7,7 @@ const Events = () => {
     return (
         <React.Fragment>
             <Outlet />
-            <Grid
+            {/* <Grid
                 container
                 sx={{
                     textAlign: "center",
@@ -107,7 +107,7 @@ const Events = () => {
                         </Stack>
                     </Box>
                 </Grid>
-            </Grid>
+            </Grid> */}
         </React.Fragment>
     );
 };

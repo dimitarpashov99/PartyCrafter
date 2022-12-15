@@ -76,6 +76,7 @@ function StepOne(props) {
                             label="Event Date"
                             value={formState.eventDate}
                             onChange={handleChangeDate}
+                            minDate={new Date()}
                             ampm={false}
                             renderInput={(params) => (
                                 <TextField

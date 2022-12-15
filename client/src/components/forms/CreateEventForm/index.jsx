@@ -19,6 +19,7 @@ import EventPreview from "../../partyevent/EventPreview";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CreateFoodMenuForm from "../CreateFoodMenuForm/CreateFoodMenuForm";
+import { createPartyEvent } from "../../../services/partyEventsService";
 export default class CreateEvent extends React.Component {
     constructor(props) {
         super(props);
@@ -47,6 +48,7 @@ export default class CreateEvent extends React.Component {
             foodMenuModalOpen: false,
             eventSubmitted: false,
             locationMap: null,
+            userAddressBook: [],
             steps: [
                 { id: 1, label: "Schedule Event" },
                 { id: 2, label: "Choose Location & Guests" },
@@ -55,12 +57,16 @@ export default class CreateEvent extends React.Component {
             ],
         };
         this.foodModalRef = React.createRef();
-        // this.submitCreateForm = this.submitCreateForm.bind(this);
+        this.submitCreateForm = this.submitCreateForm.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this._renderStepContent = this._renderStepContent.bind(this);
         this._handleBack = this._handleBack.bind(this);
         this._handleNext = this._handleNext.bind(this);
         this.handleFoodMenuModalOpen = this.handleFoodMenuModalOpen.bind(this);
+    }
+
+    submitCreateForm() {
+        createPartyEvent(this.state.eventData);
     }
     handleFormChange(eventData) {
         this.setState({ eventData: eventData });
@@ -140,81 +146,98 @@ export default class CreateEvent extends React.Component {
                     {!this.state.eventSubmitted && (
                         <React.Fragment>
                             <form onSubmit={this.submitCreateForm}>
-                                <Typography
-                                    color="primary.main"
-                                    variant="h3"
-                                    component="h2"
-                                >
-                                    Plan Your Party
-                                </Typography>
-                                <Box sx={{ paddingTop: 5 }}>
-                                    <Stepper
-                                        alternativeLabel
-                                        connector={<StepConnector />}
-                                        activeStep={this.state.activeStep - 1}
-                                    >
-                                        {this.state.steps.map((page) => {
-                                            return (
-                                                <Step key={page.id}>
-                                                    <StepLabel>
-                                                        <Typography
-                                                            variant="body1"
-                                                            color="primary"
-                                                        >
-                                                            {page.label}
-                                                        </Typography>
-                                                    </StepLabel>
-                                                </Step>
-                                            );
-                                        })}
-                                    </Stepper>
-                                    <Paper>
-                                        <React.Fragment>
-                                            {this._renderStepContent(
-                                                this.state.activeStep
-                                            )}
-                                        </React.Fragment>
-                                    </Paper>
-                                </Box>
-                                <Box sx={{ paddingY: 5 }}>
-                                    <Stack
-                                        spacing={1}
-                                        divider={
-                                            <Divider
-                                                orientation="vertical"
-                                                flexItem
-                                            />
-                                        }
-                                        direction="row"
-                                        sx={{ justifyContent: "center" }}
-                                    >
-                                        {this.state.activeStep !== 1 && (
-                                            <Button
-                                                variant="outlined"
-                                                onClick={this._handleBack}
-                                            >
-                                                Back
-                                            </Button>
-                                        )}
-
-                                        <Button
-                                            disabled={this.state.isSubmitting}
-                                            onClick={this._handleNext}
-                                            variant="contained"
+                                <Stack
+                                    spacing={2}
+                                    direction="column"
+                                    divider={
+                                        <Divider
                                             color="primary"
+                                            orientation="vertical"
+                                        />
+                                    }
+                                >
+                                    <Typography
+                                        color="primary.main"
+                                        variant="h3"
+                                        component="h2"
+                                    >
+                                        Plan Your Party
+                                    </Typography>
+                                    <Box sx={{ paddingTop: 5 }}>
+                                        <Stepper
+                                            alternativeLabel
+                                            connector={<StepConnector />}
+                                            activeStep={
+                                                this.state.activeStep - 1
+                                            }
                                         >
-                                            {this.state.activeStep === 4
-                                                ? "Create Event"
-                                                : "Next"}
-                                        </Button>
-                                    </Stack>
-                                </Box>
+                                            {this.state.steps.map((page) => {
+                                                return (
+                                                    <Step key={page.id}>
+                                                        <StepLabel>
+                                                            <Typography
+                                                                variant="body1"
+                                                                color="primary"
+                                                            >
+                                                                {page.label}
+                                                            </Typography>
+                                                        </StepLabel>
+                                                    </Step>
+                                                );
+                                            })}
+                                        </Stepper>
+                                        <Paper>
+                                            <React.Fragment>
+                                                {this._renderStepContent(
+                                                    this.state.activeStep
+                                                )}
+                                            </React.Fragment>
+                                        </Paper>
+                                    </Box>
+                                    <Box sx={{ paddingY: 5 }}>
+                                        <Stack
+                                            spacing={1}
+                                            divider={
+                                                <Divider
+                                                    orientation="vertical"
+                                                    flexItem
+                                                />
+                                            }
+                                            direction="row"
+                                            sx={{ justifyContent: "center" }}
+                                        >
+                                            {this.state.activeStep !== 1 && (
+                                                <Button
+                                                    variant="outlined"
+                                                    onClick={this._handleBack}
+                                                >
+                                                    Back
+                                                </Button>
+                                            )}
+
+                                            <Button
+                                                disabled={
+                                                    this.state.isSubmitting
+                                                }
+                                                onClick={this._handleNext}
+                                                variant="contained"
+                                                color="primary"
+                                            >
+                                                {this.state.activeStep === 4
+                                                    ? "Create Event"
+                                                    : "Next"}
+                                            </Button>
+                                        </Stack>
+                                    </Box>
+                                </Stack>
                             </form>
                             <Modal
                                 aria-labelledby="chosen-foodmenu-modal"
                                 open={this.state.foodMenuModalOpen}
                                 onClose={() => {
-                                    this.setState({ foodMenuModalOpen: false });
+                                    this.setState({
+                                        foodMenuModalOpen: false,
+                                    });
                                 }}
                                 closeAfterTransition
                                 BackdropComponent={Backdrop}

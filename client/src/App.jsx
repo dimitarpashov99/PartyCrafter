@@ -21,8 +21,8 @@ import JoinEvent from "./pages/PCEvents/JoinEvent";
 import { AuthProvider } from "./contexts/authContext";
 import { AuthConsumer } from "./contexts/authContext";
 const ProtectedRoutes = () => {
-    const authContext = AuthConsumer();
-    return authContext.auth ? <Outlet /> : <Navigate to="/login" />;
+    const { auth } = AuthConsumer();
+    return auth?.authenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 function App() {
     return (

@@ -24,6 +24,7 @@ function StepTwo(props) {
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: ["places"],
     });
+    const userAddressBook = props.userAddressBook;
     const center = { lat: 42.7, lng: 23.33 };
     const [map, setMap] = useState(/** @type google.maps.Map */ (null));
     const [formState, setFormState] = useState(props.formState);
@@ -37,6 +38,9 @@ function StepTwo(props) {
                 table: 1,
             },
         ]
+    );
+    const [eventAddress, setEventAddress] = useState(
+        formState.eventAddress || {}
     );
     const handleFormChange = props.handleFormChange;
     const [newGuest, setNewGuest] = React.useState({
@@ -65,7 +69,17 @@ function StepTwo(props) {
         setFormState({ ...formState, guestList: guestList });
     };
 
-    const handleAddressChange = (e) => {};
+    const handleAddressChange = (e) => {
+        const chosenAddressBook =
+            e.target.value && e.target.value !== "new"
+                ? userAddressBook.find((address) => {
+                      return e.target.value === address.name;
+                  })
+                : undefined;
+        if (chosenAddressBook) {
+            setEventAddress(chosenAddressBook);
+        }
+    };
     useEffect(() => {
         handleFormChange(formState);
     }, [formState, handleFormChange]);
@@ -85,8 +99,17 @@ function StepTwo(props) {
                     <Stack direction="row" spacing={2}>
                         <Box sx={{ minWidth: 400 }}>
                             <FormControl>
-                                <Select displayEmpty onChange={handleAddressChange}>
+                                <Select
+                                    displayEmpty
+                                    onChange={handleAddressChange}
+                                >
                                     <MenuItem value="new">New Address</MenuItem>
+                                    {userAddressBook?.map((address, index) => (
+                                        <MenuItem
+                                            value={address.name}
+                                            key={index}
+                                        />
+                                    ))}
                                 </Select>
                             </FormControl>
                             <TextField
@@ -96,14 +119,11 @@ function StepTwo(props) {
                                 required
                                 fullWidth
                                 autoComplete="off"
-                                value={formState.eventAddress.address1}
+                                value={formState?.eventAddress?.address1}
                                 onChange={(e) => {
-                                    setFormState({
-                                        ...formState,
-                                        eventAddress: {
-                                            ...formState.eventAddress,
-                                            address1: e.target.value,
-                                        },
+                                    setEventAddress({
+                                        ...eventAddress,
+                                        address1: e.target.value,
                                     });
                                 }}
                             />
@@ -114,14 +134,11 @@ function StepTwo(props) {
                                 required
                                 fullWidth
                                 autoComplete="off"
-                                value={formState.eventAddress.address2}
+                                value={eventAddress?.address2}
                                 onChange={(e) => {
-                                    setFormState({
-                                        ...formState,
-                                        eventAddress: {
-                                            ...formState.eventAddress,
-                                            address2: e.target.value,
-                                        },
+                                    setEventAddress({
+                                        ...eventAddress,
+                                        address2: e.target.value,
                                     });
                                 }}
                             />
@@ -132,14 +149,11 @@ function StepTwo(props) {
                                 required
                                 fullWidth
                                 autoComplete="off"
-                                value={formState.eventAddress.city}
+                                value={eventAddress?.city}
                                 onChange={(e) => {
-                                    setFormState({
-                                        ...formState,
-                                        eventAddress: {
-                                            ...formState.eventAddress,
-                                            city: e.target.value,
-                                        },
+                                    setEventAddress({
+                                        ...eventAddress,
+                                        city: e.target.value,
                                     });
                                 }}
                             />
