@@ -19,7 +19,7 @@ function EventPreview(props) {
 
     const [eventImage, setImage] = useState();
     const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-    const playlist = eventData.chosenPlaylist;
+    const { chosenPlaylist, chosenFoodMenu } = eventData;
     const locationCoorinates = { lat: 48.8584, lng: 2.2945 };
     const { isLoaded } = useJsApiLoader({
         id: "google-map-script",
@@ -38,7 +38,7 @@ function EventPreview(props) {
         return () => URL.revokeObjectURL(objectUrl);
     }, [eventData]);
     return (
-        <Box sx={{ maxWidth: "70vw", marginX: "auto" , marginY: 5}}>
+        <Box sx={{ maxWidth: "70vw", marginX: "auto", marginY: 5 }}>
             <Stack spacing={2}>
                 <Box
                     sx={{
@@ -119,11 +119,13 @@ function EventPreview(props) {
                     }}
                 >
                     <Typography variant="h6">Location</Typography>
-                    <Stack direction="row" spacing={2}>
-                        <Typography variant="body1">
-                            {eventData.eventAddress}
-                        </Typography>
-                        <Box sx={{ width: "100%", height: 200 }}>
+                    <Grid container columns={12} spacing={2}>
+                        <Grid item md={6}>
+                            <Typography variant="body1">
+                                {eventData.eventAddress?.address1}
+                            </Typography>
+                        </Grid>
+                        <Grid item md={6} sx={{ height: 200 }}>
                             {isLoaded && (
                                 <GoogleMap
                                     state={map}
@@ -142,8 +144,8 @@ function EventPreview(props) {
                                     onLoad={(map) => setMap(map)}
                                 ></GoogleMap>
                             )}
-                        </Box>
-                    </Stack>
+                        </Grid>
+                    </Grid>
                 </Box>
                 <Box
                     sx={{
@@ -182,47 +184,52 @@ function EventPreview(props) {
                     <Typography variant="h6">Additional info</Typography>
                     <Grid container spacing={1} sx={{ height: "100%" }}>
                         <Grid item md={6}>
-                            <Box
-                                sx={{
-                                    padding: 2,
-                                    border: "3px solid",
-                                    borderColor: "#B22727",
-                                    borderRadius: "12px",
-                                }}
-                            >
-                                <Typography variant="body1">Music</Typography>
-                                {playlist && (
+                            {chosenPlaylist && (
+                                <Box
+                                    sx={{
+                                        padding: 2,
+                                        border: "3px solid",
+                                        borderColor: "#B22727",
+                                        borderRadius: "12px",
+                                    }}
+                                >
+                                    <Typography variant="body1">
+                                        Music
+                                    </Typography>
+
                                     <Box sx={{ paddingX: 2 }}>
                                         <Card sx={{ width: "100%" }}>
                                             <CardMedia
                                                 component="img"
-                                                alt={playlist.label}
-                                                image={playlist.coverSrc}
+                                                alt={chosenPlaylist?.label}
+                                                image={chosenPlaylist?.coverSrc}
                                                 height={200}
                                             ></CardMedia>
                                             <CardContent>
                                                 <Typography variant="body1">
-                                                    {playlist.label}
+                                                    {chosenPlaylist?.label}
                                                 </Typography>
                                             </CardContent>
                                         </Card>
                                     </Box>
-                                )}
-                            </Box>
+                                </Box>
+                            )}
                         </Grid>
                         <Grid item md={6}>
-                            <Box
-                                sx={{
-                                    padding: 2,
-                                    border: "3px solid",
-                                    borderColor: "#EE5007",
-                                    borderRadius: "12px",
-                                }}
-                            >
-                                <Typography variant="body1">
-                                    Foods & Drinks
-                                </Typography>
-                            </Box>
+                            {chosenFoodMenu && (
+                                <Box
+                                    sx={{
+                                        padding: 2,
+                                        border: "3px solid",
+                                        borderColor: "#EE5007",
+                                        borderRadius: "12px",
+                                    }}
+                                >
+                                    <Typography variant="body1">
+                                        Foods & Drinks
+                                    </Typography>
+                                </Box>
+                            )}
                         </Grid>
                     </Grid>
                 </Box>

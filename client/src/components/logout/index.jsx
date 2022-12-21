@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 
 import { AuthConsumer } from "../../contexts/authContext";
 import Button from "@mui/material/Button";
@@ -10,8 +9,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import AuthService from "../../services/authService";
 import { useNavigate } from "react-router";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

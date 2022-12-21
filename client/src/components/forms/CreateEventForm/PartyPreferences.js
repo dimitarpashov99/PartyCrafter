@@ -322,7 +322,6 @@ function StepThree(props) {
                     <Box
                         sx={{
                             padding: 2,
-                            height: "100%",
                             border: "3px solid",
                             borderColor: "#EE5007",
                             borderRadius: "12px",
@@ -353,7 +352,8 @@ function StepThree(props) {
                                             name="event-preferences-menu"
                                             value={eventMenu.id || ""}
                                             onChange={(e) => {
-                                                formState.chosenFoodMenu = e.target.value;
+                                                formState.chosenFoodMenu =
+                                                    e.target.value;
                                                 handleFormChange(formState);
                                             }}
                                             sx={{ flexGrow: 1 }}
@@ -407,7 +407,6 @@ function StepThree(props) {
                         width: "100%",
                         maxWidth: "100vw",
                         paddingX: 5,
-                        gridAutoFlow: "column",
                     }}
                 >
                     <Box

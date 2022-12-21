@@ -1,5 +1,7 @@
 import React from "react";
 import {
+    Alert,
+    AlertTitle,
     Avatar,
     Box,
     Button,
@@ -21,10 +23,12 @@ export default class LoginForm extends React.Component {
             email: null,
             password: null,
             rememberMe: false,
+            validationError: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
+        this.showError = this.showError.bind(this);
         this.navigation = props.navigation;
         this.handleLogin = props.handleLogin;
     }
@@ -39,11 +43,22 @@ export default class LoginForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        this.showError(false);
 
-        AuthService.login(this.state.email, this.state.password).then(({data}) => {
-            this.handleLogin(data);
-            this.navigation("/home");
-        });
+        AuthService.login(this.state.email, this.state.password).then(
+            (response) => {
+                if (response?.data?.error) {
+                    this.showError(true);
+                } else {
+                    this.navigation("/home");
+                    this.handleLogin(response?.data);
+                }
+            }
+        );
+    };
+
+    showError = (value) => {
+        this.setState({ validationError: value });
     };
 
     render() {
@@ -72,6 +87,15 @@ export default class LoginForm extends React.Component {
                     noValidate
                     sx={{ mt: 1, px: 4 }}
                 >
+                    {this.state.validationError && (
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            <Typography component="strong">
+                                Email Address and password combination is
+                                incorrect. Try again!
+                            </Typography>
+                        </Alert>
+                    )}
                     <TextField
                         margin="normal"
                         required

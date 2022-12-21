@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import {
     Box,
     Button,
-    Grid,
     FormControlLabel,
     Switch,
     Typography,
@@ -60,7 +59,6 @@ function StepTwo(props) {
     const handleAddGuest = () => {
         if (newGuest.name !== "") {
             setGuests((list) => [...list, newGuest]);
-            setFormState({ ...formState, guestList: guests });
             clearNewGuestInput();
         }
     };
@@ -83,7 +81,12 @@ function StepTwo(props) {
     useEffect(() => {
         handleFormChange(formState);
     }, [formState, handleFormChange]);
-
+    useEffect(() => {
+        setFormState((current) => ({ ...current, guestList: guests }));
+    }, [guests]);
+    useEffect(() => {
+        setFormState((current) => ({ ...current, eventAddress: eventAddress }));
+    }, [eventAddress]);
     return (
         <React.Fragment>
             <Stack direction="column">
@@ -98,65 +101,77 @@ function StepTwo(props) {
                     <Typography variant="h6">Location:</Typography>
                     <Stack direction="row" spacing={2}>
                         <Box sx={{ minWidth: 400 }}>
-                            <FormControl>
-                                <Select
-                                    displayEmpty
-                                    onChange={handleAddressChange}
-                                >
-                                    <MenuItem value="new">New Address</MenuItem>
-                                    {userAddressBook?.map((address, index) => (
-                                        <MenuItem
-                                            value={address.name}
-                                            key={index}
-                                        />
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <TextField
-                                id="event-address-address1"
-                                name="event-address-address1"
-                                label="Event address"
-                                required
-                                fullWidth
-                                autoComplete="off"
-                                value={formState?.eventAddress?.address1}
-                                onChange={(e) => {
-                                    setEventAddress({
-                                        ...eventAddress,
-                                        address1: e.target.value,
-                                    });
-                                }}
-                            />
-                            <TextField
-                                id="event-address-address2"
-                                name="event-address-address2"
-                                label="Additional address"
-                                required
-                                fullWidth
-                                autoComplete="off"
-                                value={eventAddress?.address2}
-                                onChange={(e) => {
-                                    setEventAddress({
-                                        ...eventAddress,
-                                        address2: e.target.value,
-                                    });
-                                }}
-                            />
-                            <TextField
-                                id="event-address"
-                                name="event-address-city"
-                                label="Event address"
-                                required
-                                fullWidth
-                                autoComplete="off"
-                                value={eventAddress?.city}
-                                onChange={(e) => {
-                                    setEventAddress({
-                                        ...eventAddress,
-                                        city: e.target.value,
-                                    });
-                                }}
-                            />
+                            <Stack direction="column" spacing={2}>
+                                <FormControl>
+                                    <Select
+                                        value={
+                                            userAddressBook &&
+                                            userAddressBook?.length
+                                                ? userAddressBook[0]
+                                                : "new"
+                                        }
+                                        displayEmpty
+                                        onChange={handleAddressChange}
+                                    >
+                                        <MenuItem value="new">
+                                            New Address
+                                        </MenuItem>
+                                        {userAddressBook?.map(
+                                            (address, index) => (
+                                                <MenuItem
+                                                    value={address.name}
+                                                    key={index}
+                                                />
+                                            )
+                                        )}
+                                    </Select>
+                                </FormControl>
+                                <TextField
+                                    id="event-address-address1"
+                                    name="event-address-address1"
+                                    label="Event address"
+                                    required
+                                    fullWidth
+                                    autoComplete="off"
+                                    value={formState?.eventAddress?.address1}
+                                    onChange={(e) => {
+                                        setEventAddress({
+                                            ...eventAddress,
+                                            address1: e.target.value,
+                                        });
+                                    }}
+                                />
+                                <TextField
+                                    id="event-address-address2"
+                                    name="event-address-address2"
+                                    label="Additional address"
+                                    required
+                                    fullWidth
+                                    autoComplete="off"
+                                    value={eventAddress?.address2}
+                                    onChange={(e) => {
+                                        setEventAddress({
+                                            ...eventAddress,
+                                            address2: e.target.value,
+                                        });
+                                    }}
+                                />
+                                <TextField
+                                    id="event-address"
+                                    name="event-address-city"
+                                    label="City"
+                                    required
+                                    fullWidth
+                                    autoComplete="off"
+                                    value={eventAddress?.city}
+                                    onChange={(e) => {
+                                        setEventAddress({
+                                            ...eventAddress,
+                                            city: e.target.value,
+                                        });
+                                    }}
+                                />
+                            </Stack>
                         </Box>
                         <Box sx={{ width: "100%", height: 300 }}>
                             {isLoaded && (
@@ -255,13 +270,13 @@ function StepTwo(props) {
                                     formState.preferences.assignGuestTables
                                 }
                                 onChange={(e) => {
-                                    setFormState({
-                                        ...formState,
+                                    setFormState((current) => ({
+                                        ...current,
                                         preferences: {
-                                            ...formState.preferences,
+                                            ...current.preferences,
                                             assignGuestTables: e.target.checked,
                                         },
-                                    });
+                                    }));
                                 }}
                             />
                         }
@@ -278,10 +293,10 @@ function StepTwo(props) {
                                 inputProps={{ min: 1 }}
                                 onChange={(event) => {
                                     if (event.target.value > 0)
-                                        setFormState({
-                                            ...formState,
+                                        setFormState((current) => ({
+                                            ...current,
                                             tableCount: event.target.value,
-                                        });
+                                        }));
                                 }}
                             />
                         </React.Fragment>

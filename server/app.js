@@ -1,58 +1,47 @@
-var createError = require("http-errors");
-var express = require("express");
-var bodyparser = require("body-parser");
-var cookieParser = require("cookie-parser");
-var cors = require("cors");
-var mongoose = require("mongoose");
-var dotenv = require("dotenv");
+const path = require("path");
+const app = require("./config/express");
+const errorHandler = require("./middlewares/errorHandler");
+const requestLogger = require("./middlewares/requestLogger");
 
-var apiRouter = require("./routes/api");
+// enable webpack hot module replacement in development mode
+const webpack = require("webpack");
+const webpackConfig = require("../webpack/webpack.config.dev");
+const webpackDevMiddleware = require("webpack-dev-middleware");
+const webpackHotMiddleware = require("webpack-hot-middleware");
 
-const apiResponse = require("./helpers/apiResponse");
+require('dotenv').config();
 
-var app = express();
-dotenv.config();
+app.set('port',  process.env.APP_PORT || 3000);
+app.set('host',  process.env.APP_HOST || 'localhost');
 
-app.use(cors());
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(cookieParser());
+if (process.env.NODE_ENV === "development") {
+    const compiler = webpack(webpackConfig);
+    app.use(
+        webpackDevMiddleware(compiler, {
+            noInfo: true,
+            publicPath: webpackConfig.output.publicPath,
+        })
+    );
+    app.use(webpackHotMiddleware(compiler));
+}
 
-// Wraps all routes into API route
-app.use("/api", apiRouter);
+// Request logger
+app.use(requestLogger);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    next(createError(404));
+// Landing page
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
-mongoose
-    .connect(process.env.MONGODB_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => {
-        //don't show the log when it is test
-        if (process.env.NODE_ENV !== "test") {
-            console.log("Connected to " + process.env.MONGODB_URL);
-            console.log("App is running ... \n");
-            console.log("Press CTRL + C to stop the process. \n");
-        }
-    })
-    .catch((err) => {
-        console.error("App starting error:", err.message);
-        process.exit(1);
-    });
+// Error Handler Middleware
+app.use(errorHandler.genericErrorHandler);
+app.use(errorHandler.notFound);
+app.use(errorHandler.methodNotAllowed);
 
-app.all("*", function (req, res) {
-    return apiResponse.notFoundResponse(res, "Page not found");
-});
-
-app.use((err, req, res, next) => {
-    if (err.name == "UnauthorizedError") {
-        return apiResponse.unauthorizedResponse(res, err.message);
-    }
-    next();
+app.listen(app.get("port"), app.get("host"), () => {
+    console.log(
+        `Server running at http://${app.get("host")}:${app.get("port")}`
+    );
 });
 
 module.exports = app;

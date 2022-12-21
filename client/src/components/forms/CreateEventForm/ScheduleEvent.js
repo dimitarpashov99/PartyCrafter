@@ -8,19 +8,24 @@ import {
     Typography,
     TextField,
     Button,
+    Stack,
+    Icon,
+    IconButton,
 } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import {
+    AddCircleOutlineOutlined,
+    RemoveCircleOutlineOutlined,
+} from "@mui/icons-material";
 
 function StepOne(props) {
+    const { handleFormChange } = props;
+    const [formState, setFormState] = useState(props.formState);
     const [eventImage, setImage] = useState();
-    const formState = props.formState;
-    const handleFormChange = props.handleFormChange;
     const [selectedFile, setSelectedFile] = useState(formState.eventImage);
     const handleChangeDate = (newValue) => {
-        var eventData = formState;
-        eventData.eventDate = newValue;
-        handleFormChange(eventData);
+        setFormState((current) => ({ ...current, eventDate: newValue }));
     };
     useEffect(() => {
         if (!selectedFile) {
@@ -40,9 +45,12 @@ function StepOne(props) {
             return;
         }
         formState.eventImage = e.target.files[0];
-        handleFormChange(formState);
         setSelectedFile(e.target.files[0]);
     };
+    useEffect(() => {
+        handleFormChange(formState);
+    }, [formState, handleFormChange]);
+
     return (
         <Box>
             <Grid container>
@@ -66,12 +74,13 @@ function StepOne(props) {
                         autoFocus
                         value={formState.eventTitle}
                         onChange={(e) => {
-                            formState.eventTitle = e.target.value;
-                            handleFormChange(formState);
+                            setFormState((current) => ({
+                                ...current,
+                                eventTitle: e.target.value,
+                            }));
                         }}
                     />
-
-                    <Box sx={{ display: "flex", paddingTop: 5 }}>
+                    <Stack direction="row" spacing={2} sx={{ paddingTop: 5 }}>
                         <DateTimePicker
                             label="Event Date"
                             value={formState.eventDate}
@@ -87,27 +96,62 @@ function StepOne(props) {
                                 />
                             )}
                         />
+
+                        <IconButton
+                            onClick={() => {
+                                setFormState((current) => ({
+                                    ...current,
+                                    eventDuration: current.eventDuration--,
+                                }));
+                            }}
+                            variant="outlined"
+                        >
+                            <RemoveCircleOutlineOutlined />
+                        </IconButton>
                         <TextField
                             sx={{ flexGrow: 1 }}
                             type="number"
                             label="Duration (in hours)"
                             inputProps={{ min: 1, pattern: "^[+]?d+([.]d+)?$" }}
-                            value={formState.eventDuration}
+                            value={formState?.eventDuration}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                if (e.target.value > 0)
+                                    setFormState((current) => ({
+                                        ...current,
+                                        eventDuration: e.target.value,
+                                    }));
+                            }}
                         />
-                    </Box>
-                    <FormControlLabel
-                        sx={{ my: 2 }}
-                        control={
-                            <Switch
-                                checked={formState.privateEvent}
-                                onChange={(e) => {
-                                    formState.privateEvent = e.target.checked;
-                                    handleFormChange(formState);
-                                }}
-                            />
-                        }
-                        label="Private Event"
-                    />
+                        <IconButton
+                            onClick={() => {
+                                setFormState((current) => ({
+                                    ...current,
+                                    eventDuration: current.eventDuration + 1,
+                                }));
+                            }}
+                            variant="outlined"
+                        >
+                            <AddCircleOutlineOutlined />
+                        </IconButton>
+                    </Stack>
+                    <Stack direction="row" justifyContent="center">
+                        <FormControlLabel
+                            sx={{ my: 2 }}
+                            control={
+                                <Switch
+                                    checked={formState?.privateEvent}
+                                    onChange={(e) => {
+                                        setFormState((current) => ({
+                                            ...current,
+                                            privateEvent: e.target.checked,
+                                        }));
+                                    }}
+                                />
+                            }
+                            label="Private Event"
+                        />
+                    </Stack>
                 </Grid>
                 <Grid
                     item
@@ -117,17 +161,23 @@ function StepOne(props) {
                         padding: 5,
                     }}
                 >
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Stack direction="column">
                         <Typography variant="body1" color="primary">
                             Event Image
                         </Typography>
                         {selectedFile && (
-                            <Button variant="outlined" color="error">
+                            <Button
+                                variant="outlined"
+                                onClick={() => {
+                                    setImage(undefined);
+                                    setSelectedFile(undefined);
+                                }}
+                                color="error"
+                            >
                                 Change
                             </Button>
                         )}
-                    </Box>
-
+                    </Stack>
                     <Box
                         sx={{
                             display: "none",
@@ -143,41 +193,32 @@ function StepOne(props) {
                             onChange={handleUploadClick}
                         />
                     </Box>
-                    {selectedFile ? (
-                        <Box
-                            sx={{
-                                border: "3px solid",
-                                borderColor: "primary.main",
-                                borderRadius: "12px",
-                            }}
-                        >
+                    <Box
+                        sx={{
+                            border: "3px solid",
+                            borderColor: "primary.main",
+                            borderRadius: "12px",
+                            height: "100%",
+                        }}
+                    >
+                        {selectedFile ? (
                             <img
                                 className="preview-img"
                                 src={eventImage}
                                 alt=""
                             />
-                        </Box>
-                    ) : (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                border: "3px solid",
-                                borderColor: "primary.main",
-                                borderRadius: "12px",
-                                height: "100%",
-                                alignContent: "center",
-                            }}
-                        >
-                            <Button variant="outlined">
+                        ) : (
+                            <Button
+                                variant="outlined"
+                                sx={{ width: "100%", height: "100%" }}
+                            >
                                 <label htmlFor="event-image-file">
                                     <AddPhotoAlternateIcon />
                                     UPLOAD
                                 </label>
                             </Button>
-                        </Box>
-                    )}
+                        )}
+                    </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ padding: 5 }}>
                     <TextField
@@ -187,10 +228,12 @@ function StepOne(props) {
                         multiline
                         fullWidth
                         minRows={5}
-                        value={formState.eventDescription}
+                        value={formState?.eventDescription}
                         onChange={(e) => {
-                            formState.eventDescription = e.target.value;
-                            handleFormChange(formState);
+                            setFormState((current) => ({
+                                ...current,
+                                eventDescription: e.target.value,
+                            }));
                         }}
                     />
                 </Grid>

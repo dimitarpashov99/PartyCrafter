@@ -2,13 +2,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import { TextField, Typography } from "@mui/material";
 export default function GuestList(props) {
     const eventData = props.eventData;
-    const guests = props.guestList;
+    const guests = eventData.guestList;
     const tableAssign = eventData.preferences.assignGuestTables;
     const tableCount = eventData.tableCount;
     const gridView = props.page === "CreateEvent";
     const handleTableChange = props.handleTableChange;
     const tableChange = (ev, params) => {
-        var newGuestList = guests.map((guest) => {
+        const newGuestList = guests.map((guest) => {
             if (guest.id === params.row.id) {
                 return {
                     ...guest,

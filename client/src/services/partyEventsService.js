@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3001/api/events";
+const API_URL = "http://localhost:3001/api/events/";
 
 const searchEventByCode = (eventCode) => {
     return axios.get(API_URL, {
@@ -17,8 +17,8 @@ const getOpenPartyEvents = (eventCode) => {
     });
 };
 
-const createPartyEvent = (user, partyEventData) => {
-    return axios.post(API_URL, {
+const createPartyEvent = (partyEventData) => {
+    return axios.post(API_URL + 'create', {
         partyEventData: partyEventData,
     });
 };

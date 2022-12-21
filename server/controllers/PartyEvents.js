@@ -34,25 +34,42 @@ function getByCode(req, res, next) {
     return next();
 }
 
-function create(req, res, next) {
-    var newEvent = new Event({
-        title: req.body.title,
-        description: req.body.title,
-        type: req.body.partyType,
-        privateAccess: req.body.isPrivate,
-        date: req.body.eventDate,
-        preferences: {
-            musicPreference: false,
-            foodPreference: false,
-            allowRequests: false,
-            allowPhotoUploads: false,
-            allowChat: false,
-            allowGuestInvites: false,
-        },
-    });
-
-    newEvent.save();
-    return next();
+function create(req, res) {
+    const data = req.body?.partyEventData;
+    if (data) {
+        const newEvent = new Event({
+            title: data.eventTitle,
+            description: data.eventDescription,
+            address: data.eventAddress,
+            type: data?.partyType || 'default',
+            privateAccess: data.privateEvent,
+            date: data.eventDate,
+            preferences: {
+                musicPreference: data.preferences.musicPreference,
+                foodPreference: data.preferences.foodPreference,
+                allowRequests: data.preferences.allowRequests,
+                allowPhotoUploads: data.preferences.allowPhotoUploads,
+                allowChat: data.preferences.allowChat,
+                allowGuestInvites: data.preferences.allowGuestInvites,
+                assignGuestTables: data.preferences.assignGuestTables,
+            },
+            musicPlaylist: data.chosenPlaylist,
+            foodMenu: data.chosenFoodMenu,
+            tableCount: data.tableCount,
+            guestList: data.guestList,
+            code: crypto.randomBytes(7).toString("hex").toUpperCase(),
+        });
+        newEvent
+            .create()
+            .then(() => {
+                apiResponse.successResponse(res, "Event created successfuly");
+            })
+            .catch(() => {
+                apiResponse.errorResponse(res, "Event couldn't be created");
+            });
+    } else {
+        apiResponse.errorResponse(res, JSON.stringify(req.body));
+    }
 }
 
 function remove(req, res, next) {
