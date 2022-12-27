@@ -1,7 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const catchAsync = require("../utils/catchAsync");
 
-const authService = require("../services/auth");
+const authService = require("../services/authentication");
 const handleValidation = require("../middlewares/handleValidation");
 const register = [
     body("firstName")
