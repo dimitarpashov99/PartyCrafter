@@ -1,35 +1,50 @@
 const express = require("express");
+const router = express.Router();
+
 const usersController = require("../controllers/Users");
 const foodMenusController = require("../controllers/FoodMenus");
 const playListController = require("../controllers/MusicPlaylists");
-var router = express.Router();
+const { authenticate } = require("../middlewares/authenticate");
 
-router.get("/profile/:id", usersController.getUserProfile);
+router.get("/profile/:id", authenticate, usersController.getUserProfile);
 
-router.post("/profile/changePassword", usersController.changePassword);
-
-router.post("/profile/changeEmail", usersController.changeEmail);
-
-router
-    .route("/custom/menus/")
-    .get(foodMenusController.getAllFoodMenus)
-    .post(foodMenusController.createCustomFoodMenu);
+router.post(
+    "/profile/changePassword",
+    authenticate,
+    usersController.changePassword
+);
 
 router
-    .route("/custom/menus/:menuId")
-    .get(foodMenusController.getFoodMenuById)
-    .put(foodMenusController.updateCustomFoodMenu)
-    .delete(foodMenusController.removeCustomFoodMenu);
+    .route("/profile/addressbook/")
+    .get(authenticate, usersController.getAddressBook)
+    .post(authenticate, usersController.createAddress);
 
 router
-    .route("/custom/playlists")
-    .get(playListController.getAllMusicPlaylists)
-    .post(playListController.createCustomMusicPlaylist);
+    .route("/profile/addressbook/:id")
+    .get(authenticate, usersController.getAddressById)
+    .put(authenticate, usersController.editCustomAddress)
+    .delete(authenticate, usersController.removeCustomAddress);
 
 router
-    .route("/custom/playlists/:playlistId")
-    .get(playListController.getMusicPlaylistById)
-    .put(playListController.updateCustomMusicPlaylist)
-    .delete(playListController.removeCustomMusicPlaylist);
+    .route("/profile/menus/")
+    .get(authenticate, foodMenusController.getFoodMenusByUserId)
+    .post(authenticate, foodMenusController.createCustomFoodMenu);
+
+router
+    .route("/profile/menus/:menuId")
+    .get(authenticate, foodMenusController.getFoodMenuById)
+    .put(authenticate, foodMenusController.updateCustomFoodMenu)
+    .delete(authenticate, foodMenusController.removeCustomFoodMenu);
+
+router
+    .route("/profile/playlists")
+    .get(authenticate, playListController.getMusicPlaylistsByUserId)
+    .post(authenticate, playListController.createCustomMusicPlaylist);
+
+router
+    .route("/profile/playlists/:playlistId")
+    .get(authenticate, playListController.getMusicPlaylistById)
+    .put(authenticate, playListController.updateCustomMusicPlaylist)
+    .delete(authenticate, playListController.removeCustomMusicPlaylist);
 
 module.exports = router;

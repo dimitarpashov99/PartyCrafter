@@ -45,16 +45,17 @@ export default class LoginForm extends React.Component {
         event.preventDefault();
         this.showError(false);
 
-        AuthService.login(this.state.email, this.state.password).then(
-            (response) => {
-                if (response?.data?.error) {
-                    this.showError(true);
-                } else {
-                    this.navigation("/home");
-                    this.handleLogin(response?.data);
-                }
-            }
-        );
+        AuthService.login(this.state.email, this.state.password)
+            .then(({ data }) => {
+                this.navigation("/home");
+                this.handleLogin({
+                    success: true,
+                    data: data?.data,
+                });
+            })
+            .catch(() => {
+                this.showError(true);
+            });
     };
 
     showError = (value) => {

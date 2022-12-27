@@ -1,53 +1,66 @@
-const User = require("../models/user");
+const catchAsync = require("../utils/catchAsync");
 
-const apiResponse = require("../helpers/apiResponse");
+const userService = require("../services/users");
+const addressService = require("../services/address");
+const ApiError = require("../utils/APIError");
+const { StatusCodes } = require("http-status-codes");
+const { validationResult, body } = require("express-validator");
 
-const getUserProfile = (req, res, next) => {
-    try {
-        const requestedId = req.params.id;
-        const user = User.find({
-            _id: requestedId,
-        });
-
-        res.status(200);
+const getUserProfile = [
+    catchAsync(async (req, res) => {
+        const userId = req.params.id;
+        if (!userId) {
+            throw new ApiError(StatusCodes.BAD_REQUEST, "Missing id parameter");
+        }
+        const result = await userService.getUserProfile(userId);
         res.json({
-            user: user,
+            profile: result,
         });
-    } catch (err) {
-        apiResponse.errorResponse(res, 'Service error');
-    }
-    return next();
-};
+    }),
+];
 
-const changeEmail = (req, res, next) => {
-    try {
-        User.findOneAndUpdate(
-            {
-                _id: req.body.userId,
-            },
-            {
-                email: req.body.newEmail,
-            },
-            (err) => {
-                if (err) {
-                    apiResponse.errorResponse(res, "User not found!");
-                } else {
-                    apiResponse.successResponse(res, "Email changed!");
-                }
-            }
-        );
-    } catch (err) {
-        apiResponse.errorResponse(res, 'Service error');
-    }
-    return next();
-};
+const getAddressBook = [
+    catchAsync(async (req, res) => {
+        const userId = req.params.id;
+        const result = await addressService.getAddressBook(userId);
+        res.json({
+            profile: result,
+        });
+    }),
+];
 
-const changePassword = (req, res, next) => {
-    return next();
-};
-
+const createAddress = [
+    body("address").isEmpty().withMessage("Request must contain address"),
+    catchAsync(async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.json({ error: errors.array() });
+        }
+        const address = req.body.address;
+        const result = await addressService.createAddress(address);
+        return res.json(result);
+    }),
+];
+const getAddressById = [
+    catchAsync(async (req, res, next) => {
+        return next();
+    }),
+];
+const editCustomAddress = [
+    catchAsync(async (req, res, next) => {
+        return next();
+    }),
+];
+const removeCustomAddress = [
+    catchAsync(async (req, res, next) => {
+        return next();
+    }),
+];
 module.exports = {
     getUserProfile,
-    changeEmail,
-    changePassword,
+    getAddressBook,
+    createAddress,
+    getAddressById,
+    editCustomAddress,
+    removeCustomAddress,
 };

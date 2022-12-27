@@ -8,9 +8,12 @@ export default function Login() {
     const navigation = useNavigate();
     const { setAuth } = AuthConsumer();
 
-    const handleLogin = (data) => {
-        setAuth({ authenticated: true, profile: data.profile });
+    const handleLogin = (result) => {
+        if (result.success) {
+            setAuth({ authenticated: true, profile: result?.data?.profile });
+        }
     };
+
     return (
         <Container>
             <LoginForm navigation={navigation} handleLogin={handleLogin} />

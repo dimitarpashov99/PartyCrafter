@@ -1,44 +1,50 @@
-import axios from "axios";
-const API_URL = "http://localhost:3001/api/events/";
-
+import { apiCall } from "./utils";
 const searchEventByCode = (eventCode) => {
-    return axios.get(API_URL, {
+    return apiCall().get("events", {
         params: {
             code: eventCode,
         },
     });
 };
 
-const getOpenPartyEvents = (eventCode) => {
-    return axios.get(API_URL, {
+const getOpenPartyEvents = (location) => {
+    return apiCall().get("events/public", {
         params: {
-            code: eventCode,
+            location: location,
         },
     });
 };
 
 const createPartyEvent = (partyEventData) => {
-    return axios.post(API_URL + 'create', {
+    return apiCall().post("events", {
         partyEventData: partyEventData,
     });
 };
 
 const updatePartyEvent = (eventCode, partyEventData) => {
-    return axios.put(API_URL, {
-        code: eventCode,
+    return apiCall().put("events", {
+        params: {
+            code: eventCode,
+        },
         partyEventData: partyEventData,
     });
 };
 
 const cancelPartyEvent = (eventCode) => {
-    return axios.delete(API_URL, {
+    return apiCall().put("events", {
         params: {
             code: eventCode,
         },
     });
 };
 
-// const getSuggestedMusicPlaylists = (user) => {};
+const deletePartyEvent = (eventCode) => {
+    return apiCall().delete("events", {
+        params: {
+            code: eventCode,
+        },
+    });
+};
 
 const sendMusicRequest = (user) => {};
 
@@ -48,6 +54,6 @@ export {
     createPartyEvent,
     updatePartyEvent,
     cancelPartyEvent,
-    // getSuggestedMusicPlaylists,
+    deletePartyEvent,
     sendMusicRequest,
 };

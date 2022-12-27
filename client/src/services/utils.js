@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiCall = (controller) => {
+const apiCall = () => {
     return axios.create({
         baseURL: process.env.SERVER_API_DEVELOPMENT,
         headers: {

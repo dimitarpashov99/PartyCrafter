@@ -22,7 +22,7 @@ const config = {
         new webpack.NoEmitOnErrorsPlugin(),
         new Dotenv(),
         new MiniCssExtractPlugin({
-            filename: "[name].[contenthash].css",
+            filename: "[name].css",
             chunkFilename: "[id].[contenthash].css",
         }),
     ],
@@ -45,11 +45,37 @@ const config = {
             },
             {
                 test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 1,
+                            modules: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.s[c]ss$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: "",
+                        },
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 1,
+                            modules: true,
+                            // url: false,
+                            // sourceMap: true,
+                        },
+                    },
+                    "sass-loader",
+                ],
             },
         ],
     },

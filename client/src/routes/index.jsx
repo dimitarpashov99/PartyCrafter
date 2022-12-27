@@ -1,12 +1,7 @@
 import React from "react";
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-    Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home";
-import AboutUs from "../pages/aboutus";
+import ContactUs from "../pages/contactus";
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 
@@ -39,7 +34,7 @@ const AppRoutes = () => {
                             </Route>
                             <Route path="join" element={<JoinEvent />} />
                         </Route>
-                        <Route path="aboutus" element={<AboutUs />} />
+                        <Route path="contactus" element={<ContactUs />} />
                         <Route path="login" element={<Login />} />
                         <Route path="register" element={<Register />} />
                         <Route path="*" element={<PageNotFound />} />

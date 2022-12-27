@@ -16,4 +16,9 @@ const userSchema = mongoose.Schema({
 userSchema.virtual("fullName").get(function () {
     return this.firstName + " " + this.lastName;
 });
+
+userSchema.methods.isEmailTaken = async (email) => {
+    const user = await this.findOne({ email: email });
+    return !!user;
+};
 module.exports = mongoose.model("User", userSchema, "users");

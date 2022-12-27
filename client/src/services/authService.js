@@ -1,7 +1,7 @@
 import { apiCall, urlencodeFormData } from "./utils";
 
 const register = async (formData) => {
-    return await apiCall
+    return await apiCall()
         .post("signup", urlencodeFormData(formData))
         .then((response) => {
             return response.data;
@@ -9,17 +9,18 @@ const register = async (formData) => {
 };
 
 const login = async (email, password) => {
-    return await apiCall.post("signin", {
+    return await apiCall().post("auth/signin", {
         email,
         password,
     });
 };
 
 const logout = async () => {
-    localStorage.removeItem("user");
-    return await apiCall.post("signout").then((response) => {
-        return response.data;
-    });
+    return await apiCall()
+        .post("auth/signout")
+        .then((response) => {
+            return response.data;
+        });
 };
 
 const AuthService = {

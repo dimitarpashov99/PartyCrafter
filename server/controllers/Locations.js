@@ -1,64 +1,74 @@
 const Locations = require("../models/location");
 
 const apiResponse = require("../helpers/apiResponse");
+const catchAsync = require("../utils/catchAsync");
 
-const createLocation = (req, res, next) => {
-    const newLocation = new Locations({
-        name: req.body.locationName,
-        details: req.body.locationName,
-        address: req.body.address,
-        city: req.body.city,
-        lng: req.body.locationLng,
-        lat: req.body.locationLat,
-    });
+const createLocation = [
+    catchAsync(async (req, res, next) => {
+        const newLocation = new Locations({
+            name: req.body.locationName,
+            details: req.body.locationName,
+            address: req.body.address,
+            city: req.body.city,
+            lng: req.body.locationLng,
+            lat: req.body.locationLat,
+        });
 
-    newLocation.save(function (err) {
-        if (err) {
-            apiResponse.errorResponse(res, "Location cannot be created");
-        } else {
-            apiResponse.successResponse(res, "Location created");
-        }
-    });
-    next();
-};
-
-const getById = (req, res, next) => {
-    Locations.findOne({
-        _id: res.body.locationId,
-    }).then((doc) => {
-        if (!doc) {
-            apiResponse.notFoundResponse(res, "Location not found");
-        } else {
-            apiResponse.successResponseWithData(
-                res,
-                "Location found",
-                doc.toJSON()
-            );
-        }
-    });
-    next();
-};
-
-const removeLocation = (req, res, next) => {
-    Locations.findOneAndDelete(
-        {
-            _id: req.locationId,
-        },
-        (err, doc) => {
+        newLocation.save(function (err) {
             if (err) {
-                apiResponse.errorResponse(res, "Location cannot be removed");
+                apiResponse.errorResponse(res, "Location cannot be created");
             } else {
-                if (!doc) {
-                    apiResponse.notFoundResponse(res, "Location not found");
-                } else {
-                    apiResponse.successResponse(
+                apiResponse.successResponse(res, "Location created");
+            }
+        });
+        next();
+    }),
+];
+
+const getById = [
+    catchAsync(async (req, res, next) => {
+        Locations.findOne({
+            _id: res.body.locationId,
+        }).then((doc) => {
+            if (!doc) {
+                apiResponse.notFoundResponse(res, "Location not found");
+            } else {
+                apiResponse.successResponseWithData(
+                    res,
+                    "Location found",
+                    doc.toJSON()
+                );
+            }
+        });
+        next();
+    }),
+];
+
+const removeLocation = [
+    catchAsync(async (req, res, next) => {
+        Locations.findOneAndDelete(
+            {
+                _id: req.locationId,
+            },
+            (err, doc) => {
+                if (err) {
+                    apiResponse.errorResponse(
                         res,
-                        "Location removed successfully"
+                        "Location cannot be removed"
                     );
+                } else {
+                    if (!doc) {
+                        apiResponse.notFoundResponse(res, "Location not found");
+                    } else {
+                        apiResponse.successResponse(
+                            res,
+                            "Location removed successfully"
+                        );
+                    }
                 }
             }
-        }
-    );
-    next();
-};
+        );
+        next();
+    }),
+];
 module.exports = { createLocation, getById, removeLocation };

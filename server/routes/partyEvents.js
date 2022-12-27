@@ -1,10 +1,11 @@
 var express = require("express");
 var router = express.Router();
-
 const eventsController = require("../controllers/PartyEvents");
 
-router.post('/create', eventsController.create);
-router.get("/:id", eventsController.getById);
+const { authenticate } = require("../middlewares/authenticate");
+
+router.post("/", authenticate, eventsController.create);
+router.get("/:id", authenticate, eventsController.getById);
 router
     .route("/:code")
     .get(eventsController.getByCode)

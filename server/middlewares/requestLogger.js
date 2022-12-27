@@ -1,7 +1,6 @@
 const logger = require("../config/winston");
 
 module.exports = (req, res, next) => {
-    // TODO response body
     let requestBody =
         typeof req.body !== "string" ? JSON.stringify(req.body) : req.body;
     logger.log(

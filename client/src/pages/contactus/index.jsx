@@ -1,5 +1,5 @@
 import React from "react";
-const AboutUs = () => {
+const ContactUs = () => {
   return <div>About Us</div>;
 };
-export default AboutUs;
+export default ContactUs;
