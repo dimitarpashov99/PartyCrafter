@@ -1,7 +1,7 @@
 const Event = require("../models/partyEvent");
 
-const apiResponse = require("../utils/apiResponse");
 const catchAsync = require("../utils/catchAsync");
+const partyEventsService = require('../services/party-events')
 
 const getById = [
     catchAsync(async (req, res, next) => {
@@ -45,47 +45,8 @@ const getByCode = [
 
 const create = [
     catchAsync(async (req, res) => {
-        try {
             const data = req.body?.partyEventData;
-
-            const newEvent = new Event({
-                title: data.eventTitle,
-                description: data.eventDescription,
-                address: data.eventAddress,
-                type: data?.partyType || "default",
-                hostId: "testId",
-                privateAccess: data.privateEvent,
-                date: new Date(data.eventDate),
-                preferences: {
-                    musicPreference: data.preferences.musicPreference,
-                    foodPreference: data.preferences.foodPreference,
-                    allowRequests: data.preferences.allowRequests,
-                    allowPhotoUploads: data.preferences.allowPhotoUploads,
-                    allowChat: data.preferences.allowChat,
-                    allowGuestInvites: data.preferences.allowGuestInvites,
-                    assignGuestTables: data.preferences.assignGuestTables,
-                },
-                musicPlaylist: data.chosenPlaylist,
-                foodMenu: data.chosenFoodMenu,
-                tableCount: data.tableCount,
-                guestList: data.guestList,
-                code: "002", // crypto.randomBytes(7).toString("hex"),
-            });
-
-            newEvent.save((err) => {
-                if (err) {
-                    console.log(err);
-                    apiResponse.errorResponse(res, "Event couldn't be created");
-                } else {
-                    apiResponse.successResponse(
-                        res,
-                        "Event created successfuly"
-                    );
-                }
-            });
-        } catch (e) {
-            apiResponse.errorResponse(res, JSON.stringify(req.body));
-        }
+            
     }),
 ];
 

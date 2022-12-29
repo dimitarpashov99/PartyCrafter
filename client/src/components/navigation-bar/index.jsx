@@ -19,10 +19,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useTheme } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-import ColorModeContext from "../../contexts/colorModeContext";
+import { ColorModeContext } from "../../contexts";
 import DarkModeSwitch from "./DarkModeSwitch";
 
-import { AuthConsumer } from "../../contexts/authContext";
+import { AuthConsumer } from "../../contexts";
 import { Logout } from "@mui/icons-material";
 import LogoutDiag from "../logout";
 
@@ -171,19 +171,25 @@ const NavBar = () => {
                                         vertical: "bottom",
                                     }}
                                 >
-                                    <MenuItem>
-                                        <Typography
-                                            sx={{
-                                                display: {
-                                                    xs: "none",
-                                                    md: "block",
-                                                },
-                                            }}
-                                        >
-                                            <Avatar />
-                                            My Profile
-                                        </Typography>
-                                    </MenuItem>
+                                    <NavLink to="/account">
+                                        {({ isActive }) =>
+                                            !isActive && (
+                                                <MenuItem>
+                                                    <Typography
+                                                        sx={{
+                                                            display: {
+                                                                xs: "none",
+                                                                md: "block",
+                                                            },
+                                                        }}
+                                                    >
+                                                        <Avatar />
+                                                        My Profile
+                                                    </Typography>
+                                                </MenuItem>
+                                            )
+                                        }
+                                    </NavLink>
                                     <MenuItem onClick={handleLogout}>
                                         <Typography>
                                             <Logout />

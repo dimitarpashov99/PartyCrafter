@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { AuthConsumer } from "../../contexts/authContext";
+import { AuthConsumer } from "../../contexts";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";

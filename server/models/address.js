@@ -6,7 +6,7 @@ const address = mongoose.Schema({
     address1: { type: String, required: false },
     address2: { type: String, required: true },
     city: { type: Date },
-    country: { type: Number },
+    country: { type: String },
 });
 
 module.exports = mongoose.model("Address", address);

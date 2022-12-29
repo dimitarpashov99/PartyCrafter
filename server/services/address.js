@@ -23,9 +23,28 @@ const getAddressBook = async (userId) => {
         if (err) {
             throw new ApiError(StatusCodes.NOT_FOUND, err.message);
         } else {
-            return { addressBook: doc };
+            return doc;
         }
     });
 };
 
-module.exports = { getAddressById, getAddressBook };
+const createAddress = async (userId, data) => {
+    const userAddressBook = await getAddressBook(userId);
+    return userAddressBook;
+};
+
+const updateAddress = async (userId, addressId, data) => {
+    const userAddressBook = await getAddressBook(userId);
+    return userAddressBook;
+};
+const deleteAddress = async (userId, addressId) => {
+    const userAddressBook = await getAddressBook(userId);
+    return userAddressBook;
+};
+module.exports = {
+    getAddressById,
+    getAddressBook,
+    createAddress,
+    updateAddress,
+    deleteAddress,
+};

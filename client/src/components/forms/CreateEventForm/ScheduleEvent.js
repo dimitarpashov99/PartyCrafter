@@ -25,7 +25,7 @@ function StepOne(props) {
     const [eventImage, setImage] = useState();
     const [selectedFile, setSelectedFile] = useState(formState.eventImage);
     const handleChangeDate = (newValue) => {
-        setFormState((current) => ({ ...current, eventDate: newValue }));
+        setFormState((current) => ({ ...current, startingDate: newValue }));
     };
     useEffect(() => {
         if (!selectedFile) {
@@ -72,18 +72,18 @@ function StepOne(props) {
                         required
                         autoComplete="off"
                         autoFocus
-                        value={formState.eventTitle}
+                        value={formState.title}
                         onChange={(e) => {
                             setFormState((current) => ({
                                 ...current,
-                                eventTitle: e.target.value,
+                                title: e.target.value,
                             }));
                         }}
                     />
                     <Stack direction="row" spacing={2} sx={{ paddingTop: 5 }}>
                         <DateTimePicker
                             label="Event Date"
-                            value={formState.eventDate}
+                            value={formState.startingDate}
                             onChange={handleChangeDate}
                             minDate={new Date()}
                             ampm={false}
@@ -101,7 +101,7 @@ function StepOne(props) {
                             onClick={() => {
                                 setFormState((current) => ({
                                     ...current,
-                                    eventDuration: current.eventDuration--,
+                                    durationInHours: current.durationInHours--,
                                 }));
                             }}
                             variant="outlined"
@@ -113,13 +113,13 @@ function StepOne(props) {
                             type="number"
                             label="Duration (in hours)"
                             inputProps={{ min: 1, pattern: "^[+]?d+([.]d+)?$" }}
-                            value={formState?.eventDuration}
+                            value={formState?.durationInHours}
                             onChange={(e) => {
                                 e.preventDefault();
                                 if (e.target.value > 0)
                                     setFormState((current) => ({
                                         ...current,
-                                        eventDuration: e.target.value,
+                                        durationInHours: e.target.value,
                                     }));
                             }}
                         />
@@ -127,7 +127,7 @@ function StepOne(props) {
                             onClick={() => {
                                 setFormState((current) => ({
                                     ...current,
-                                    eventDuration: current.eventDuration + 1,
+                                    durationInHours: current.durationInHours + 1,
                                 }));
                             }}
                             variant="outlined"
@@ -228,11 +228,11 @@ function StepOne(props) {
                         multiline
                         fullWidth
                         minRows={5}
-                        value={formState?.eventDescription}
+                        value={formState?.description}
                         onChange={(e) => {
                             setFormState((current) => ({
                                 ...current,
-                                eventDescription: e.target.value,
+                                description: e.target.value,
                             }));
                         }}
                     />

@@ -142,7 +142,7 @@ function StepThree(props) {
     };
     useEffect(() => {
         if (
-            formState.preferences.musicPreference &&
+            formState.preferences.music &&
             !formState.chosenPlaylist
         ) {
             setPlaylist(demoPlayLists[0]);
@@ -186,10 +186,10 @@ function StepThree(props) {
                             control={
                                 <Switch
                                     checked={
-                                        formState.preferences.musicPreference
+                                        formState.preferences.music
                                     }
                                     onChange={(e) => {
-                                        formState.preferences.musicPreference =
+                                        formState.preferences.music =
                                             e.target.checked;
                                         handleFormChange(formState);
                                     }}
@@ -197,7 +197,7 @@ function StepThree(props) {
                             }
                             label="Party Music"
                         />
-                        {formState.preferences.musicPreference && (
+                        {formState.preferences.music && (
                             <React.Fragment>
                                 <Box>
                                     <Button
@@ -331,10 +331,10 @@ function StepThree(props) {
                             control={
                                 <Switch
                                     checked={
-                                        formState.preferences.foodPreference
+                                        formState.preferences.foodMenu
                                     }
                                     onChange={(e) => {
-                                        formState.preferences.foodPreference =
+                                        formState.preferences.foodMenu =
                                             e.target.checked;
                                         handleFormChange(formState);
                                     }}
@@ -342,7 +342,7 @@ function StepThree(props) {
                             }
                             label="Foods & Drinks"
                         />
-                        {formState.preferences.foodPreference && (
+                        {formState.preferences.foodMenu && (
                             <Box sx={{ paddingTop: 5, height: "100%" }}>
                                 <Typography variant="body1">Menu:</Typography>
                                 <FormControl fullWidth>

@@ -13,6 +13,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+
 import { LockOutlined } from "@mui/icons-material";
 import AuthService from "../../../services/authService";
 
@@ -29,7 +30,6 @@ export default class LoginForm extends React.Component {
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.showError = this.showError.bind(this);
-        this.navigation = props.navigation;
         this.handleLogin = props.handleLogin;
     }
 
@@ -47,10 +47,9 @@ export default class LoginForm extends React.Component {
 
         AuthService.login(this.state.email, this.state.password)
             .then(({ data }) => {
-                this.navigation("/home");
                 this.handleLogin({
                     success: true,
-                    data: data?.data,
+                    data: data,
                 });
             })
             .catch(() => {

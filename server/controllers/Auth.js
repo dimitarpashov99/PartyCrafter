@@ -39,18 +39,7 @@ const register = [
     }),
 ];
 
-const login = [
-    body("email")
-        .not()
-        .isEmpty()
-        .trim()
-        .withMessage("Request must contain email."),
-    body("password")
-        .not()
-        .isEmpty()
-        .trim()
-        .withMessage("Request must contain password."),
-    handleValidation,
+const login = 
     catchAsync(async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -59,7 +48,7 @@ const login = [
         const { email, password } = req.body;
         const result = await authService.login(email, password);
         res.json(result);
-    }),
-];
+    })
+;
 
 module.exports = { register, login };

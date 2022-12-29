@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
     Backdrop,
     Box,
@@ -14,27 +15,30 @@ import {
     StepConnector,
     Typography,
 } from "@mui/material";
+
 import { StepOne, StepTwo, StepThree } from "./FormSteps";
 import EventPreview from "../../partyevent/EventPreview";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CreateFoodMenuForm from "../CreateFoodMenuForm/CreateFoodMenuForm";
 import { createPartyEvent } from "../../../services/partyEventsService";
+
 export default class CreateEvent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             activeStep: props.activeStep || 1,
             eventData: {
-                eventTitle: "",
-                eventDescription: "",
-                eventAddress: "",
+                title: "",
+                description: "",
+                address: {},
                 privateEvent: false,
-                eventDate: new Date(),
-                eventDuration: 0,
+                startingDate: new Date(),
+                durationInHours: 0,
                 preferences: {
-                    musicPreference: false,
-                    foodPreference: false,
+                    music: false,
+                    foodMenu: false,
+                    guestList: false,
                     allowRequests: false,
                     allowPhotoUploads: false,
                     allowChat: false,

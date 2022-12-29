@@ -1,6 +1,6 @@
 const accountTabs = [
     {
-        id: "overview",
+        id: "profile",
         label: "Profile",
     },
     {

@@ -5,6 +5,9 @@ const apiCall = () => {
         baseURL: process.env.SERVER_API_DEVELOPMENT,
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${
+                localStorage.getItem("access_token") || ""
+            }`,
         },
     });
 };

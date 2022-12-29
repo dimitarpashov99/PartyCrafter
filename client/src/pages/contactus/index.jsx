@@ -1,5 +1,11 @@
+import { Container } from "@mui/material";
 import React from "react";
+import ContactForm from "../../components/forms/ContactForm";
 const ContactUs = () => {
-  return <div>About Us</div>;
+    return (
+        <Container>
+            <ContactForm />
+        </Container>
+    );
 };
 export default ContactUs;

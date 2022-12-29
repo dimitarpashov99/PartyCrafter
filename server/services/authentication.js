@@ -1,36 +1,41 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const { createTokens } = require("../utils/authHelper");
 const ApiError = require("../utils/APIError");
+const jwt = require("jsonwebtoken");
+
+const generateToken = (user) => {
+    return jwt.sign(
+        {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+        },
+        process.env.TOKEN_SECRET_KEY
+    );
+};
 
 const login = async (email, password) => {
-    return await User.findOne({ email: email })
-        .lean()
-        .then((user) => {
-            if (!user) {
-                throw new ApiError(StatusCodes.NOT_FOUND, "User Doesn't Exist");
-            } else {
-                const dbPassword = user.passwordHash;
-                bcrypt.compare(password, dbPassword).then((match) => {
-                    if (!match) {
-                        throw new ApiError(
-                            StatusCodes.NOT_FOUND,
-                            "Wrong Email and Password Combination!"
-                        );
-                    } else {
-                        const accessToken = createTokens(user);
-                        return {
-                            profile: {
-                                firstName: user.firstName,
-                                lastName: user.lastName,
-                            },
-                            accessToken: accessToken,
-                        };
-                    }
-                });
-            }
-        });
+    const user = await User.findOne({ email: email });
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "User Doesn't Exist");
+    }
+    const match = await bcrypt.compare(password, user.passwordHash);
+    if (!match) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            "Wrong Email and Password Combination!",
+            false
+        );
+    }
+    const accessToken = generateToken(user);
+    return {
+        profile: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+        },
+        accessToken: accessToken,
+    };
 };
 
 const register = async (data) => {

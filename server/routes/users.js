@@ -4,15 +4,22 @@ const router = express.Router();
 const usersController = require("../controllers/Users");
 const foodMenusController = require("../controllers/FoodMenus");
 const playListController = require("../controllers/MusicPlaylists");
-const { authenticate } = require("../middlewares/authenticate");
-
-router.get("/profile/:id", authenticate, usersController.getUserProfile);
-
-router.post(
-    "/profile/changePassword",
+const authenticate  = require("../middlewares/authenticate");
+const { body } = require("express-validator");
+const handleValidation = require("../middlewares/handleValidation");
+router.get(
+    "/profile/:id",
     authenticate,
-    usersController.changePassword
+    body("address").isEmpty().withMessage("Request must contain address"),
+    handleValidation,
+    usersController.getUserProfile
 );
+
+// router.post(
+//     "/profile/changePassword",
+//     authenticate,
+//     usersController.changePassword
+// );
 
 router
     .route("/profile/addressbook/")

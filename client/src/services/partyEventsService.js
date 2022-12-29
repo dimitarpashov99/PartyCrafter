@@ -1,6 +1,6 @@
 import { apiCall } from "./utils";
-const searchEventByCode = (eventCode) => {
-    return apiCall().get("events", {
+const searchEventByCode = async (eventCode) => {
+    return await apiCall().get("events", {
         params: {
             code: eventCode,
         },

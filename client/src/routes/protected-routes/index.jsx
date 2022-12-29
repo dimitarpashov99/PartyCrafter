@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { AuthConsumer } from "../../contexts/authContext";
+import { AuthConsumer } from "../../contexts";
 
 const ProtectedRoutes = () => {
     const { auth } = AuthConsumer();

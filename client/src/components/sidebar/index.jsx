@@ -2,11 +2,13 @@ import React from "react";
 import {
     Box,
     Divider,
+    Icon,
     Stack,
     Toolbar,
     Tooltip,
     Typography,
 } from "@mui/material";
+import ContactPageIcon from "@mui/icons-material/ContactPage";
 
 import HomeIcon from "@mui/icons-material/Home";
 import EventIcon from "@mui/icons-material/Event";
@@ -16,15 +18,21 @@ import { NavLink } from "react-router-dom";
 const navLinks = [
     {
         id: "home",
-        icon: <HomeIcon color="primary" />,
+        icon: HomeIcon,
         label: "Home",
         link: "/home",
     },
     {
         id: "events",
-        icon: <EventIcon color="primary" />,
+        icon: EventIcon,
         label: "Events",
         link: "/events",
+    },
+    {
+        id: "contactus",
+        icon: ContactPageIcon,
+        label: "Contact us",
+        link: "/contactus",
     },
 ];
 
@@ -56,7 +64,11 @@ const SideBar = () => {
                 spacing={2}
                 divider={<Divider />}
                 direction={{ md: "column" }}
-                sx={{ flexGrow: { xs: 0, md: 1 }, justifyContent: "center" , textAlign:'center'}}
+                sx={{
+                    flexGrow: { xs: 0, md: 1 },
+                    justifyContent: "center",
+                    textAlign: "center",
+                }}
             >
                 {navLinks.map((navLink) => {
                     return (
@@ -67,13 +79,27 @@ const SideBar = () => {
                                 placement="right"
                             >
                                 <NavLink to={navLink.link} className="nav-link">
-                                    <Typography
-                                        variant="h4"
-                                        color="inherit"
-                                        component="div"
-                                    >
-                                        {navLink.icon}
-                                    </Typography>
+                                    {({ isActive }) => (
+                                        <Typography
+                                            variant="h4"
+                                            color="inherit"
+                                            component="div"
+                                        >
+                                            <Icon
+                                                component={navLink.icon}
+                                                color={
+                                                    isActive
+                                                        ? "primary"
+                                                        : "disabled"
+                                                }
+                                                fontSize={
+                                                    isActive
+                                                        ? "large"
+                                                        : "medium"
+                                                }
+                                            ></Icon>
+                                        </Typography>
+                                    )}
                                 </NavLink>
                             </Tooltip>
                         </Box>

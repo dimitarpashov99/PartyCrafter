@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const roles = ["user", "admin"];
+const roles = ["user", "organizer", "admin"];
+
 const userSchema = mongoose.Schema({
     id: { type: String },
     firstName: { type: String, required: true },

@@ -5,14 +5,15 @@ import ContactUs from "../pages/contactus";
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 
-import Layout from "../layouts/Layout";
-import PageNotFound from "../components/PageNotFound";
+import Layout from "../layouts";
+import PageNotFound from "../components/page-not-found";
 import Events from "../pages/PCEvents";
 import CreateEvent from "../pages/PCEvents/CreateEvent";
 import JoinEvent from "../pages/PCEvents/JoinEvent";
-import { AuthProvider } from "../contexts/authContext";
+import { AuthProvider } from "../contexts";
 
 import ProtectedRoutes from "./protected-routes";
+import AccountPage from "../pages/account";
 
 const AppRoutes = () => {
     return (
@@ -25,7 +26,7 @@ const AppRoutes = () => {
                             element={<Navigate to="/home" replace />}
                         />
                         <Route path="home" element={<Home />} />
-                        <Route path="events" element={<Events />}>
+                        <Route path="events">
                             <Route element={<ProtectedRoutes />}>
                                 <Route
                                     path="create"
@@ -37,6 +38,12 @@ const AppRoutes = () => {
                         <Route path="contactus" element={<ContactUs />} />
                         <Route path="login" element={<Login />} />
                         <Route path="register" element={<Register />} />
+                        <Route element={<ProtectedRoutes />}>
+                            <Route
+                                path="account"
+                                element={<AccountPage />}
+                            ></Route>
+                        </Route>
                         <Route path="*" element={<PageNotFound />} />
                     </Route>
                 </Routes>

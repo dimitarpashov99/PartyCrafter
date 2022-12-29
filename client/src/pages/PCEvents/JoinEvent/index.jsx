@@ -16,12 +16,14 @@ import LoginForm from "../../../components/forms/Authentication/LoginForm";
 const JoinEvent = () => {
     const [eventCode, setEventCode] = useState(undefined);
     const [eventCodeSubmitted, setEventCodeSubmitted] = useState(false);
-    const submitJoinEvent = () => {};
-    const searchEvent = () => {
-        if (!eventCode) {
-            searchEventByCode(eventCode).then((responseData) => {
+    const searchEvent = async () => {
+        if (eventCode) {
+            const response = searchEventByCode(eventCode);
+            if (response.success) {
                 setEventCodeSubmitted(true);
-            });
+            } else {
+                showError();
+            }
         }
     };
     return (
@@ -76,17 +78,12 @@ const JoinEvent = () => {
                             </Box>
                         )}
                         {eventCodeSubmitted && (
-                            <Box>
+                            <Stack direction="column">
                                 <Typography component="h2" variant="h3">
                                     How would you like to join the event
                                 </Typography>
-                                <Grid container columns={2}>
-                                    <Grid item>
-                                        <LoginForm />
-                                    </Grid>
-                                    <Grid item></Grid>
-                                </Grid>
-                            </Box>
+                                <JoinEventForm />
+                            </Stack>
                         )}
                     </Box>
                 </Stack>

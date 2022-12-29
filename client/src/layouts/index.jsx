@@ -2,15 +2,17 @@ import React from "react";
 
 import { Header, Footer } from "./user";
 
-import SideBar from "../components/navigation/Sidebar";
+import SideBar from "../components/sidebar";
 import GetDesignTokens from "../themes/themes";
 
-import ColorModeContext from "../contexts/colorModeContext";
+import { AuthConsumer, ColorModeContext } from "../contexts";
 import { Box, Container } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Outlet } from "react-router";
+
 const Layout = ({ children }) => {
-    const [mode, setMode] = React.useState("light");
+    const [mode, setMode] = React.useState("light"); // sets default color mode to "light"
+
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
@@ -21,13 +23,18 @@ const Layout = ({ children }) => {
         }),
         []
     );
+
     const theme = React.useMemo(
         () => createTheme(GetDesignTokens(mode)),
         [mode]
     );
+    const { auth } = AuthConsumer();
 
     return (
-        <Box className="layout" variant="div">
+        <Box
+            className={"layout-" + (auth?.profile?.role || "default")}
+            variant="div"
+        >
             <ColorModeContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
                     <React.Fragment>
