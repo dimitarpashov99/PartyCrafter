@@ -2,10 +2,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3001/api/user";
 
-const getAllCustomMenus = (user) => {
-    return axios.get(API_URL + "/custom/menus", {
-        userId: user.id,
-    });
+const getAllCustomMenus = () => {
+    return axios.get(API_URL + "/custom/menus");
 };
 
 const getCustomMenuById = (id) => {

@@ -144,12 +144,12 @@ function StepOne(props) {
                                     onChange={(e) => {
                                         setFormState((current) => ({
                                             ...current,
-                                            privateEvent: e.target.checked,
+                                            privateEvent: !e.target.checked,
                                         }));
                                     }}
                                 />
                             }
-                            label="Private Event"
+                            label="Public Event"
                         />
                     </Stack>
                 </Grid>

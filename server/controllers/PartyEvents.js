@@ -21,7 +21,7 @@ const getById = [
 const getByCode = [
     catchAsync(async (req, res, next) => {
         Event.findOne({
-            _code: req.params.eventCode,
+            _code: req.params.code,
         })
             .lean()
             .then((doc) => {

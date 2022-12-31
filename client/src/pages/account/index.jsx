@@ -1,5 +1,16 @@
 import React from "react";
-import { Container, Paper, Tab, Tabs } from "@mui/material";
+import {
+    Container,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    ListSubheader,
+    Paper,
+    Stack,
+} from "@mui/material";
+import { NavLink, Routes, Route, useMatch, useParams } from "react-router-dom";
+import { Box } from "@mui/system";
 
 const accountTabs = [
     {
@@ -37,34 +48,49 @@ const accountTabs = [
 ];
 
 const AccountPage = () => {
-    const handleChange = () => {};
+    const params = useParams();
     return (
-        <Container>
-            <Paper
-                sx={{
-                    flexGrow: 1,
-                    bgcolor: "background.paper",
-                    display: "flex",
-                    height: 224,
-                }}
-            >
-                <Tabs
-                    orientation="vertical"
-                    variant="scrollable"
-                    defaultValue={"profile"}
-                    onChange={handleChange}
+        <Paper sx={{ height: "100%" }}>
+            <Stack direction="row">
+                <List
                     sx={{
-                        borderRight: 1,
-                        borderColor: "divider",
-                        backgroundColor: "red",
+                        width: "100%",
+                        maxWidth: 240,
                     }}
+                    component="nav"
+                    aria-labelledby="nested-list-subheader"
+                    subheader={
+                        <ListSubheader
+                            component="div"
+                            id="nested-list-subheader"
+                        >
+                            My Account
+                        </ListSubheader>
+                    }
                 >
+                    {accountTabs?.map((tab) => (
+                        <ListItem>
+                            <NavLink
+                                key={tab.id}
+                                to={"/account/" + tab.id}
+                                style={{ flexGrow: 1, textDecoration: "none" }}
+                            >
+                                {({ isActive }) => (
+                                    <ListItemButton selected={isActive}>
+                                        <ListItemText primary={tab.label} />
+                                    </ListItemButton>
+                                )}
+                            </NavLink>
+                        </ListItem>
+                    ))}
+                </List>
+                <Box>
                     {accountTabs?.map((tab) => {
-                        <Tab key={tab.id} value={tab.id} label={tab.label} />;
+                        if (tab.id === params.id) return <Box>{tab.label}</Box>;
                     })}
-                </Tabs>
-            </Paper>
-        </Container>
+                </Box>
+            </Stack>
+        </Paper>
     );
 };
 

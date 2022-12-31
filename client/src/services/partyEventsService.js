@@ -1,28 +1,26 @@
 import { apiCall } from "./utils";
+
 const searchEventByCode = async (eventCode) => {
-    return await apiCall().get("events", {
-        params: {
-            code: eventCode,
-        },
-    });
+    const uri = "events/" + eventCode;
+    return await apiCall().get(uri);
 };
 
-const getOpenPartyEvents = (location) => {
-    return apiCall().get("events/public", {
+const getOpenPartyEvents = async (location) => {
+    return await apiCall().get("events/public", {
         params: {
             location: location,
         },
     });
 };
 
-const createPartyEvent = (partyEventData) => {
-    return apiCall().post("events", {
+const createPartyEvent = async (partyEventData) => {
+    return await apiCall().post("events", {
         partyEventData: partyEventData,
     });
 };
 
-const updatePartyEvent = (eventCode, partyEventData) => {
-    return apiCall().put("events", {
+const updatePartyEvent = async (eventCode, partyEventData) => {
+    return await apiCall().put("events", {
         params: {
             code: eventCode,
         },
@@ -30,16 +28,16 @@ const updatePartyEvent = (eventCode, partyEventData) => {
     });
 };
 
-const cancelPartyEvent = (eventCode) => {
-    return apiCall().put("events", {
+const cancelPartyEvent = async (eventCode) => {
+    return await apiCall().put("events", {
         params: {
             code: eventCode,
         },
     });
 };
 
-const deletePartyEvent = (eventCode) => {
-    return apiCall().delete("events", {
+const deletePartyEvent = async (eventCode) => {
+    return await apiCall().delete("events", {
         params: {
             code: eventCode,
         },

@@ -50,11 +50,10 @@ const Layout = ({ children }) => {
                             <SideBar />
                             <main>
                                 <Container
-                                    disableGutters
                                     sx={{
                                         my: 0,
-                                        maxWidth: "100vw",
                                         minHeight: "80vh",
+                                        paddingLeft: { xs: 0, md: 9 },
                                     }}
                                     maxWidth="false"
                                 >

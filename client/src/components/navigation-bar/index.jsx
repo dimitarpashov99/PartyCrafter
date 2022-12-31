@@ -8,6 +8,8 @@ import {
     Divider,
     FormControlLabel,
     IconButton,
+    ListItemIcon,
+    ListItemText,
     Menu,
     MenuItem,
     Stack,
@@ -23,7 +25,7 @@ import { ColorModeContext } from "../../contexts";
 import DarkModeSwitch from "./DarkModeSwitch";
 
 import { AuthConsumer } from "../../contexts";
-import { Logout } from "@mui/icons-material";
+import { AccountBox, Email, Logout } from "@mui/icons-material";
 import LogoutDiag from "../logout";
 
 const NavBar = () => {
@@ -133,7 +135,6 @@ const NavBar = () => {
                                     anchorEl={anchorEl}
                                     id="account-menu"
                                     open={open}
-                                    onClose={handleClose}
                                     onClick={handleClose}
                                     PaperProps={{
                                         elevation: 0,
@@ -141,19 +142,13 @@ const NavBar = () => {
                                             overflow: "visible",
                                             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                                             mt: 1.5,
-                                            "& .MuiAvatar-root": {
-                                                width: 32,
-                                                height: 32,
-                                                ml: -0.5,
-                                                mr: 1,
-                                            },
                                             "&:before": {
                                                 content: '""',
                                                 display: "block",
                                                 position: "absolute",
                                                 top: 0,
                                                 right: 14,
-                                                width: 10,
+                                                width: 15,
                                                 height: 10,
                                                 bgcolor: "background.paper",
                                                 transform:
@@ -171,25 +166,29 @@ const NavBar = () => {
                                         vertical: "bottom",
                                     }}
                                 >
-                                    <NavLink to="/account">
+                                    <NavLink
+                                        to="/account"
+                                        style={{ textDecoration: "none" }}
+                                    >
                                         {({ isActive }) =>
                                             !isActive && (
                                                 <MenuItem>
-                                                    <Typography
-                                                        sx={{
-                                                            display: {
-                                                                xs: "none",
-                                                                md: "block",
-                                                            },
-                                                        }}
-                                                    >
-                                                        <Avatar />
-                                                        My Profile
-                                                    </Typography>
+                                                    <ListItemIcon>
+                                                        <PersonIcon />
+                                                    </ListItemIcon>
+                                                    <ListItemText>
+                                                        My Account
+                                                    </ListItemText>
                                                 </MenuItem>
                                             )
                                         }
                                     </NavLink>
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <Email />
+                                        </ListItemIcon>
+                                        <ListItemText>Invites</ListItemText>
+                                    </MenuItem>
                                     <MenuItem onClick={handleLogout}>
                                         <Typography>
                                             <Logout />

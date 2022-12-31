@@ -39,10 +39,12 @@ const AppRoutes = () => {
                         <Route path="login" element={<Login />} />
                         <Route path="register" element={<Register />} />
                         <Route element={<ProtectedRoutes />}>
-                            <Route
-                                path="account"
-                                element={<AccountPage />}
-                            ></Route>
+                            <Route path="account" element={<AccountPage />}>
+                                <Route
+                                    path=":id"
+                                    element={<AccountPage />}
+                                ></Route>
+                            </Route>
                         </Route>
                         <Route path="*" element={<PageNotFound />} />
                     </Route>

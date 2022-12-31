@@ -4,11 +4,14 @@ const eventsController = require("../controllers/PartyEvents");
 
 const authenticate = require("../middlewares/authenticate");
 
-router.post("/", authenticate, eventsController.create);
-router.get("/:id", authenticate, eventsController.getById);
 router
-    .route("/:code")
-    .get(authenticate, eventsController.getByCode)
+    .route("/")
+    .post(authenticate, eventsController.create)
+    .get(authenticate, eventsController.getById)
     .delete(authenticate, eventsController.remove);
+
+router.route("/:code").get(authenticate, eventsController.getByCode);
+
+router.post("/join", authenticate, eventsController.join);
 
 module.exports = router;

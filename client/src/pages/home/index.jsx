@@ -61,7 +61,6 @@ const Home = () => {
             </Box>
             <Box
                 sx={{
-                    mx: { xs: 0, md: 8 },
                     borderRadius: "16px",
                 }}
                 ref={nextStep}
@@ -82,9 +81,9 @@ const Home = () => {
                             display: "flex",
                             flexDirection: "column",
                             gridAutoFlow: "column",
-                            padding: 3,
                             height: "100%",
                             flexGrow: 1,
+                            pr: 3,
                         }}
                     >
                         <Paper
@@ -125,12 +124,7 @@ const Home = () => {
                             </Stack>
                         </Paper>
                     </Grid>
-                    <Grid
-                        item
-                        xs={12}
-                        md={5}
-                        sx={{ padding: 3, height: "100%" }}
-                    >
+                    <Grid item xs={12} md={5} sx={{ height: "100%" }}>
                         <Stack
                             direction="column"
                             spacing={2}
@@ -197,7 +191,7 @@ const Home = () => {
                                     alignContent: "center",
                                     justifyContent: "center",
                                     border: "3px solid",
-                                    borderColor: "primary.main"
+                                    borderColor: "primary.main",
                                 }}
                             >
                                 <Link to="/events/join">
