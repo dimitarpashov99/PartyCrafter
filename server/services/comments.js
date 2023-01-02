@@ -1,23 +1,49 @@
 const { StatusCodes } = require("http-status-codes");
 const Comment = require("../models/comment");
-const bcrypt = require("bcrypt");
-const { createTokens } = require("../utils/authHelper");
 const ApiError = require("../utils/APIError");
 
-const create = () => {};
+const create = async (userId, eventId, data) => {
+    const newComment = new Comment({
+        eventId: eventId,
+        senderId: userId,
+        ...data,
+    });
+    await newComment.save();
+    return { success: true };
+};
 
-const getById = () => {};
+const getById = async (commentId) => {
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Comment not found");
+    }
+    return comment;
+};
 
-const getAllAsQuery = () => {};
+const getAllAsQuery = async (filter) => {
+    return await Comment.find(filter).exec();
+};
 
-const update = () => {};
+const updateComment = async (commentId, data) => {
+    const comment = await Comment.findByIdAndUpdate(commentId, data);
+    if (!comment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Comment not found");
+    }
+    return comment;
+};
 
-const remove = () => {};
+const deleteComment = async (commentId) => {
+    const comment = await Comment.findByIdAndRemove(commentId);
+    if (!comment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Comment not found");
+    }
+    return comment;
+};
 
 module.exports = {
     create,
     getById,
     getAllAsQuery,
-    update,
-    remove,
+    updateComment,
+    deleteComment,
 };

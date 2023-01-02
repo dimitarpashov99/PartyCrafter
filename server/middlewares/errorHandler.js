@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 const HttpStatus = require("http-status-codes");
 const StatusCodes = HttpStatus?.StatusCodes;
-const logger = require("../config/winston");
+const logger = require("../config/logger");
 
 /**
  * Error handler middleware

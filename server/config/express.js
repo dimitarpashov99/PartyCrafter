@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
-const cookieParser = require("cookie-parser");
+
 const cors = require("cors");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
@@ -17,7 +17,6 @@ dotenv.config();
 app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // set security HTTP headers
 app.use(helmet());

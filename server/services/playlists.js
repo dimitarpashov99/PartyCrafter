@@ -1,22 +1,64 @@
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const { createTokens } = require("../utils/authHelper");
 const ApiError = require("../utils/APIError");
-const create = () => {};
+const MusicPlaylist = require("../models/playlist");
 
-const getById = () => {};
+const create = async (userId, data) => {
+    const songList = data.songList.map((song) => {
+        var musicTrack = {
+            name: song.name,
+            artist: song.artist,
+            lengthInMinutes: song.lengthInMinutes,
+            genre: song.genre,
+        };
+        return musicTrack;
+    });
 
-const getAllAsQuery = () => {};
+    const newPlaylist = new MusicPlaylist({
+        title: data.title,
+        shortDescription: data.description,
+        createdBy: userId,
+        songList: songList,
+        createdOn: new Date(),
+        likes: 0,
+    });
+    return await newPlaylist.save((err) => {
+        if (err) {
+            throw new ApiError(StatusCodes.BAD_REQUEST, err.message);
+        }
+    });
+};
 
-const update = () => {};
+const getById = async (userId, playlistId) => {
+    const playlist = await MusicPlaylist.findOne({
+        _id: playlistId,
+        userId: userId,
+    });
+    if (!playlist) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Playlist not found");
+    }
+    return playlist;
+};
 
-const remove = () => {};
+const getAllCustomPlaylists = async (userId) => {
+    const customMenu = await Menu.find({ createdBy: userId });
+    if (!customMenu) {
+        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+    }
+    return customMenu;
+};
+
+const updateCustomPlaylist = async (id, playlistData) => {
+    return await Menu.findByIdAndUpdate(id, { $set: playlistData });
+};
+
+const deleteCustomPlaylist = async (id) => {
+    return await Menu.findByIdAndRemove(id);
+};
 
 module.exports = {
     create,
     getById,
-    getAllAsQuery,
-    update,
-    remove,
+    getAllCustomPlaylists,
+    updateCustomPlaylist,
+    deleteCustomPlaylist,
 };

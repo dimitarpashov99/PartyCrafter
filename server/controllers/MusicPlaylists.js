@@ -1,49 +1,13 @@
-const apiResponse = require("../utils/apiResponse");
-
-const MusicPlaylists = require("../models/playlist").Playlist;
-const MusicTrack = require("../models/playlist").MusicTrack;
-
-const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
+const musitPlaylistsService = require("../services/playlists");
 const createCustomMusicPlaylist = [
     catchAsync(async (req, res) => {
-        User.findOne({ id: req.body.userId }, (err, user) => {
-            if (err) {
-                apiResponse.notFoundResponse(res, "User not found!");
-            } else {
-                const playListData = req.body.playListData;
-                const songList = playListData.songList.map((song) => {
-                    var musicTrack = new MusicTrack({
-                        name: song.name,
-                        artist: song.artist,
-                        lengthInMinutes: song.lengthInMinutes,
-                        genre: song.genre,
-                    });
-                    return musicTrack;
-                });
-                const newPlaylist = new MusicPlaylists({
-                    title: playListData.title,
-                    shortDescription: playListData.description,
-                    createdBy: user._id,
-                    songList: songList,
-                    createdOn: new Date(),
-                    likes: 0,
-                });
-                newPlaylist.save((err) => {
-                    if (err) {
-                        apiResponse.errorResponse(
-                            res,
-                            "Playlist cannot be created"
-                        );
-                    } else {
-                        apiResponse.successResponse(
-                            res,
-                            "Playlist created successfuly"
-                        );
-                    }
-                });
-            }
-        });
+        const data = req.body?.musicPlaylistData;
+        const result = await musitPlaylistsService.create(
+            req.currentUser?.id,
+            data
+        );
+        res.json(result);
     }),
 ];
 

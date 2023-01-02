@@ -10,7 +10,7 @@ const musicTrack = mongoose.Schema({
 const playlistSchema = mongoose.Schema({
     title: { type: String, required: true },
     shortDescription: { type: String },
-    songList: [musicTrack],
+    songList: { type: [musicTrack] },
     createdOn: { type: Date },
     createdBy: { type: String },
     likes: { type: Number, default: 0 },

@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const roles = ["user", "organizer", "admin"];
+const status = ["active", "inactive", "banned"];
 
 const userSchema = mongoose.Schema({
-    id: { type: String },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema({
     role: { type: String, enum: roles, default: "user" },
     lastSignedIn: { type: Date },
     registeredOn: { type: Date },
+    status: { type: String, enum: status, default: "inactive" },
 });
 
 userSchema.virtual("fullName").get(function () {

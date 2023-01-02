@@ -1,64 +1,37 @@
 const Event = require("../models/partyEvent");
 
 const catchAsync = require("../utils/catchAsync");
-const partyEventsService = require('../services/party-events')
+const partyEventsService = require("../services/party-events");
 
 const getById = [
     catchAsync(async (req, res, next) => {
         var requestedId = req.params.id;
-        let partyEvent = Event.find({
-            _id: requestedId,
-        });
-
-        res.status(200);
-        res.json({
-            partyEvent: partyEvent,
-        });
-        return next();
+        const result = await partyEventsService.getById(requestedId);
+        res.json(result);
     }),
 ];
 
 const getByCode = [
-    catchAsync(async (req, res, next) => {
-        Event.findOne({
-            _code: req.params.code,
-        })
-            .lean()
-            .then((doc) => {
-                if (!doc) {
-                    apiResponse.notFoundResponse(
-                        res,
-                        "Event with " + req.params.eventCode + " code not found"
-                    );
-                } else {
-                    apiResponse.successResponseWithData(
-                        res,
-                        "Event found",
-                        doc
-                    );
-                }
-            });
-
-        return next();
+    catchAsync(async (req, res) => {
+        const code = req.params?.code;
+        const result = await partyEventsService.getByCode(code);
+        res.json(result);
     }),
 ];
 
 const create = [
     catchAsync(async (req, res) => {
-            const data = req.body?.partyEventData;
-            
+        const data = req.body?.partyEventData;
+        const result = await partyEventsService.create(data, req.currentUser);
+        res.json(result);
     }),
 ];
 
 const remove = [
     catchAsync(async (req, res) => {
-        Event.findAndRemove({ _id: req.param.id }, (err) => {
-            if (err) {
-                apiResponse.errorResponse(res, "Event couldn't be removed");
-            } else {
-                apiResponse.successResponse(res, "Event removed successfuly");
-            }
-        });
+        const id = req.body.id;
+        const result = await partyEventsService.deleteEvent(id);
+        res.json(result);
     }),
 ];
 
@@ -78,10 +51,18 @@ const changePreferance = [
     }),
 ];
 
+const join = [
+    catchAsync(async (req, res) => {
+        const user = req.currentUser;
+        const eventCode = req.body?.code;
+        const event = await partyEventsService.getByCode(eventCode);
+    }),
+];
 module.exports = {
     getById,
     getByCode,
     create,
     remove,
     changePreferance,
+    join,
 };

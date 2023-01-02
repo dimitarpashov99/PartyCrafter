@@ -9,7 +9,7 @@ const eventSchema = mongoose.Schema({
     date: { type: Date, required: true },
     hostId: { type: String, required: true },
     guestList: { type: Array, required: true },
-    foodMenu: { type: Object, required: false },
+    foodMenu: { type: Object },
     musicPlaylist: { type: Object, required: false },
     tableCount: { type: Number },
     preferences: { type: Object },

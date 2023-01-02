@@ -59,8 +59,12 @@ const getAsQuery = async (filter, options) => {
     return await PartyEvent.paginate(filter, options);
 };
 
+const getPublicEvents = async () => {
+    return await PartyEvent.find({ privateAccess: true }).limit(10);
+};
+
 const updateEvent = async (id, data) => {
-    return await PartyEvent.findByIdAndUpdate(id, { $set: data },);
+    return await PartyEvent.findByIdAndUpdate(id, { $set: data });
 };
 
 const deleteEvent = async (id) => {
@@ -78,6 +82,7 @@ module.exports = {
     create,
     getById,
     getAsQuery,
+    getPublicEvents,
     getByCode,
     updateEvent,
     deleteEvent,

@@ -1,22 +1,60 @@
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const { createTokens } = require("../utils/authHelper");
 const ApiError = require("../utils/APIError");
-const create = () => {};
+const Menu = require("../models/menu");
 
-const getById = () => {};
+const getById = async (menuId) => {};
 
-const getAllAsQuery = () => {};
+const createCustomMenu = async (userId, menuData) => {
+    const user = User.findById(userId);
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+    }
 
-const update = () => {};
+    const newFoodMenu = new Menu({
+        title: foodMenuData,
+        createdBy: user._id,
+        createdOn: new Date(),
+        likes: 0,
+    });
+    menuData.menuItems.forEach((item) => {
+        newFoodMenu.menuItems.create({
+            type: item.type,
+            itemCategory: item.itemCategory,
+            itemName: item.itemName,
+        });
+    });
+    await newFoodMenu.save();
+};
 
-const remove = () => {};
+const getCustomMenu = async (userId, menuId) => {
+    const customMenu = await Menu.find({ _id: menuId, createdBy: userId });
+    if (!customMenu) {
+        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+    }
+    return customMenu;
+};
+
+const getAllCustomMenus = async (userId) => {
+    const customMenu = await Menu.find({ createdBy: userId });
+    if (!customMenu) {
+        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+    }
+    return customMenu;
+};
+
+const updateCustomMenu = async (menuId, menuData) => {
+    return await Menu.findByIdAndUpdate(menuId, { $set: menuData });
+};
+
+const deleteCustomMenu = async (menuId) => {
+    return await Menu.findByIdAndRemove(menuId);
+};
 
 module.exports = {
-    create,
+    createCustomMenu,
     getById,
-    getAllAsQuery,
-    update,
-    remove,
+    getCustomMenu,
+    getAllCustomMenus,
+    updateCustomMenu,
+    deleteCustomMenu,
 };

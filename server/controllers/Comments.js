@@ -1,52 +1,33 @@
-const Events = require("../models/partyEvent");
 const Comments = require("../models/comment");
-const apiResponse = require("../utils/apiResponse");
 const catchAsync = require("../utils/catchAsync");
 const { body } = require("express-validator");
+const commentService = require("../services/comments");
 const handleValidation = require("../middlewares/handleValidation");
 
 const create = [
     body("eventId").isEmpty().withMessage("Event Id required!"),
+    body("comment")
+        .isEmpty()
+        .withMessage("A comment must be provided in request"),
     handleValidation,
     catchAsync(async (req, res) => {
-        Events.findOneAndUpdate(
-            {
-                _id: req.body.eventId,
-            },
-            (err, event) => {
-                if (err) {
-                    apiResponse.errorResponse(res, "Event not found");
-                } else {
-                    event;
-                }
-            }
+        const eventId = req.body?.eventId;
+        const comment = req.body?.comment;
+        const result = await commentService.create(
+            req.currentUser,
+            eventId,
+            comment
         );
+        res.json(result);
     }),
 ];
 
 const getEventComments = [
     handleValidation,
     catchAsync(async (req, res) => {
-        Comments.find(
-            {
-                userId: req.param.userId,
-            },
-            (err, docs) => {
-                if (err) {
-                    apiResponse.errorResponse(res, "Comment not found");
-                } else {
-                    if (docs.length === 0) {
-                        apiResponse.notFoundResponse(res, "Comment not found");
-                    } else {
-                        apiResponse.successResponseWithData(
-                            res,
-                            docs.length + "comments found for this user",
-                            docs
-                        );
-                    }
-                }
-            }
-        );
+        const eventId = req.body?.eventId;
+        const result = commentService.getAllAsQuery();
+        res.json(result);
     }),
 ];
 
