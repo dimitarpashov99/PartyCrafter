@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const PartyEvent = require("../models/partyEvent");
 const ApiError = require("../utils/APIError");
+const crypto = require("crypto");
 
 const create = async (data, host) => {
     const eventCode = crypto.randomBytes(7).toString("hex");

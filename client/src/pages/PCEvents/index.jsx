@@ -1,13 +1,10 @@
-import { Outlet } from "react-router";
-
 import React from "react";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 const Events = () => {
     return (
         <React.Fragment>
-            <Outlet />
-            {/* <Grid
+            <Grid
                 container
                 sx={{
                     textAlign: "center",
@@ -54,16 +51,6 @@ const Events = () => {
                                     Host yourself
                                 </Button>
                             </Link>
-                            <Typography variant="h6" component="h4">
-                                OR
-                            </Typography>
-                            <Button
-                                className="btn"
-                                color="secondary"
-                                variant="contained"
-                            >
-                                Find an organizer
-                            </Button>
                         </Stack>
                     </Box>
                 </Grid>
@@ -98,16 +85,13 @@ const Events = () => {
                             <Button color="primary" variant="outlined">
                                 Join existing event
                             </Button>
-                            <Typography variant="h6" component="h4">
-                                OR
-                            </Typography>
-                            <Button color="secondary" variant="outlined">
-                                Browse public events
-                            </Button>
                         </Stack>
                     </Box>
                 </Grid>
-            </Grid> */}
+                <Grid item xs={12}>
+                    
+                </Grid>
+            </Grid>
         </React.Fragment>
     );
 };

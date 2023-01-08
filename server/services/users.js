@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/user");
 const ApiError = require("../utils/APIError");
+const User = require("../models/user");
 
 const getById = async (userId) => {
     const user = await User.findById(userId);

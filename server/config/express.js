@@ -1,14 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const bodyparser = require("body-parser");
-const xss = require("xss-clean");
-const mongoSanitize = require("express-mongo-sanitize");
 
 const cors = require("cors");
+const morgan = require("morgan");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
-const morgan = require("morgan");
 const directory = require("./directory");
 
 const app = express();
@@ -20,10 +17,6 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 // set security HTTP headers
 app.use(helmet());
-
-// sanitize request data
-app.use(xss());
-app.use(mongoSanitize());
 
 app.use(morgan("dev"));
 

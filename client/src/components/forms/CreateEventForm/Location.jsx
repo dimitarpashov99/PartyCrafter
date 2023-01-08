@@ -18,9 +18,10 @@ const Location = (props) => {
 
     const { isLoaded } = useJsApiLoader({
         id: "google-map-script",
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: 'AIzaSyD3DFJdrc6s8YMh9FXRU7ekVkN8lXFdWiI',
         libraries: ["places"],
     });
+
     const center = { lat: 42.7, lng: 23.33 };
     const [map, setMap] = useState(/** @type google.maps.Map */ (null));
 

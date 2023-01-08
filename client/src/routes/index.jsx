@@ -27,6 +27,7 @@ const AppRoutes = () => {
                         />
                         <Route path="home" element={<Home />} />
                         <Route path="events">
+                            <Route index element={<Events />} />
                             <Route element={<ProtectedRoutes />}>
                                 <Route
                                     path="create"

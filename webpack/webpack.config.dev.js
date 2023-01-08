@@ -3,6 +3,8 @@ const webpack = require("webpack");
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 const CURRENT_WORKING_DIR = process.cwd();
 
 const config = {
@@ -15,12 +17,16 @@ const config = {
     output: {
         path: path.resolve(CURRENT_WORKING_DIR, "dist"),
         filename: "client.bundle.js",
-        publicPath: "/dist/",
+        publicPath: "/",
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new Dotenv(),
+        new HtmlWebpackPlugin({
+            filename: "index.html",
+            template: "../public/index.html",
+        }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].[contenthash].css",
@@ -46,12 +52,17 @@ const config = {
             {
                 test: /\.css$/i,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: "",
+                        },
+                    },
                     {
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules: true,
+                            modules: false
                         },
                     },
                 ],
@@ -69,9 +80,7 @@ const config = {
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules: true,
-                            // url: false,
-                            // sourceMap: true,
+                            modules: false
                         },
                     },
                     "sass-loader",
@@ -80,7 +89,7 @@ const config = {
         ],
     },
     resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: ['*', ".js", ".jsx"],
     },
     devtool: "inline-source-map",
     devServer: {
@@ -88,6 +97,7 @@ const config = {
         port: process.env.PORT || 3000,
         historyApiFallback: true,
         hot: true,
+        static: path.resolve(__dirname, "./dist"),
     },
 };
 

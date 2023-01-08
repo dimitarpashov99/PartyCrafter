@@ -11,7 +11,7 @@ const webpackConfig = require("../webpack/webpack.config.dev");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
 app.set("port", process.env.APP_PORT || 3000);
 app.set("host", process.env.APP_HOST || "localhost");
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "development") {
     app.use(
         webpackDevMiddleware(compiler, {
             noInfo: true,
-            publicPath: webpackConfig.output.publicPath,
+            publicPath: webpackConfig.output.publicPath + 'dist/',
         })
     );
     app.use(webpackHotMiddleware(compiler));
@@ -30,13 +30,17 @@ if (process.env.NODE_ENV === "development") {
 // Request logger
 app.use(requestLogger);
 
-// Landing page
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-});
-
 // Wraps all routes into API route
 app.use("/api", apiRouter);
+
+// Landing page
+app.get("*", (req, res, next) => {
+    try {
+        res.sendFile(path.join(__dirname, "../public/index.html"));
+    } catch (e) {
+        next(e);
+    }
+});
 
 // Error Handler Middleware
 app.use(errorHandler);
