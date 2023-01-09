@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { v4 as uuidv4 } from "uuid";
-import { createCustomMenu } from "../../../services/userService";
+import { createCustomMenu } from "../../../services/menuService";
 
 export default function CreateFoodMenuForm(props) {
     const typesOfFood = [

@@ -16,12 +16,6 @@ router.get(
     usersController.getUserProfile
 );
 
-// router.post(
-//     "/profile/changePassword",
-//     requireToken,
-//     usersController.changePassword
-// );
-
 router
     .route("/profile/addressbook/")
     .get(requireToken, usersController.getAddressBook)

@@ -113,13 +113,13 @@ const Home = () => {
                                     How does it work?
                                 </Typography>
                                 <Typography variant="body1">
-                                    Create a digital plan for your party
+                                    Schedule and customize your party
                                 </Typography>
                                 <Typography variant="body1">
                                     Send invites to your guests
                                 </Typography>
                                 <Typography variant="body1">
-                                    Spectate real time
+                                    Watch in real time your event
                                 </Typography>
                             </Stack>
                         </Paper>

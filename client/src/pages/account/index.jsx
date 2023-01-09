@@ -1,6 +1,5 @@
 import React from "react";
 import {
-    Container,
     List,
     ListItem,
     ListItemButton,
@@ -9,43 +8,9 @@ import {
     Paper,
     Stack,
 } from "@mui/material";
-import { NavLink, Routes, Route, useMatch, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
-
-const accountTabs = [
-    {
-        id: "profile",
-        label: "Profile",
-    },
-    {
-        id: "events",
-        label: "Your Events",
-    },
-    {
-        id: "comments",
-        label: "Your comments",
-    },
-    {
-        id: "security",
-        label: "Security",
-    },
-    {
-        id: "address-book",
-        label: "Addresses",
-    },
-    {
-        id: "custom-music-playlists",
-        label: "Music Playlists",
-    },
-    {
-        id: "custom-food-menus",
-        label: "Food Menus",
-    },
-    {
-        id: "custom-guestlists",
-        label: "GuestLists",
-    },
-];
+import accountTabs from "./account-menus";
 
 const AccountPage = () => {
     const params = useParams();
@@ -86,7 +51,8 @@ const AccountPage = () => {
                 </List>
                 <Box>
                     {accountTabs?.map((tab) => {
-                        if (tab.id === params.id) return <Box>{tab.label}</Box>;
+                        if (tab.id === params.id)
+                            return <Box>{tab.component}</Box>;
                     })}
                 </Box>
             </Stack>

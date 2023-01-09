@@ -20,7 +20,7 @@ import { StepOne, StepTwo, StepThree } from "./FormSteps";
 import EventPreview from "../../partyevent/EventPreview";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import CreateFoodMenuForm from "../CreateFoodMenuForm/CreateFoodMenuForm";
+import CreateFoodMenuForm from "../CreateFoodMenuForm";
 import { createPartyEvent } from "../../../services/partyEventsService";
 
 export default class CreateEvent extends React.Component {

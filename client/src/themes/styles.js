@@ -1,6 +1,6 @@
 const Styles = {
+    // Overwrites palette values for light mode
     light: {
-        // palette values for light mode
         primary: {
             main: "#2ba0ff",
         },
@@ -19,8 +19,8 @@ const Styles = {
             disabled: '#fff'
         },
     },
+    // Overwrites palette values for dark mode
     dark: {
-        // palette values for dark mode
         primary: {
             main: "#b8af02",
         },

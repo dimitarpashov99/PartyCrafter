@@ -5,6 +5,9 @@ const router = express.Router();
 const authController = require("../controllers/Auth");
 const handleValidation = require("../middlewares/handleValidation");
 
+/**
+ * Authorizetion API routes
+ */
 router.post("/signup", authController.register);
 router.post(
     "/signin",

@@ -431,10 +431,6 @@ function StepThree(props) {
                             />
                             <FormControlLabel
                                 control={<Switch />}
-                                label="Enable Chat"
-                            />
-                            <FormControlLabel
-                                control={<Switch />}
                                 label="Allow guest invites"
                             />
                         </Box>

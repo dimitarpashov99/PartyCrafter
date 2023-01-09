@@ -44,7 +44,9 @@ const deletePartyEvent = async (eventCode) => {
     });
 };
 
-const sendMusicRequest = (user) => {};
+const sendMusicRequest = (user) => {
+    
+};
 
 export {
     searchEventByCode,

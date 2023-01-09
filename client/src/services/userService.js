@@ -1,37 +1,19 @@
-import axios from "axios";
+import { apiCall } from "./utils";
 
-const API_URL = "http://localhost:3001/api/user";
+const serviceURL = "/profile";
 
-const getAllCustomMenus = () => {
-    return axios.get(API_URL + "/custom/menus");
+const getAllUserPartyInvitations = () => {
+    const service = serviceURL + "/invitations";
+    return apiCall().get(service);
 };
 
-const getCustomMenuById = (id) => {
-    return axios.get(API_URL, {
+const getUserPartyInvitation = (inviteId) => {
+    const service = serviceURL + "/invitation";
+    return apiCall().get(service, {
         params: {
-            menuId: id,
+            id: inviteId,
         },
     });
 };
 
-const createCustomMenu = (menuData) => {
-    return axios.post(API_URL + "/custom/menus", menuData);
-};
-
-const updateCustomMenu = (menuData) => {
-    return axios.put(API_URL + "/custom/menus", menuData);
-};
-
-const deleteCustomMenu = (menuId) => {
-    return axios.delete(API_URL + "/custom/menus", {
-        params: { menuId: menuId },
-    });
-};
-
-export {
-    getAllCustomMenus,
-    getCustomMenuById,
-    createCustomMenu,
-    updateCustomMenu,
-    deleteCustomMenu,
-};
+export { getAllUserPartyInvitations, getUserPartyInvitation };

@@ -24,6 +24,10 @@ const StepTwo = (props) => {
         setFormState((current) => ({ ...current, guestList: guestList }));
     };
 
+    const handleTableCountChange = (tableCount) => {
+        setFormState((current) => ({ ...current, tableCount: tableCount }));
+    };
+
     const handleAssignTablePrefChange = (value) => {
         setFormState((current) => ({
             ...current,
@@ -59,6 +63,7 @@ const StepTwo = (props) => {
                         tableCount={formState?.tableCount}
                         handleGuestsChange={handleGuestsChange}
                         handleTableChange={handleTableChange}
+                        handleTableCountChange={handleTableCountChange}
                         handleAssignTablePrefChange={
                             handleAssignTablePrefChange
                         }

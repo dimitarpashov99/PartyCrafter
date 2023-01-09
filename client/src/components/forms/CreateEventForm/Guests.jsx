@@ -18,6 +18,7 @@ const Guests = ({
     tableCount,
     assignGuestTables,
     handleGuestsChange,
+    handleTableCountChange,
     handleAssignTablePrefChange,
 }) => {
     const [guests, setGuests] = useState(
@@ -145,10 +146,7 @@ const Guests = ({
                             inputProps={{ min: 1 }}
                             onChange={(event) => {
                                 if (event.target.value > 0)
-                                    setFormState((current) => ({
-                                        ...current,
-                                        tableCount: event.target.value,
-                                    }));
+                                    handleTableCountChange(event.target.value);
                             }}
                         />
                     </React.Fragment>

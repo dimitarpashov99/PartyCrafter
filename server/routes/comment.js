@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const commentsController = require('../controllers/Comments');
-router.post("/send", commentsController.create);
-router.post("/edit", commentsController.create);
+const commentsController = require("../controllers/Comments");
+
+router
+    .route("/")
+    .get(commentsController.getAllComments)
+    .post(commentsController.create)
+    .put(commentsController.edit);
+
 router.get("/:eventId", commentsController.getEventComments);
 
 router.delete("/remove", commentsController.remove);

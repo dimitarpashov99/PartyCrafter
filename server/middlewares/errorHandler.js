@@ -6,9 +6,9 @@ const logger = require("../config/logger");
 /**
  * Error handler middleware
  *
- * @param  {Object}   err
- * @param  {Object}   req
- * @param  {Object}   res
+ * @param  {Object}   err - runtime error
+ * @param  {Object}   req - request
+ * @param  {Object}   res - response
  */
 const errorHandler = (err, req, res) => {
     logger.error(err);

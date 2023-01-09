@@ -14,6 +14,8 @@ import {
     Typography,
 } from "@mui/material";
 
+import { LoginOutlined } from "@mui/icons-material";
+
 import { LockOutlined } from "@mui/icons-material";
 import AuthService from "../../../services/authService";
 
@@ -76,7 +78,7 @@ export default class LoginForm extends React.Component {
                 elevation={10}
             >
                 <Avatar sx={{ m: 2, bgcolor: "primary.main" }}>
-                    <LockOutlined />
+                    <LoginOutlined />
                 </Avatar>
                 <Typography component="h2" variant="h5">
                     Sign in

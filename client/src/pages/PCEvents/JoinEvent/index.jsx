@@ -13,8 +13,9 @@ import {
 import { useState } from "react";
 import { searchEventByCode } from "../../../services/partyEventsService";
 import LoginForm from "../../../components/forms/Authentication/LoginForm";
+import JoinEventForm from "../../../components/forms/JoinEventForm";
+
 const JoinEvent = () => {
-    const [eventCode, setEventCode] = useState(undefined);
     const [eventCodeSubmitted, setEventCodeSubmitted] = useState(false);
     const searchEvent = async () => {
         if (eventCode) {
@@ -52,39 +53,21 @@ const JoinEvent = () => {
                         >
                             Join The Party
                         </Typography>
-                        {!eventCodeSubmitted && (
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <TextField
-                                    required
-                                    id="event-code"
-                                    label="Party Code"
-                                    name="event-code"
-                                    onChange={(e) => {
-                                        setEventCode(e.target.value);
-                                    }}
-                                    autoFocus
-                                />
-                                <Button
-                                    onClick={searchEvent}
-                                    variant="contained"
-                                >
-                                    Search
-                                </Button>
-                            </Box>
-                        )}
-                        {eventCodeSubmitted && (
-                            <Stack direction="column">
-                                <Typography component="h2" variant="h3">
-                                    How would you like to join the event
-                                </Typography>
-                                <JoinEventForm />
-                            </Stack>
-                        )}
+                        <Typography
+                            color="primary.main"
+                            variant="h3"
+                            component="h2"
+                        >
+                            How would you like to join the party
+                        </Typography>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <JoinEventForm />
+                        </Box>
                     </Box>
                 </Stack>
             </Paper>

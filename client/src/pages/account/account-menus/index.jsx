@@ -1,11 +1,16 @@
+import Profile from "./profile";
+import UserInvitations from "./user-events";
+
 const accountTabs = [
     {
         id: "profile",
         label: "Profile",
+        component: <Profile />,
     },
     {
         id: "events",
         label: "Your Events",
+        component: <UserInvitations />,
     },
     {
         id: "comments",
@@ -26,10 +31,6 @@ const accountTabs = [
     {
         id: "custom-food-menus",
         label: "Food Menus",
-    },
-    {
-        id: "custom-guestlists",
-        label: "GuestLists",
     },
 ];
 

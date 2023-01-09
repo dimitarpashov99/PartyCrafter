@@ -4,11 +4,20 @@ const app = express();
 const usersRouter = require("./users");
 const eventsRouter = require("./partyEvents");
 const authRouter = require("./auth");
-// const locationRouter = require("./locations");
 
+/**
+ * Initialize Authorization API routes
+ */
 app.use("/auth", authRouter);
+
+/**
+ * Initialize Users API routes
+ */
 app.use("/users", usersRouter);
+
+/**
+ * Initialize Party Events API routes
+ */
 app.use("/events", eventsRouter);
-// router.use("/location", locationRouter);
 
 module.exports = app;

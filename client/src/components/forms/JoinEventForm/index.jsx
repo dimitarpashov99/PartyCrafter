@@ -1,30 +1,19 @@
 import React from "react";
 import { FormControl, Grid, TextField } from "@mui/material";
 import partyEventService from "../../../services/partyEventsService";
+import JoinEvent from "./JoinEvent";
+import JoinEventAsGuest from "./JoinEventAsGuest";
 
 const JoinEventForm = () => {
-    const handleJoinAsGuest = () => {
-        partyEventService.
-    };
-    const handleJoinAsUser = () => {
-
-    };
+    const handleJoin = () => {};
     return (
         <Box>
             <Grid container>
                 <Grid item md={6}>
-                    <Box component="form">
-                        <FormControl>
-                            <TextField id="join-as-guest"></TextField>
-                        </FormControl>
-                    </Box>
+                    <JoinEvent />
                 </Grid>
                 <Grid item md={6}>
-                    <Box component="form">
-                        <FormControl>
-                            <TextField id="join-as-user"></TextField>
-                        </FormControl>
-                    </Box>
+                    <JoinEventAsGuest />
                 </Grid>
             </Grid>
         </Box>
