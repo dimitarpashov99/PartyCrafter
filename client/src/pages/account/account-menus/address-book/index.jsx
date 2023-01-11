@@ -1,10 +1,9 @@
-import { Paper, Typography } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Paper, Grid, Typography } from "@mui/material";
 
 const Address = (props) => {
     const { data } = props;
-    return <Box> </Box>;
+    return <Box></Box>;
 };
 
 const AddressBook = () => {
@@ -17,12 +16,10 @@ const AddressBook = () => {
                         <Address data={address} />;
                     })}
                 </Grid>
-                <Grid item>
-                    
-                </Grid>
+                <Grid item></Grid>
             </Grid>
         </Paper>
     );
 };
 
-export default AccountSecurity;
+export default AddressBook;

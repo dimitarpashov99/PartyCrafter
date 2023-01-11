@@ -49,12 +49,11 @@ const AccountPage = () => {
                         </ListItem>
                     ))}
                 </List>
-                <Box>
+                <Paper sx={{ width: "100%" }}>
                     {accountTabs?.map((tab) => {
-                        if (tab.id === params.id)
-                            return <Box>{tab.component}</Box>;
+                        if (tab.id === params.id) return tab.component;
                     })}
-                </Box>
+                </Paper>
             </Stack>
         </Paper>
     );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import PartyEventsCalendar from "../../../../components/party-events-calendar";
 
@@ -7,7 +7,7 @@ const UserEvents = () => {
 
     return (
         <Box>
-            <Typography component="h3" variant="h3">
+            <Typography component="h3" variant="h5">
                 Your Events
             </Typography>
             <Grid container>

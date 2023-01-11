@@ -123,7 +123,7 @@ export default class CreateEvent extends React.Component {
                                 });
                             }}
                         >
-                            Return to Step 1
+                            Return
                         </Button>
                     </Box>
                 );

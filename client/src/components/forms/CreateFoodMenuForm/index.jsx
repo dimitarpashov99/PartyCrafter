@@ -78,7 +78,10 @@ export default function CreateFoodMenuForm(props) {
                     <Button
                         variant="outlined"
                         onClick={() => {
-                            createCustomMenu(customMenu);
+                            const result = createCustomMenu(customMenu);
+                            if (result?.success) {
+                                props.handleCreateCustomMenu(result);
+                            }
                         }}
                     >
                         Create
