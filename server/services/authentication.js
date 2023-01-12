@@ -63,7 +63,25 @@ const register = async (data) => {
         return user;
     });
 };
+
+const changePassword = async (userId, oldPassword, newPassword) => {
+    const user = User.findById(userId);
+    if (!user) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "User not found");
+    }
+
+    const match = await bcrypt.compare(oldPassword, user.passwordHash); 
+    if(!match){
+        throw new ApiError(StatusCodes.BAD_REQUEST, "User password doesn't match")
+    }
+
+    const newPasswordHash = await bcrypt.hash(newPassword, 10);
+    user.passwordHash = newPasswordHash;
+    return await user.save();
+};
+
 module.exports = {
     login,
     register,
+    changePassword
 };

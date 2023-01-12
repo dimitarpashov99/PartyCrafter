@@ -40,15 +40,15 @@ const getById = async (userId, playlistId) => {
 };
 
 const getAllCustomPlaylists = async (userId) => {
-    const customMenu = await Menu.find({ createdBy: userId });
-    if (!customMenu) {
+    const customPlaylist = await MusicPlaylist.find({ createdBy: userId });
+    if (!customPlaylist) {
         throw new ApiError(StatusCodes.NOT_FOUND, err.message);
     }
-    return customMenu;
+    return customPlaylist;
 };
 
 const updateCustomPlaylist = async (id, playlistData) => {
-    return await Menu.findByIdAndUpdate(id, { $set: playlistData });
+    return await MusicPlaylist.findByIdAndUpdate(id, { $set: playlistData });
 };
 
 const deleteCustomPlaylist = async (id) => {

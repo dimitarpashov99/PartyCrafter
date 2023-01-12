@@ -1,17 +1,16 @@
 const catchAsync = require("../utils/catchAsync");
-
-const userService = require("../services/users");
-const addressService = require("../services/address");
 const ApiError = require("../utils/APIError");
 const { StatusCodes } = require("http-status-codes");
-const { validationResult } = require("express-validator");
+
+const accountService = require("../services/account");
+const addressService = require("../services/address");
 
 const getUserProfile = catchAsync(async (req, res) => {
     const userId = req.params.id;
     if (!userId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Missing id parameter");
     }
-    const result = await userService.getUserProfile(userId);
+    const result = await accountService.getUserProfile(userId);
     res.json({
         profile: result,
     });
@@ -30,6 +29,7 @@ const createAddress = catchAsync(async (req, res) => {
     const result = await addressService.createAddress(address);
     return res.json(result);
 });
+
 const getAddressById = catchAsync(async (req, res) => {
     const addressId = req.params.id;
     const result = await addressService.getAddressById(
@@ -38,6 +38,7 @@ const getAddressById = catchAsync(async (req, res) => {
     );
     return res.json(result);
 });
+
 const editCustomAddress = catchAsync(async (req, res) => {
     const addressId = req.params.id;
     const addressData = req.body.address;
@@ -48,6 +49,7 @@ const editCustomAddress = catchAsync(async (req, res) => {
     );
     return res.json(result);
 });
+
 const removeCustomAddress = catchAsync(async (req, res) => {
     const addressId = req.params.id;
     const result = await addressService.deleteAddress(
@@ -56,6 +58,20 @@ const removeCustomAddress = catchAsync(async (req, res) => {
     );
     return res.json(result);
 });
+
+const getUserInvitations = catchAsync(async (req, res) => {
+    const userId = req.currentUser.id;
+    const result = await accountService.getInvitations(userId);
+    res.json(result);
+});
+
+// const getInvitation = catchAsync(async (req, res) => {
+//     const inviteId = req.params.id;
+//     const result = await accountService.getInvitation(inviteId);
+//     res.json(result);
+// });
+
+
 module.exports = {
     getUserProfile,
     getAddressBook,
@@ -63,4 +79,6 @@ module.exports = {
     getAddressById,
     editCustomAddress,
     removeCustomAddress,
+    getUserInvitations,
+    // getInvitation
 };

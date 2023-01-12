@@ -1,11 +1,12 @@
 import {
+    Box,
     Grid,
     IconButton,
     List,
     ListItem,
-    ListItemButton,
     ListItemText,
     Paper,
+    Typography,
 } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
 import React from "react";
@@ -15,10 +16,13 @@ import CreateFoodMenuForm from "../../../../components/forms/CreateFoodMenuForm"
 const CustomMenus = () => {
     const [userMenus, setUserMenus] = useState([]);
     const handleCreateCustomMenu = (result) => {
-        setUseMenus((current) => [...current, result.newMenu]);
+        setUserMenus((current) => [...current, result.newMenu]);
     };
     return (
         <Paper sx={{ height: "100%" }}>
+            <Typography component="h3" variant="h5">
+                Your menus
+            </Typography>
             <Grid container>
                 <Grid item xs={4}>
                     {userMenus.length ? (

@@ -4,6 +4,7 @@ const status = ["pending", "accepted", "rejected"];
 
 const Invitation = mongoose.Schema({
     eventId: { type: mongoose.Types.ObjectId, required: true },
+    guestId: {type: mongoose.Types.ObjectId, required: true},
     guestName: { type: String },
     guestEmail: { type: String },
     isGuestRegistered: { type: Boolean },

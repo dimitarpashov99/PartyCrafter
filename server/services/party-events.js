@@ -57,7 +57,7 @@ const getByCode = async (code) => {
 };
 
 const getAsQuery = async (filter, options) => {
-    return await PartyEvent.paginate(filter, options);
+    return await PartyEvent.find(filter, options);
 };
 
 const getPublicEvents = async () => {

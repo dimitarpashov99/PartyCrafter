@@ -1,8 +1,8 @@
 const { body, validationResult } = require("express-validator");
 const catchAsync = require("../utils/catchAsync");
-
 const authService = require("../services/authentication");
 const handleValidation = require("../middlewares/handleValidation");
+
 const register = [
     body("firstName")
         .isLength({ min: 1 })
@@ -39,16 +39,27 @@ const register = [
     }),
 ];
 
-const login = 
+const login = [
+    handleValidation,
     catchAsync(async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ error: errors.array() });
-        }
         const { email, password } = req.body;
         const result = await authService.login(email, password);
         res.json(result);
-    })
-;
+    }),
+];
 
-module.exports = { register, login };
+const changePassword = [
+    handleValidation,
+    catchAsync(async (req, res) => {
+        const { oldPassword, newPassword } = req.body;
+        const user = req.currentUser.id;
+
+        const result = await authService.changePassword(
+            user,
+            oldPassword,
+            newPassword
+        );
+        res.json(result);
+    }),
+];
+module.exports = { register, login, changePassword };

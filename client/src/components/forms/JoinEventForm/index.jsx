@@ -1,8 +1,8 @@
 import React from "react";
-import { FormControl, Grid, TextField } from "@mui/material";
-import partyEventService from "../../../services/partyEventsService";
+import { Box, FormControl, Grid, TextField } from "@mui/material";
 import JoinEvent from "./JoinEvent";
 import JoinEventAsGuest from "./JoinEventAsGuest";
+import partyEventService from "../../../services/partyEventsService";
 
 const JoinEventForm = () => {
     const handleJoin = () => {};

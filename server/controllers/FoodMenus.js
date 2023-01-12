@@ -30,7 +30,7 @@ const getFoodMenusByUserId = [
 
 const updateCustomFoodMenu = [
     catchAsync(async (req, res) => {
-        const menuId = req.params.menuId;
+        const menuId = req.params.id;
         const data = req.body.menuData;
         const result = await foodMenuService.updateCustomMenu(menuId, data);
         res.json(result);
@@ -39,7 +39,7 @@ const updateCustomFoodMenu = [
 
 const removeCustomFoodMenu = [
     catchAsync(async (req, res) => {
-        const menuId = req.params.menuId;
+        const menuId = req.params.id;
         const result = await foodMenuService.removeCustomFoodMenu(menuId);
         res.json(result);
     }),

@@ -1,52 +1,53 @@
 const express = require("express");
-const router = express.Router();
 
-const usersController = require("../controllers/Users");
+const router = express.Router();
+const controller = require("../controllers/Account");
 const foodMenusController = require("../controllers/FoodMenus");
 const playListController = require("../controllers/MusicPlaylists");
+
 const requireToken = require("../middlewares/authenticate");
-const { body } = require("express-validator");
-const handleValidation = require("../middlewares/handleValidation");
 
-router.get(
-    "/profile/:id",
-    requireToken,
-    body("address").isEmpty().withMessage("Request must contain address"),
-    handleValidation,
-    usersController.getUserProfile
-);
+// const handleValidation = require("../middlewares/handleValidation");
+
+/**
+ * Account API routes
+ */
+
+router.get("/profile", requireToken, controller.getUserProfile);
 
 router
-    .route("/profile/addressbook/")
-    .get(requireToken, usersController.getAddressBook)
-    .post(requireToken, usersController.createAddress);
+    .route("/addressbook/")
+    .get(requireToken, controller.getAddressBook)
+    .post(requireToken, controller.createAddress);
 
 router
-    .route("/profile/addressbook/:id")
-    .get(requireToken, usersController.getAddressById)
-    .put(requireToken, usersController.editCustomAddress)
-    .delete(requireToken, usersController.removeCustomAddress);
+    .route("/addressbook/:id")
+    .get(requireToken, controller.getAddressById)
+    .put(requireToken, controller.editCustomAddress)
+    .delete(requireToken, controller.removeCustomAddress);
 
 router
-    .route("/profile/menus/")
+    .route("/menus/")
     .get(requireToken, foodMenusController.getFoodMenusByUserId)
     .post(requireToken, foodMenusController.createCustomFoodMenu);
 
 router
-    .route("/profile/menus/:menuId")
+    .route("/menus/:id")
     .get(requireToken, foodMenusController.getFoodMenuById)
     .put(requireToken, foodMenusController.updateCustomFoodMenu)
     .delete(requireToken, foodMenusController.removeCustomFoodMenu);
 
 router
-    .route("/profile/playlists")
+    .route("/playlists")
     .get(requireToken, playListController.getMusicPlaylistsByUserId)
     .post(requireToken, playListController.createCustomMusicPlaylist);
 
 router
-    .route("/profile/playlists/:playlistId")
+    .route("/playlists/:id")
     .get(requireToken, playListController.getMusicPlaylistById)
     .put(requireToken, playListController.updateCustomMusicPlaylist)
     .delete(requireToken, playListController.removeCustomMusicPlaylist);
+
+router.get("/invitations", requireToken, controller.getUserInvitations);
 
 module.exports = router;

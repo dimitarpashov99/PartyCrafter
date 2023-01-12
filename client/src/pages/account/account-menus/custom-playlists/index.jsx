@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+    Box,
     Grid,
     List,
     ListItem,
@@ -8,14 +9,18 @@ import {
     Paper,
 } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
+import MusicPlaylistForm from "../../../../components/forms/MusicPlaylistForm";
 
 const CustomPlaylists = () => {
     const [userPlaylists, setUserPlaylists] = useState([]);
-    const handleCreateCustomMenu = (result) => {
-        setUseMenus((current) => [...current, result.newMenu]);
+    const handleCreatePlaylists = (result) => {
+        setUserPlaylists((current) => [...current, result.newMenu]);
     };
     return (
         <Paper sx={{ height: "100%" }}>
+            <Typography component="h3" variant="h5">
+                Your music playlists
+            </Typography>
             <Grid container>
                 <Grid item xs={4}>
                     {userPlaylists.length ? (
@@ -37,12 +42,12 @@ const CustomPlaylists = () => {
                             ))}
                         </List>
                     ) : (
-                        <Box>You don't have custom food menus</Box>
+                        <Box>You don't have custom playlists</Box>
                     )}
                 </Grid>
                 <Grid item xs={8}>
-                    <CreateFoodMenuForm
-                        handleCreateCustomMenu={handleCreateCustomMenu}
+                    <MusicPlaylistForm
+                        handleCreatePlaylists={handleCreatePlaylists}
                     />
                 </Grid>
             </Grid>

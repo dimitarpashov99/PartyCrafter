@@ -91,7 +91,7 @@ export default function CreateFoodMenuForm(props) {
                     container
                     sx={{ minWidth: "80vw", justifyContent: "center" }}
                 >
-                    <Grid item lg={6} sx={{ paddingX: 5 }}>
+                    <Grid item xs={12}>
                         <Box sx={{ paddingBottom: 2 }}>
                             <Typography variant="body1">
                                 Add Item to your menu:
@@ -188,7 +188,7 @@ export default function CreateFoodMenuForm(props) {
                             </Button>
                         </Box>
                     </Grid>
-                    <Grid item lg={6} sx={{ flexGrow: 1 }}>
+                    <Grid item xs={12}>
                         <Typography variant="body1" sx={{ paddingBottom: 2 }}>
                             Menu items
                         </Typography>

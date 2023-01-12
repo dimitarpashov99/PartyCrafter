@@ -34,13 +34,13 @@ const accountTabs = [
         component: <AddressBook />,
     },
     {
-        id: "custom-music-playlists",
-        label: "Music Playlists",
+        id: "custom-food-menus",
+        label: "Food Menus",
         component: <CustomMenus />,
     },
     {
-        id: "custom-food-menus",
-        label: "Food Menus",
+        id: "custom-music-playlists",
+        label: "Music Playlists",
         component: <CustomPlaylists />,
     },
 ];

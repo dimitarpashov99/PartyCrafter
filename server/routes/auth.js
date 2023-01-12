@@ -2,13 +2,15 @@ const express = require("express");
 const { body } = require("express-validator");
 
 const router = express.Router();
-const authController = require("../controllers/Auth");
+const controller = require("../controllers/Auth");
 const handleValidation = require("../middlewares/handleValidation");
+
+const requireToken = require("../middlewares/authenticate");
 
 /**
  * Authorizetion API routes
  */
-router.post("/signup", authController.register);
+router.post("/signup", controller.register);
 router.post(
     "/signin",
     body("email")
@@ -22,7 +24,9 @@ router.post(
         .trim()
         .withMessage("Request must contain password."),
     handleValidation,
-    authController.login
+    controller.login
 );
+
+router.post("/changepassword", requireToken, controller.changePassword);
 
 module.exports = router;

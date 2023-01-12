@@ -10,6 +10,5 @@ module.exports = {
     },
     plugins: ["react"],
     rules: {},
-
     sourceType: "module",
 };

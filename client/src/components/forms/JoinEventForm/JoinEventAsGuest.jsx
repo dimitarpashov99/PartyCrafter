@@ -1,11 +1,16 @@
 import {
+    Alert,
+    Box,
+    Button,
     FormControl,
     InputLabel,
     MenuItem,
     Select,
     TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import partyEventsSevice from "../../../services/partyEventsService";
+import CustomizedAlert from "../../alert";
 
 const JoinEventAsGuest = ({ handleJoinEvent }) => {
     const [formState, setFormState] = useState({
@@ -13,9 +18,23 @@ const JoinEventAsGuest = ({ handleJoinEvent }) => {
         guestIdentifier: undefined,
         guestIdentifierType: "name",
     });
+    const [alert, setAlert] = useState({ open: false });
+    const submitJoinEvent = async () => {
+        const result = await partyEventsSevice.joinEvent(formState);
+        if (!result || result.error) {
+            return setAlert({
+                open: true,
+                type: error,
+                title: result.title,
+                message: result.message,
+            });
+        }
+        handleJoinEvent();
+    };
     return (
         <>
             <Box component="form">
+                <CustomizedAlert alert={alert} />
                 <TextField
                     required
                     id="event-code"
@@ -54,8 +73,8 @@ const JoinEventAsGuest = ({ handleJoinEvent }) => {
                         }));
                     }}
                 />
-                <Button onClick={searchEvent} variant="contained">
-                    Join using code
+                <Button onClick={submitJoinEvent} variant="contained">
+                    Join Event
                 </Button>
             </Box>
             ;

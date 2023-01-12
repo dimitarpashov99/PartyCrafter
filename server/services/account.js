@@ -2,9 +2,12 @@ const { StatusCodes } = require("http-status-codes");
 const ApiError = require("../utils/APIError");
 const User = require("../models/user");
 
-const getById = async (userId) => {
-    const user = await User.findById(userId);
-    return user;
+const getProfile = async (userId) => {
+    const profile = await User.findOne({ _id: userId });
+    if (!profile) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Profile not found");
+    }
+    return profile;
 };
 
 const editProfile = async (userId, data) => {
@@ -17,15 +20,17 @@ const editProfile = async (userId, data) => {
 
 const banUser = async (userId) => {
     const user = await User.findById(userId);
-    if (user) {
-        user.status = "banned";
-        await user.save();
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "User not found");
     }
+    user.status = "banned";
+    await user.save();
+
     return { success: true };
 };
 
 module.exports = {
-    getById,
+    getProfile,
     editProfile,
-    banUser,
+    banUser
 };

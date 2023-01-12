@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const CURRENT_WORKING_DIR = process.cwd();
-
 const config = {
     context: path.resolve(CURRENT_WORKING_DIR, "client/src/"),
     entry: {

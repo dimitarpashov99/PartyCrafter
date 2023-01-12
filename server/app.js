@@ -5,7 +5,6 @@ const errorHandler = require("./middlewares/errorHandler");
 const requestLogger = require("./middlewares/requestLogger");
 const apiRouter = require("./routes/api");
 
-// enable webpack hot module replacement in development mode
 const webpack = require("webpack");
 const webpackConfig = require("../webpack/webpack.config.dev");
 const webpackDevMiddleware = require("webpack-dev-middleware");
@@ -16,12 +15,13 @@ require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 app.set("port", process.env.APP_PORT || 3000);
 app.set("host", process.env.APP_HOST || "localhost");
 
+// enable webpack hot module replacement for development
 if (process.env.NODE_ENV === "development") {
     const compiler = webpack(webpackConfig);
     app.use(
         webpackDevMiddleware(compiler, {
             noInfo: true,
-            publicPath: webpackConfig.output.publicPath + 'dist/',
+            publicPath: webpackConfig.output.publicPath + "dist/",
         })
     );
     app.use(webpackHotMiddleware(compiler));
@@ -34,12 +34,8 @@ app.use(requestLogger);
 app.use("/api", apiRouter);
 
 // Landing page
-app.get("*", (req, res, next) => {
-    try {
-        res.sendFile(path.join(__dirname, "../public/index.html"));
-    } catch (e) {
-        next(e);
-    }
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
 // Error Handler Middleware

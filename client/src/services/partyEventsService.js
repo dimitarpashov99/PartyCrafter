@@ -1,26 +1,31 @@
 import { apiCall } from "./utils";
 
+const uri = "events";
+
 const searchEventByCode = async (eventCode) => {
-    const uri = "events/" + eventCode;
-    return await apiCall().get(uri);
+    const service = uri + eventCode;
+    return await apiCall().get(service);
 };
 
-const getOpenPartyEvents = async (location) => {
-    return await apiCall().get("events/public", {
+const getOpenPartyEvents = async (city) => {
+    const service = `${uri}/public`;
+    return await apiCall().get(service, {
         params: {
-            location: location,
+            city: city,
         },
     });
 };
 
 const createPartyEvent = async (partyEventData) => {
-    return await apiCall().post("events", {
+    const service = `${uri}`;
+    return await apiCall().post(service, {
         partyEventData: partyEventData,
     });
 };
 
 const updatePartyEvent = async (eventCode, partyEventData) => {
-    return await apiCall().put("events", {
+    const service = `${uri}`;
+    return await apiCall().put(service, {
         params: {
             code: eventCode,
         },
@@ -29,7 +34,8 @@ const updatePartyEvent = async (eventCode, partyEventData) => {
 };
 
 const cancelPartyEvent = async (eventCode) => {
-    return await apiCall().put("events", {
+    const service = `${uri}`;
+    return await apiCall().put(service, {
         params: {
             code: eventCode,
         },
@@ -37,23 +43,41 @@ const cancelPartyEvent = async (eventCode) => {
 };
 
 const deletePartyEvent = async (eventCode) => {
-    return await apiCall().delete("events", {
+    const service = `${uri}`;
+    return await apiCall().delete(service, {
         params: {
             code: eventCode,
         },
     });
 };
 
-const sendMusicRequest = (user) => {
-    
+const getTopPublicEvents = async (city) => {
+    const service = `${uri}/topevents`;
+    return await apiCall().get(service, { params: { city: city } });
 };
 
-export {
+const joinEvent = async (eventCode) => {
+    const service = `${uri}/join`;
+    return await apiCall().post(service, { eventCode: eventCode });
+};
+
+const sendRequest = async (eventCode, request) => {
+    const service = `${uri}/${eventCode}/request"`;
+    return await apiCall().post(service, {
+        eventCode: eventCode,
+        request: request,
+    });
+};
+
+export default {
     searchEventByCode,
     getOpenPartyEvents,
     createPartyEvent,
     updatePartyEvent,
     cancelPartyEvent,
     deletePartyEvent,
-    sendMusicRequest,
+    getTopPublicEvents,
+    getPublicEvents,
+    sendRequest,
+    joinEvent,
 };
