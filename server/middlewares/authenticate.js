@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
 
 const User = require("../models/user");
+const invitation = require("../models/invitation");
 
 /**
  * Authentication middleware to verify authorization token
@@ -27,19 +28,36 @@ const authenticateUser = (req, res, next) => {
                     error: "UNAUTHORIZED! You are not authorized to perform this operation!",
                 });
             } else {
-                User.findOne({
-                    id: decoded.id,
-                    email: decoded.email,
-                }).then((user) => {
-                    if (!user) {
-                        res.status(StatusCodes.NOT_FOUND).json({
-                            error: "Requested user was't found",
+                if (decoded.isGuestToken) {
+                    invitation
+                        .findOne({
+                            guestId: decoded.guestId,
+                            eventCode: decoded.eventCode,
+                        })
+                        .then((guest) => {
+                            if (!guest) {
+                                res.status(StatusCodes.NOT_FOUND).json({
+                                    error: "Requested guest is not valid",
+                                });
+                            } else {
+                                next();
+                            }
                         });
-                    } else {
-                        req.currentUser = user;
-                        next();
-                    }
-                });
+                } else {
+                    User.findOne({
+                        id: decoded.id,
+                        email: decoded.email,
+                    }).then((user) => {
+                        if (!user) {
+                            res.status(StatusCodes.NOT_FOUND).json({
+                                error: "Requested user was't found",
+                            });
+                        } else {
+                            req.currentUser = user;
+                            next();
+                        }
+                    });
+                }
             }
         });
     } else {

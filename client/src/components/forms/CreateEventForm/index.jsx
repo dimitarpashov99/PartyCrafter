@@ -21,7 +21,7 @@ import EventPreview from "../../partyevent/EventPreview";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import CreateFoodMenuForm from "../CreateFoodMenuForm";
-import { createPartyEvent } from "../../../services/partyEventsService";
+import partyEventsService from "../../../services/partyEventsService";
 
 export default class CreateEvent extends React.Component {
     constructor(props) {
@@ -32,8 +32,8 @@ export default class CreateEvent extends React.Component {
                 title: "",
                 description: "",
                 address: {},
-                privateEvent: false,
-                startingDate: new Date(),
+                privateAccess: false,
+                date: new Date(),
                 durationInHours: 0,
                 preferences: {
                     music: false,
@@ -45,8 +45,8 @@ export default class CreateEvent extends React.Component {
                     allowGuestInvites: false,
                     assignGuestTables: false,
                 },
-                chosenPlaylist: null,
-                chosenFoodMenu: null,
+                musicPlaylist: null,
+                foodMenu: null,
                 tableCount: 1,
                 guestList: null,
             },
@@ -71,7 +71,7 @@ export default class CreateEvent extends React.Component {
     }
 
     submitCreateForm() {
-        createPartyEvent(this.state.eventData).then(() => {
+        partyEventsService.createPartyEvent(this.state.eventData).then(() => {
             this.setState({ eventSubmitted: true });
         });
     }

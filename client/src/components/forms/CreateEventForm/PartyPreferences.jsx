@@ -123,8 +123,8 @@ function StepThree(props) {
     const [playlistModalOpen, setPLModalOpen] = useState(false);
     const formState = props.formState;
     const handleFormChange = props.handleFormChange;
-    const [chosenPlaylist, setPlaylist] = useState(demoPlayLists[0]);
-    const eventMenu = formState.chosenFoodMenu || "";
+    const [musicPlaylist, setPlaylist] = useState(demoPlayLists[0]);
+    const eventMenu = formState.foodMenu || "";
     const sliderSettings = {
         centerMode: true,
         infinite: true,
@@ -136,20 +136,20 @@ function StepThree(props) {
         lazyLoad: true,
         afterChange: (current) => {
             setPlaylist(demoPlayLists[current]);
-            formState.chosenPlaylist = chosenPlaylist;
+            formState.musicPlaylist = musicPlaylist;
             handleFormChange(formState);
         },
     };
     useEffect(() => {
         if (
             formState.preferences.music &&
-            !formState.chosenPlaylist
+            !formState.musicPlaylist
         ) {
             setPlaylist(demoPlayLists[0]);
-            formState.chosenPlaylist = chosenPlaylist;
+            formState.musicPlaylist = musicPlaylist;
             handleFormChange(formState);
         }
-    }, [formState, handleFormChange, chosenPlaylist]);
+    }, [formState, handleFormChange, musicPlaylist]);
     const PlaylistElement = (props) => {
         let playlist = props.playlist;
         return (
@@ -262,7 +262,7 @@ function StepThree(props) {
                                 }}
                             >
                                 <Typography variant="body1">
-                                    {chosenPlaylist.label}
+                                    {musicPlaylist.label}
                                 </Typography>
                                 <TableContainer component={Paper}>
                                     <Table
@@ -277,7 +277,7 @@ function StepThree(props) {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {chosenPlaylist.songList.map(
+                                            {musicPlaylist.songList.map(
                                                 (song) => {
                                                     return (
                                                         <React.Fragment
@@ -352,7 +352,7 @@ function StepThree(props) {
                                             name="event-preferences-menu"
                                             value={eventMenu.id || ""}
                                             onChange={(e) => {
-                                                formState.chosenFoodMenu =
+                                                formState.foodMenu =
                                                     e.target.value;
                                                 handleFormChange(formState);
                                             }}

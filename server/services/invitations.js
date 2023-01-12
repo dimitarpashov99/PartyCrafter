@@ -14,53 +14,62 @@ const getInvitations = async (userId) => {
 };
 
 const getInvitation = async (inviteId) => {
-    const invitations = await Invitation.findOneById(inviteId);
-    if (!invitations) {
+    const invitation = await Invitation.findOneById(inviteId);
+    if (!invitation) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             "No invitations found for user"
         );
     }
-    return invitations;
+    return invitation;
 };
 
-const getInvitationsByGuestName = async (guestName) => {
-    const invitations = await Invitation.find({ guestName: guestName });
-    if (!invitations) {
+const findInvitationByGuestName = async (eventCode, guestName) => {
+    const invitation = await Invitation.findOne({
+        eventCode: eventCode,
+        guestName: guestName,
+    });
+    if (!invitation) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             "No invitations found for user"
         );
     }
-    return invitations;
+    return invitation;
 };
 
-const getInvitationsByGuestEmail = async (guestEmail) => {
-    const invitations = await Invitation.find({ guestEmail: guestEmail });
-    if (!invitations) {
+const findInvitationByGuestEmail = async (eventCode, guestEmail) => {
+    const invitation = await Invitation.findOne({
+        eventCode: eventCode,
+        guestEmail: guestEmail,
+    });
+    if (!invitation) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             "No invitations found for user"
         );
     }
-    return invitations;
+    return invitation;
 };
 
-const getInvitationsByGuestPhone = async (guestPhone) => {
-    const invitations = await Invitation.find({ guestPhone: guestPhone });
-    if (!invitations) {
+const findInvitationByGuestPhone = async (eventCode, guestPhone) => {
+    const invitation = await Invitation.findOne({
+        eventCode: eventCode,
+        guestPhone: guestPhone,
+    });
+    if (!invitation) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             "No invitations found for user"
         );
     }
-    return invitations;
+    return invitation;
 };
 
 module.exports = {
     getInvitations,
     getInvitation,
-    getInvitationsByGuestName,
-    getInvitationsByGuestEmail,
-    getInvitationsByGuestPhone,
+    findInvitationByGuestName,
+    findInvitationByGuestEmail,
+    findInvitationByGuestPhone,
 };

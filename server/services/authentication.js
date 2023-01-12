@@ -70,9 +70,12 @@ const changePassword = async (userId, oldPassword, newPassword) => {
         throw new ApiError(StatusCodes.BAD_REQUEST, "User not found");
     }
 
-    const match = await bcrypt.compare(oldPassword, user.passwordHash); 
-    if(!match){
-        throw new ApiError(StatusCodes.BAD_REQUEST, "User password doesn't match")
+    const match = await bcrypt.compare(oldPassword, user.passwordHash);
+    if (!match) {
+        throw new ApiError(
+            StatusCodes.BAD_REQUEST,
+            "User password doesn't match"
+        );
     }
 
     const newPasswordHash = await bcrypt.hash(newPassword, 10);
@@ -80,8 +83,20 @@ const changePassword = async (userId, oldPassword, newPassword) => {
     return await user.save();
 };
 
+const generateGuestToken = (guestId, eventCode) => {
+    return jwt.sign(
+        {
+            guestId: guestId,
+            eventCode: eventCode,
+            isGuestToken: true,
+        },
+        process.env.TOKEN_SECRET_KEY
+    );
+};
+
 module.exports = {
     login,
     register,
-    changePassword
+    changePassword,
+    generateGuestToken,
 };

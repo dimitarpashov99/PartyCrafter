@@ -14,6 +14,7 @@ import { AuthProvider } from "../contexts";
 
 import ProtectedRoutes from "./protected-routes";
 import AccountPage from "../pages/account";
+import Preview from "../pages/PCEvents/Preview";
 
 const AppRoutes = () => {
     return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
                                     element={<CreateEvent />}
                                 />
                             </Route>
+                            <Route path="preview/:code" element={<Preview />} />
                             <Route path="join" element={<JoinEvent />} />
                         </Route>
                         <Route path="contactus" element={<ContactUs />} />

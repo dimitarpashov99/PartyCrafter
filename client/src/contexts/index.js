@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     const [auth, setAuth] = React.useState({
         authenticated: false,
         profile: null,
+        invitations: [],
     });
 
     return (

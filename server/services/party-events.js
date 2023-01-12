@@ -2,17 +2,31 @@ const { StatusCodes } = require("http-status-codes");
 const PartyEvent = require("../models/partyEvent");
 const ApiError = require("../utils/APIError");
 const crypto = require("crypto");
+const Invitation = require("../models/invitation");
 
 const create = async (data, host) => {
     const eventCode = crypto.randomBytes(7).toString("hex");
+    const guestList = data.guestList?.map((guest) => {
+        const guestInvitation = new Invitation({
+            guestId: guest.id,
+            eventCode: eventCode,
+            guestName: guest.name,
+            guestEmail: guest.email,
+            guestPhone: guest.phone,
+            createdOn: new Date(),
+            status: "pending",
+        });
+        guestInvitation.save();
+        return { ...guest, status: "invited" };
+    });
     const newEvent = new PartyEvent({
         title: data.title,
         description: data.description,
         address: data.address,
         type: data?.partyType || "default",
         hostId: host.id,
-        privateAccess: data.privateEvent,
-        date: new Date(data.startingDate),
+        privateAccess: data.privateAccess,
+        date: new Date(data.date),
         preferences: {
             music: data.preferences.music,
             foodMenu: data.preferences.foodMenu,
@@ -22,10 +36,10 @@ const create = async (data, host) => {
             allowGuestInvites: data.preferences.allowGuestInvites,
             assignGuestTables: data.preferences.assignGuestTables,
         },
-        musicPlaylist: data.chosenPlaylist,
-        foodMenu: data.chosenFoodMenu,
+        musicPlaylist: data.musicPlaylist,
+        foodMenu: data.foodMenu,
         tableCount: data.tableCount,
-        guestList: data.guestList,
+        guestList: guestList,
         code: eventCode,
     });
 
@@ -79,6 +93,26 @@ const deleteEvent = async (id) => {
     return result;
 };
 
+const joinEvent = async (code, guestId) => {
+    const event = await PartyEvent.findOne({ code: code });
+    const guestIndex = event.guestList.findIndex((guest) => {
+        return guestId === guest.id;
+    });
+    if (!guestIndex) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Guest Not found");
+    }
+    const guest = event.guestList[guestIndex];
+    if (guest) {
+        event.guestList[guestIndex] = { ...guest, status: "joined" };
+        await Invitation.findOneAndUpdate(
+            { guestId: guestId },
+            { status: "accepted" }
+        );
+    }
+    await event.save();
+    return event;
+};
+
 module.exports = {
     create,
     getById,
@@ -87,4 +121,5 @@ module.exports = {
     getByCode,
     updateEvent,
     deleteEvent,
+    joinEvent,
 };

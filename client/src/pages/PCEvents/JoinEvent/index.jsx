@@ -11,7 +11,7 @@ import {
     Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { searchEventByCode } from "../../../services/partyEventsService";
+import partyEventsService from "../../../services/partyEventsService";
 import LoginForm from "../../../components/forms/Authentication/LoginForm";
 import JoinEventForm from "../../../components/forms/JoinEventForm";
 
@@ -19,11 +19,9 @@ const JoinEvent = () => {
     const [eventCodeSubmitted, setEventCodeSubmitted] = useState(false);
     const searchEvent = async () => {
         if (eventCode) {
-            const response = searchEventByCode(eventCode);
+            const response = partyEventsService.searchEventByCode(eventCode);
             if (response.success) {
                 setEventCodeSubmitted(true);
-            } else {
-                showError();
             }
         }
     };

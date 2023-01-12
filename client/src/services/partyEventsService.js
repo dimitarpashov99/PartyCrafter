@@ -2,8 +2,8 @@ import { apiCall } from "./utils";
 
 const uri = "events";
 
-const searchEventByCode = async (eventCode) => {
-    const service = uri + eventCode;
+const getEvent = async (eventCode) => {
+    const service = `${uri}/${eventCode}`;
     return await apiCall().get(service);
 };
 
@@ -56,9 +56,9 @@ const getTopPublicEvents = async (city) => {
     return await apiCall().get(service, { params: { city: city } });
 };
 
-const joinEvent = async (eventCode) => {
+const joinEvent = async (data) => {
     const service = `${uri}/join`;
-    return await apiCall().post(service, { eventCode: eventCode });
+    return await apiCall().post(service, data);
 };
 
 const sendRequest = async (eventCode, request) => {
@@ -70,14 +70,13 @@ const sendRequest = async (eventCode, request) => {
 };
 
 export default {
-    searchEventByCode,
+    getEvent,
     getOpenPartyEvents,
     createPartyEvent,
     updatePartyEvent,
     cancelPartyEvent,
     deletePartyEvent,
     getTopPublicEvents,
-    getPublicEvents,
     sendRequest,
     joinEvent,
 };

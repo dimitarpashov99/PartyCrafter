@@ -12,7 +12,11 @@ export default function Login() {
         if (result?.success) {
             const data = result?.data;
             localStorage.setItem("access_token", data?.accessToken);
-            setAuth({ authenticated: true, profile: data?.profile });
+            setAuth({
+                authenticated: true,
+                profile: data?.profile,
+                invitations: data?.invitations,
+            });
             navigation("/home");
         }
     };

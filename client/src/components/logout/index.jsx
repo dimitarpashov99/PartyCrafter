@@ -50,7 +50,7 @@ const LogoutDiag = ({ isOpen, setOpen }) => {
     };
     const handleLogout = () => {
         // AuthService.logout().then(() => {
-        setAuth({ authenticated: false, profile: null });
+        setAuth({ authenticated: false, profile: null, invitations: [] });
         setOpen(false);
         navigate("/home");
         // });

@@ -2,6 +2,10 @@ const Event = require("../models/partyEvent");
 
 const catchAsync = require("../utils/catchAsync");
 const partyEventsService = require("../services/party-events");
+const invitationsService = require("../services/invitations");
+const authService = require("../services/authentication");
+const ApiError = require("../utils/APIError");
+const { StatusCodes } = require("http-status-codes");
 
 const getById = [
     catchAsync(async (req, res, next) => {
@@ -54,8 +58,58 @@ const changePreferance = [
 const join = [
     catchAsync(async (req, res) => {
         const user = req.currentUser;
-        const eventCode = req.body?.code;
-        const event = await partyEventsService.getByCode(eventCode);
+        const eventCode = req.body?.eventCode;
+        const guestIdentifier = req.body?.guestIdentifier;
+        const guestIdentifierType = req.body?.guestIdentifierType;
+        let invite;
+        switch (guestIdentifierType) {
+            case "name":
+                invite = await invitationsService.findInvitationByGuestName(
+                    eventCode,
+                    guestIdentifier
+                );
+                break;
+            case "email":
+                invite = await invitationsService.findInvitationByGuestEmail(
+                    eventCode,
+                    guestIdentifier
+                );
+                break;
+            case "phone":
+                invite = await invitationsService.findInvitationByGuestPhone(
+                    eventCode,
+                    guestIdentifier
+                );
+                break;
+            default:
+                throw new ApiError(
+                    StatusCodes.BAD_REQUEST,
+                    "Identifier must be provided"
+                );
+        }
+        if (!invite) {
+            throw new ApiError(
+                StatusCodes.NOT_FOUND,
+                "Invitation not found for this event"
+            );
+        }
+        const event = await partyEventsService.joinEvent(
+            eventCode,
+            invite.guestId
+        );
+        const result = {
+            success: true,
+            eventCode: event.code,
+        };
+        if (!req.currentUser) {
+            const token = authService.generateGuestToken(
+                eventCode,
+                invite.guestId
+            );
+            result.accessToken = token;
+        }
+
+        res.json(result);
     }),
 ];
 module.exports = {

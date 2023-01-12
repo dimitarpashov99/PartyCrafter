@@ -1,6 +1,6 @@
 import React from "react";
 import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
-
+import { useState } from "react";
 const LocationMap = (props) => {
     const { isLoaded } = useJsApiLoader({
         id: "google-map-script",

@@ -25,7 +25,7 @@ function StepOne(props) {
     const [eventImage, setImage] = useState();
     const [selectedFile, setSelectedFile] = useState(formState.eventImage);
     const handleChangeDate = (newValue) => {
-        setFormState((current) => ({ ...current, startingDate: newValue }));
+        setFormState((current) => ({ ...current, date: newValue }));
     };
     useEffect(() => {
         if (!selectedFile) {
@@ -83,7 +83,7 @@ function StepOne(props) {
                     <Stack direction="row" spacing={2} sx={{ paddingTop: 5 }}>
                         <DateTimePicker
                             label="Event Date"
-                            value={formState.startingDate}
+                            value={formState.date}
                             onChange={handleChangeDate}
                             minDate={new Date()}
                             ampm={false}
@@ -140,11 +140,11 @@ function StepOne(props) {
                             sx={{ my: 2 }}
                             control={
                                 <Switch
-                                    checked={formState?.privateEvent}
+                                    checked={formState?.privateAccess}
                                     onChange={(e) => {
                                         setFormState((current) => ({
                                             ...current,
-                                            privateEvent: e.target.checked,
+                                            privateAccess: e.target.checked,
                                         }));
                                     }}
                                 />

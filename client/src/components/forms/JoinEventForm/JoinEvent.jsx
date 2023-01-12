@@ -1,4 +1,4 @@
-import { List, ListItem } from "@mui/material";
+import { Box, List, ListItem } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { AuthConsumer } from "../../../contexts";
@@ -6,9 +6,17 @@ import LoginForm from "../Authentication/LoginForm";
 
 const JoinEvent = () => {
     const { auth } = AuthConsumer();
-    const [userInvitations, setUserInvitations] = useState({});
+    const [userInvitations, setUserInvitations] = useState([]);
     const handleLogin = (result) => {
-        if (result.success) {
+        const { setAuth } = AuthConsumer();
+        if (result?.success) {
+            const data = result?.data;
+            localStorage.setItem("access_token", data?.accessToken);
+            setAuth({
+                authenticated: true,
+                profile: data?.profile,
+                invitations: data?.invitations,
+            });
             setUserInvitations(result.data.invitations);
         }
     };

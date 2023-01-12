@@ -15,8 +15,6 @@ import {
 } from "@mui/material";
 
 import { LoginOutlined } from "@mui/icons-material";
-
-import { LockOutlined } from "@mui/icons-material";
 import AuthService from "../../../services/authService";
 
 export default class LoginForm extends React.Component {
@@ -84,9 +82,6 @@ export default class LoginForm extends React.Component {
                     Sign in
                 </Typography>
                 <Box
-                    component="form"
-                    onSubmit={this.handleSubmit}
-                    noValidate
                     sx={{ mt: 1, px: 4 }}
                 >
                     {this.state.validationError && (
@@ -130,10 +125,10 @@ export default class LoginForm extends React.Component {
                         label="Remember me"
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        onClick={this.handleSubmit}
                     >
                         Sign In
                     </Button>

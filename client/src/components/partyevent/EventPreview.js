@@ -10,22 +10,15 @@ import {
     Typography,
 } from "@mui/material";
 
-import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
-
 import GuestList from "./GuestListGrid";
-const libraries = ["places"];
+import LocationMap from "../location-map";
 
 const EventPreview = (props) => {
     const eventData = props.formState;
     const [eventImage, setImage] = useState();
-    const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-    const { chosenPlaylist, chosenFoodMenu } = eventData;
+    const { musicPlaylist, foodMenu } = eventData;
     const locationCoorinates = { lat: 48.8584, lng: 2.2945 };
-    const { isLoaded } = useJsApiLoader({
-        id: "google-map-script",
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        libraries: libraries,
-    });
+
     useEffect(() => {
         if (!eventData.eventImage) {
             setImage(undefined);
@@ -38,7 +31,7 @@ const EventPreview = (props) => {
         return () => URL.revokeObjectURL(objectUrl);
     }, [eventData]);
     return (
-        <Box sx={{ maxWidth: "70vw", marginX: "auto", marginY: 5 }}>
+        <Box sx={{ maxWidth: "70vw", marginX: "auto", marginY: 5, color: 'text.primary' }}>
             <Stack spacing={2}>
                 <Box
                     sx={{
@@ -52,21 +45,21 @@ const EventPreview = (props) => {
                         borderColor: "primary.main",
                     }}
                 >
-                    <Typography variant="h6">Event info</Typography>
+                    <Typography variant="h6" color='primary'>Event info</Typography>
                     <Box>
                         <Grid container>
                             <Grid item md={6} sx={{ textAlign: "center" }}>
                                 <Stack spacing={1} sx={{ textAlign: "start" }}>
-                                    <Typography variant="body1">
+                                    <Typography variant="body1" color='primary'>
                                         Party Title: {"\n"} {eventData.title}
                                     </Typography>
-                                    <Typography variant="body1">
+                                    <Typography variant="body1" color='primary'>
                                         Date:{" "}
-                                        {eventData.startingDate.toLocaleString()}
+                                        {new Date(eventData.date).toLocaleString()}
                                     </Typography>
-                                    <Typography variant="body1">
+                                    <Typography variant="body1" color='primary'>
                                         Access:{" "}
-                                        {eventData.privateEvent
+                                        {eventData.privateAccess
                                             ? "Private"
                                             : "Public"}
                                     </Typography>
@@ -92,10 +85,10 @@ const EventPreview = (props) => {
                             <Grid item>
                                 {eventData.description && (
                                     <React.Fragment>
-                                        <Typography variant="body1">
+                                        <Typography variant="body1" color='primary'>
                                             Description:
                                         </Typography>
-                                        <Typography variant="body1">
+                                        <Typography variant="body1" color='primary'>
                                             {eventData.description}
                                         </Typography>
                                     </React.Fragment>
@@ -117,22 +110,22 @@ const EventPreview = (props) => {
                         borderColor: "primary.main",
                     }}
                 >
-                    <Typography variant="h6">Location</Typography>
+                    <Typography variant="h6" color='primary'>Location</Typography>
                     {eventData.address ? (
                         <Grid container columns={12} spacing={2}>
                             <Grid item md={6}>
                                 <Stack direction="column">
-                                    <Typography variant="body1">
+                                    <Typography variant="body1" color='primary'>
                                         Address: {eventData.address?.address1}
                                     </Typography>
                                     {eventData.address?.address2 && (
-                                        <Typography variant="body1">
+                                        <Typography variant="body1" color='primary'>
                                             Additional Address:{" "}
                                             {eventData.address?.address1}
                                         </Typography>
                                     )}
                                     {eventData.address?.address2 && (
-                                        <Typography variant="body1">
+                                        <Typography variant="body1" color='primary'>
                                             City: {eventData.address?.city} ,
                                             Country:{" "}
                                             {eventData.address?.country}
@@ -141,28 +134,11 @@ const EventPreview = (props) => {
                                 </Stack>
                             </Grid>
                             <Grid item md={6} sx={{ height: 200 }}>
-                                {isLoaded && (
-                                    <GoogleMap
-                                        state={map}
-                                        center={locationCoorinates}
-                                        zoom={15}
-                                        mapContainerStyle={{
-                                            width: "100%",
-                                            height: "100%",
-                                        }}
-                                        options={{
-                                            zoomControl: false,
-                                            streetViewControl: false,
-                                            mapTypeControl: false,
-                                            fullscreenControl: false,
-                                        }}
-                                        onLoad={(map) => setMap(map)}
-                                    ></GoogleMap>
-                                )}
+                                <LocationMap center={locationCoorinates} />
                             </Grid>
                         </Grid>
                     ) : (
-                        <Typography variant="body">
+                        <Typography variant="body" color='primary'>
                             Location is not mentioned
                         </Typography>
                     )}
@@ -194,13 +170,13 @@ const EventPreview = (props) => {
                         </Box>
                     ) : (
                         <Box>
-                            <Typography variant="body1">
+                            <Typography variant="body1" color='primary'>
                                 No Guest invatations
                             </Typography>
                         </Box>
                     )}
                 </Box>
-                {(chosenPlaylist || chosenFoodMenu) && (
+                {(musicPlaylist || foodMenu) && (
                     <Box
                         sx={{
                             padding: 2,
@@ -210,12 +186,12 @@ const EventPreview = (props) => {
                         }}
                     >
                         <React.Fragment>
-                            <Typography variant="h6">
+                            <Typography variant="h6" color='primary'>
                                 Additional info
                             </Typography>
                             <Grid container spacing={1} sx={{ height: "100%" }}>
                                 <Grid item md={6}>
-                                    {chosenPlaylist && (
+                                    {musicPlaylist && (
                                         <Box
                                             sx={{
                                                 padding: 2,
@@ -224,7 +200,7 @@ const EventPreview = (props) => {
                                                 borderRadius: "12px",
                                             }}
                                         >
-                                            <Typography variant="body1">
+                                            <Typography variant="body1" color='primary'>
                                                 Music
                                             </Typography>
 
@@ -233,17 +209,17 @@ const EventPreview = (props) => {
                                                     <CardMedia
                                                         component="img"
                                                         alt={
-                                                            chosenPlaylist?.label
+                                                            musicPlaylist?.label
                                                         }
                                                         image={
-                                                            chosenPlaylist?.coverSrc
+                                                            musicPlaylist?.coverSrc
                                                         }
                                                         height={200}
                                                     ></CardMedia>
                                                     <CardContent>
-                                                        <Typography variant="body1">
+                                                        <Typography variant="body1" color='primary'>
                                                             {
-                                                                chosenPlaylist?.label
+                                                                musicPlaylist?.label
                                                             }
                                                         </Typography>
                                                     </CardContent>
@@ -253,7 +229,7 @@ const EventPreview = (props) => {
                                     )}
                                 </Grid>
                                 <Grid item md={6}>
-                                    {chosenFoodMenu && (
+                                    {foodMenu && (
                                         <Box
                                             sx={{
                                                 padding: 2,
@@ -262,7 +238,7 @@ const EventPreview = (props) => {
                                                 borderRadius: "12px",
                                             }}
                                         >
-                                            <Typography variant="body1">
+                                            <Typography variant="body1" color='primary'>
                                                 Foods & Drinks
                                             </Typography>
                                         </Box>
