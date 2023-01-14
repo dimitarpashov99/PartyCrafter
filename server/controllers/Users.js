@@ -4,9 +4,8 @@ const userService = require("../services/users");
 const addressService = require("../services/address");
 const ApiError = require("../utils/APIError");
 const { StatusCodes } = require("http-status-codes");
-const { validationResult } = require("express-validator");
 
-const getUserProfile = catchAsync(async (req, res) => {
+const get = catchAsync(async (req, res) => {
     const userId = req.params.id;
     if (!userId) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Missing id parameter");

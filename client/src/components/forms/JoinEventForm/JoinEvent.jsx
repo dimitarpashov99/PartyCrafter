@@ -1,7 +1,8 @@
-import { Box, List, ListItem } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { AuthConsumer } from "../../../contexts";
+import InvitationsPreview from "../../invitations-preview";
 import LoginForm from "../Authentication/LoginForm";
 
 const JoinEvent = () => {
@@ -21,22 +22,18 @@ const JoinEvent = () => {
         }
     };
     return (
-        <>
+        <React.Fragment>
             {auth.authenticated ? (
                 <Box>
-                    Your invitations
-                    <List>
-                        {userInvitations?.map((invite) => (
-                            <ListItem key={invite.id}></ListItem>
-                        ))}
-                    </List>
+                    <Typography component="h4" variant="h5">
+                        Your invitations
+                    </Typography>
+                    <InvitationsPreview invitations={userInvitations} />
                 </Box>
             ) : (
-                <Box component="form">
-                    <LoginForm handleLogin={handleLogin} />
-                </Box>
+                <LoginForm handleLogin={handleLogin} />
             )}
-        </>
+        </React.Fragment>
     );
 };
 

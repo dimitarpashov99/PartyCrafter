@@ -4,7 +4,7 @@ const ApiError = require("../utils/APIError");
 const crypto = require("crypto");
 const Invitation = require("../models/invitation");
 
-const create = async (data, host) => {
+const createPartyEvent = async (data, host) => {
     const eventCode = crypto.randomBytes(7).toString("hex");
     const guestList = data.guestList?.map((guest) => {
         const guestInvitation = new Invitation({
@@ -54,7 +54,7 @@ const create = async (data, host) => {
     }
 };
 
-const getById = async (id) => {
+const getPartyEventById = async (id) => {
     const event = await PartyEvent.findById(id);
     if (!event) {
         throw new ApiError(StatusCodes.NOT_FOUND, "Party event doesn't exist");
@@ -62,27 +62,15 @@ const getById = async (id) => {
     return event;
 };
 
-const getByCode = async (code) => {
-    const event = await PartyEvent.findOne({ code: code });
-    if (!event) {
-        throw new ApiError(StatusCodes.NOT_FOUND, "Party event doesn't exist");
-    }
-    return event;
-};
-
-const getAsQuery = async (filter, options) => {
+const getPartyEventsAsQuery = async (filter, options) => {
     return await PartyEvent.find(filter, options);
 };
 
-const getPublicEvents = async () => {
-    return await PartyEvent.find({ privateAccess: true }).limit(10);
-};
-
-const updateEvent = async (id, data) => {
+const updatePartyEvent = async (id, data) => {
     return await PartyEvent.findByIdAndUpdate(id, { $set: data });
 };
 
-const deleteEvent = async (id) => {
+const deletePartyEvent = async (id) => {
     const result = await PartyEvent.findByIdAndRemove(id);
     if (!result) {
         throw new ApiError(
@@ -93,33 +81,45 @@ const deleteEvent = async (id) => {
     return result;
 };
 
-const joinEvent = async (code, guestId) => {
-    const event = await PartyEvent.findOne({ code: code });
-    const guestIndex = event.guestList.findIndex((guest) => {
-        return guestId === guest.id;
-    });
-    if (!guestIndex) {
-        throw new ApiError(StatusCodes.NOT_FOUND, "Guest Not found");
-    }
-    const guest = event.guestList[guestIndex];
-    if (guest) {
-        event.guestList[guestIndex] = { ...guest, status: "joined" };
-        await Invitation.findOneAndUpdate(
-            { guestId: guestId },
-            { status: "accepted" }
-        );
-    }
-    await event.save();
-    return event;
-};
+// const joinEvent = async (code, guestId) => {
+//     const event = await PartyEvent.findOne({ code: code });
+//     const guestIndex = event.guestList.findIndex((guest) => {
+//         return guestId === guest.id;
+//     });
+//     if (!guestIndex) {
+//         throw new ApiError(StatusCodes.NOT_FOUND, "Guest Not found");
+//     }
+//     const guest = event.guestList[guestIndex];
+//     if (guest) {
+//         event.guestList[guestIndex] = { ...guest, status: "joined" };
+//         await Invitation.findOneAndUpdate(
+//             { guestId: guestId },
+//             { status: "accepted" }
+//         );
+//     }
+//     await event.save();
+//     return event;
+// };
+
+// const rateEvent = async (guestId, eventCode, rate) => {
+//     const event = await PartyEvent.findOne({ code: eventCode });
+//     const validGuest = event.guestList.find((guest) => {
+//         return guestId === guest.id;
+//     });
+//     if (!validGuest) {
+//         throw new ApiError(StatusCodes.NOT_FOUND, "Guest Not found");
+//     }
+//     const currentRating = event.rating || 0;
+//     const newRating = (currentRating + rate) / event.ratesCount + 1;
+//     event.rating = newRating;
+//     await event.save();
+//     return event;
+// };
 
 module.exports = {
-    create,
-    getById,
-    getAsQuery,
-    getPublicEvents,
-    getByCode,
-    updateEvent,
-    deleteEvent,
-    joinEvent,
+    createPartyEvent,
+    getPartyEventById,
+    getPartyEventsAsQuery,
+    updatePartyEvent,
+    deletePartyEvent,
 };

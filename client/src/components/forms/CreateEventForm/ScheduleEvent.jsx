@@ -127,7 +127,7 @@ function StepOne(props) {
                             onClick={() => {
                                 setFormState((current) => ({
                                     ...current,
-                                    durationInHours: current.durationInHours + 1,
+                                    durationInHours: current.durationInHours++,
                                 }));
                             }}
                             variant="outlined"

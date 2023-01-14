@@ -2,14 +2,15 @@ const { StatusCodes } = require("http-status-codes");
 const ApiError = require("../utils/APIError");
 const Menu = require("../models/menu");
 
-const getById = async (menuId) => {};
-
-const createCustomMenu = async (userId, menuData) => {
-    const user = User.findById(userId);
-    if (!user) {
+const getFoodMenuById = async (menuId) => {
+    const menu = Menu.findById(menuId);
+    if (!menu) {
         throw new ApiError(StatusCodes.NOT_FOUND, err.message);
     }
+    return menu;
+};
 
+const createFoodMenu = async (menuData) => {
     const newFoodMenu = new Menu({
         title: foodMenuData,
         createdBy: user._id,
@@ -23,18 +24,11 @@ const createCustomMenu = async (userId, menuData) => {
             itemName: item.itemName,
         });
     });
+
     await newFoodMenu.save();
 };
 
-const getCustomMenu = async (userId, menuId) => {
-    const customMenu = await Menu.find({ _id: menuId, createdBy: userId });
-    if (!customMenu) {
-        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
-    }
-    return customMenu;
-};
-
-const getAllCustomMenus = async (userId) => {
+const getAllFoodMenusAsQuery = async (userId) => {
     const customMenu = await Menu.find({ createdBy: userId });
     if (!customMenu) {
         throw new ApiError(StatusCodes.NOT_FOUND, err.message);
@@ -42,19 +36,18 @@ const getAllCustomMenus = async (userId) => {
     return customMenu;
 };
 
-const updateCustomMenu = async (menuId, menuData) => {
+const updateFoodMenu = async (menuId, menuData) => {
     return await Menu.findByIdAndUpdate(menuId, { $set: menuData });
 };
 
-const deleteCustomMenu = async (menuId) => {
+const removeFoodMenu = async (menuId) => {
     return await Menu.findByIdAndRemove(menuId);
 };
 
 module.exports = {
-    createCustomMenu,
-    getById,
-    getCustomMenu,
-    getAllCustomMenus,
-    updateCustomMenu,
-    deleteCustomMenu,
+    createFoodMenu,
+    getFoodMenuById,
+    getAllFoodMenusAsQuery,
+    updateFoodMenu,
+    removeFoodMenu,
 };

@@ -11,6 +11,5 @@ router
 
 router.route("/:code").get(requireUserToken, controller.getByCode);
 
-router.post("/join", requireUserToken, controller.join);
 
 module.exports = router;

@@ -57,7 +57,6 @@ const changePreferance = [
 
 const join = [
     catchAsync(async (req, res) => {
-        const user = req.currentUser;
         const eventCode = req.body?.eventCode;
         const guestIdentifier = req.body?.guestIdentifier;
         const guestIdentifierType = req.body?.guestIdentifierType;
@@ -112,6 +111,24 @@ const join = [
         res.json(result);
     }),
 ];
+
+const rateEvent = [
+    catchAsync(async (req, res) => {
+        const userId = req.isGuest ? req.currentUser : req.currentUser.id;
+        const eventCode = req.body?.eventCode;
+        const rate = req.body?.rate;
+        const result = await partyEventsService.rateEvent(
+            userId,
+            eventCode,
+            rate
+        );
+        if (!result) {
+            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, null);
+        }
+        res.json({ success: true });
+    }),
+];
+
 module.exports = {
     getById,
     getByCode,
@@ -119,4 +136,5 @@ module.exports = {
     remove,
     changePreferance,
     join,
+    rateEvent,
 };

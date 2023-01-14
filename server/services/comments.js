@@ -2,17 +2,20 @@ const { StatusCodes } = require("http-status-codes");
 const Comment = require("../models/comment");
 const ApiError = require("../utils/APIError");
 
-const create = async (userId, eventId, data) => {
+
+const createComment = async (data) => {
     const newComment = new Comment({
-        eventId: eventId,
-        senderId: userId,
-        ...data,
+        eventId: data.eventId,
+        senderId: data.userId,
+        body: data.body,
+        createOn: data.createOn || new Date(),
+        likes: 0,
     });
     await newComment.save();
     return { success: true };
 };
 
-const getById = async (commentId) => {
+const getCommentById = async (commentId) => {
     const comment = await Comment.findById(commentId);
     if (!comment) {
         throw new ApiError(StatusCodes.NOT_FOUND, "Comment not found");
@@ -20,8 +23,12 @@ const getById = async (commentId) => {
     return comment;
 };
 
-const getAllAsQuery = async (filter) => {
-    return await Comment.find(filter).exec();
+const getAllCommentsAsQuery = async (filter) => {
+    const comments = await Comment.find(filter);
+    if (!comments) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Comments not found");
+    }
+    return comments;
 };
 
 const updateComment = async (commentId, data) => {
@@ -41,9 +48,9 @@ const deleteComment = async (commentId) => {
 };
 
 module.exports = {
-    create,
-    getById,
-    getAllAsQuery,
+    createComment,
+    getCommentById,
+    getAllCommentsAsQuery,
     updateComment,
     deleteComment,
 };

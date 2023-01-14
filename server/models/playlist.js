@@ -3,23 +3,18 @@ const mongoose = require("mongoose");
 const musicTrack = mongoose.Schema({
     name: { type: String },
     artist: { type: String },
-    lengthInMinutes: { type: String },
+    duration: { type: String },
     genre: { type: String },
 });
 
 const playlistSchema = mongoose.Schema({
     title: { type: String, required: true },
     shortDescription: { type: String },
-    songList: { type: [musicTrack] },
-    createdOn: { type: Date },
-    createdBy: { type: String },
-    likes: { type: Number, default: 0 },
+    songList: { type: [musicTrack], required: true },
+    createdOn: { type: Date, required: true },
+    createdBy: { type: mongoose.Types.ObjectId },
+    likes: { type: String, default: 0 },
 });
 
-const Playlist = mongoose.model("Playlist", playlistSchema, "music_playlists");
-const MusicTrack = mongoose.model("MusicTrack", musicTrack);
+module.exports = mongoose.model("Playlist", playlistSchema, "music-playlists");
 
-module.exports = {
-    Playlist,
-    MusicTrack,
-};

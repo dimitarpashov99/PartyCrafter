@@ -10,10 +10,11 @@ const eventSchema = mongoose.Schema({
     hostId: { type: String, required: true },
     guestList: { type: Array, required: true },
     foodMenu: { type: Object },
-    musicPlaylist: { type: Object, required: false },
-    tableCount: { type: Number },
+    imageURL: { type: String },
+    rating: { type: Number, default: 0 },
+    musicPlaylist: { type: Object },
+    tableCount: { type: Number, default: 0 },
     preferences: { type: Object },
-    code: { type: String },
 });
 
 module.exports = mongoose.model("Event", eventSchema);

@@ -66,10 +66,41 @@ const findInvitationByGuestPhone = async (eventCode, guestPhone) => {
     return invitation;
 };
 
+const createInvitation = async (eventCode, guestData) => {
+    const newInvitation = new Invitation({
+        eventCode: eventCode,
+        ...guestData,
+    });
+    await newInvitation.save();
+    return { success: true };
+};
+
+const updateInvitation = async (eventCode, guestData) => {
+    const newInvitation = new Invitation({
+        eventCode: eventCode,
+        ...guestData,
+    });
+    await newInvitation.save();
+    return { success: true };
+};
+
+const removeInvitation = async (invitationId) => {
+    const invitation = await Invitation.findByIdAndDelete(invitationId)
+    if (!invitation) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            "No invitations found for user"
+        );
+    }
+    return { success: true };
+};
 module.exports = {
     getInvitations,
     getInvitation,
     findInvitationByGuestName,
     findInvitationByGuestEmail,
     findInvitationByGuestPhone,
+    createInvitation,
+    updateInvitation,
+    removeInvitation,
 };

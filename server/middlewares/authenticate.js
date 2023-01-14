@@ -40,6 +40,8 @@ const authenticateUser = (req, res, next) => {
                                     error: "Requested guest is not valid",
                                 });
                             } else {
+                                req.isGuest = true;
+                                req.currentUser = decoded.guestId;
                                 next();
                             }
                         });

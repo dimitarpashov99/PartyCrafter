@@ -11,10 +11,10 @@ const MenuItem = mongoose.Schema({
 const FoodMenuSchema = mongoose.Schema({
     title: { type: String, required: true },
     createdBy: { type: String, required: true },
-    menuItems: { type: [MenuItem] },
-    createdOn: { type: Date },
+    menuItems: { type: [MenuItem], required: true },
+    createdOn: { type: Date, required: true },
+    userId: {type: mongoose.Types.ObjectId, required: true},
     likes: { type: Number, default: 0 },
-    isCustom: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("FoodMenu", FoodMenuSchema, "food-menus");

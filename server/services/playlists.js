@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const ApiError = require("../utils/APIError");
 const MusicPlaylist = require("../models/playlist");
 
-const create = async (userId, data) => {
+const createMusicPlaylist = async (userId, data) => {
     const songList = data.songList.map((song) => {
         var musicTrack = {
             name: song.name,
@@ -28,7 +28,7 @@ const create = async (userId, data) => {
     });
 };
 
-const getById = async (userId, playlistId) => {
+const getMusicPlaylistById = async (userId, playlistId) => {
     const playlist = await MusicPlaylist.findOne({
         _id: playlistId,
         userId: userId,
@@ -39,7 +39,7 @@ const getById = async (userId, playlistId) => {
     return playlist;
 };
 
-const getAllCustomPlaylists = async (userId) => {
+const getAllMusicPlaylistsAsQuery = async (userId) => {
     const customPlaylist = await MusicPlaylist.find({ createdBy: userId });
     if (!customPlaylist) {
         throw new ApiError(StatusCodes.NOT_FOUND, err.message);
@@ -47,18 +47,18 @@ const getAllCustomPlaylists = async (userId) => {
     return customPlaylist;
 };
 
-const updateCustomPlaylist = async (id, playlistData) => {
+const updateMusicPlaylist = async (id, playlistData) => {
     return await MusicPlaylist.findByIdAndUpdate(id, { $set: playlistData });
 };
 
-const deleteCustomPlaylist = async (id) => {
+const deleteMusicPlaylist = async (id) => {
     return await Menu.findByIdAndRemove(id);
 };
 
 module.exports = {
-    create,
-    getById,
-    getAllCustomPlaylists,
-    updateCustomPlaylist,
-    deleteCustomPlaylist,
+    createMusicPlaylist,
+    getMusicPlaylistById,
+    getAllMusicPlaylistsAsQuery,
+    updateMusicPlaylist,
+    deleteMusicPlaylist,
 };

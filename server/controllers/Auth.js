@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const catchAsync = require("../utils/catchAsync");
 const authService = require("../services/authentication");
+const invitationService = require("../services/invitations");
 const handleValidation = require("../middlewares/handleValidation");
 
 const register = [
@@ -43,8 +44,14 @@ const login = [
     handleValidation,
     catchAsync(async (req, res) => {
         const { email, password } = req.body;
-        const result = await authService.login(email, password);
-        res.json(result);
+        const userData = await authService.login(email, password);
+        const userInvitations = await invitationService.getInvitations(
+            userData.inviteCode
+        );
+        if (userInvitations && userInvitations.length) {
+            userData.invitations = userInvitations;
+        }
+        res.json(userData);
     }),
 ];
 

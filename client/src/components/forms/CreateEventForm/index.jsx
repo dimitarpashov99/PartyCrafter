@@ -34,7 +34,7 @@ export default class CreateEvent extends React.Component {
                 address: {},
                 privateAccess: false,
                 date: new Date(),
-                durationInHours: 0,
+                durationInHours: 1,
                 preferences: {
                     music: false,
                     foodMenu: false,

@@ -1,54 +1,52 @@
 const catchAsync = require("../utils/catchAsync");
 const foodMenuService = require("../services/menus");
 
-const createCustomFoodMenu = [
+const create = [
     catchAsync(async (req, res) => {
         const menuData = req.body?.menuData;
-        const result = await foodMenuService.createCustomMenu(
+        const result = await foodMenuService.createFoodMenu(
             req.currentUser.id,
             menuData
         );
         res.json(result);
     }),
 ];
-const getFoodMenuById = [
+const getById = [
     catchAsync(async (req, res) => {
         const menuId = req.params?.id;
-        const result = await foodMenuService.getById(menuId);
+        const result = await foodMenuService.getFoodMenuById(menuId);
         res.json(result);
     }),
 ];
 
-const getFoodMenusByUserId = [
+const getAll = [
     catchAsync(async (req, res) => {
-        const result = await foodMenuService.getAllCustomMenus(
-            req.currentUser.id
-        );
+        const filter = req.params?.id;
+        const result = await foodMenuService.getAllFoodMenusAsQuery(filter);
         res.json(result);
     }),
 ];
-
-const updateCustomFoodMenu = [
+const update = [
     catchAsync(async (req, res) => {
         const menuId = req.params.id;
         const data = req.body.menuData;
-        const result = await foodMenuService.updateCustomMenu(menuId, data);
+        const result = await foodMenuService.updateFoodMenu(menuId, data);
         res.json(result);
     }),
 ];
 
-const removeCustomFoodMenu = [
+const remove = [
     catchAsync(async (req, res) => {
         const menuId = req.params.id;
-        const result = await foodMenuService.removeCustomFoodMenu(menuId);
+        const result = await foodMenuService.removeFoodMenu(menuId);
         res.json(result);
     }),
 ];
 
 module.exports = {
-    createCustomFoodMenu,
-    getFoodMenuById,
-    getFoodMenusByUserId,
-    updateCustomFoodMenu,
-    removeCustomFoodMenu,
+    create,
+    getById,
+    getAll,
+    update,
+    remove,
 };
