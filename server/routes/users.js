@@ -17,17 +17,6 @@ router
     .delete(requireToken, controller.delete);
 
 router
-    .route("/:userId/addressbook")
-    .get(requireToken, controller.getAddressBook)
-    .post(requireToken, controller.createAddress);
-
-router
-    .route("/:userId/addressbook/:id")
-    .get(requireToken, controller.getAddressById)
-    .put(requireToken, controller.editCustomAddress)
-    .delete(requireToken, controller.removeCustomAddress);
-
-router
     .route("/:userId/playlists")
     .get(requireToken, controller.getAddressBook)
     .post(requireToken, controller.createAddress);

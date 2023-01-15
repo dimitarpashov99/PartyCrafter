@@ -1,6 +1,6 @@
-const { StatusCodes } = require("http-status-codes");
-const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const User = require("../models/user");
+const { StatusCodes } = require("http-status-codes");
 const ApiError = require("../utils/APIError");
 const jwt = require("jsonwebtoken");
 

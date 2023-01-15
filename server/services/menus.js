@@ -5,18 +5,19 @@ const Menu = require("../models/menu");
 const getFoodMenuById = async (menuId) => {
     const menu = Menu.findById(menuId);
     if (!menu) {
-        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+        throw new ApiError(StatusCodes.NOT_FOUND, "Food menu not found");
     }
     return menu;
 };
 
 const createFoodMenu = async (menuData) => {
     const newFoodMenu = new Menu({
-        title: foodMenuData,
-        createdBy: user._id,
+        title: menuData?.title,
+        createdBy: menuData?.userId,
         createdOn: new Date(),
         likes: 0,
     });
+
     menuData.menuItems.forEach((item) => {
         newFoodMenu.menuItems.create({
             type: item.type,
@@ -25,13 +26,13 @@ const createFoodMenu = async (menuData) => {
         });
     });
 
-    await newFoodMenu.save();
+    return await newFoodMenu.save();
 };
 
-const getAllFoodMenusAsQuery = async (userId) => {
-    const customMenu = await Menu.find({ createdBy: userId });
+const getAllFoodMenusAsQuery = async (filter) => {
+    const customMenu = await Menu.find(filter);
     if (!customMenu) {
-        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+        throw new ApiError(StatusCodes.NOT_FOUND, "No food menus found");
     }
     return customMenu;
 };

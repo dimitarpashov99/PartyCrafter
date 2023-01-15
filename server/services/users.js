@@ -18,14 +18,13 @@ const updateUser = async (userId, data) => {
     return result;
 };
 
-const deleteUser = async (userId, data) => {
+const deleteUser = async (userId) => {
     const result = await User.findByIdAndDelete(userId);
     if (!result) {
         throw new ApiError(StatusCodes.NOT_FOUND, "User not found");
     }
     return result;
 };
-
 
 module.exports = {
     getUserById,

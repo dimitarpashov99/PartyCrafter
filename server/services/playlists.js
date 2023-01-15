@@ -7,7 +7,7 @@ const createMusicPlaylist = async (userId, data) => {
         var musicTrack = {
             name: song.name,
             artist: song.artist,
-            lengthInMinutes: song.lengthInMinutes,
+            duration: song.duration,
             genre: song.genre,
         };
         return musicTrack;
@@ -21,6 +21,7 @@ const createMusicPlaylist = async (userId, data) => {
         createdOn: new Date(),
         likes: 0,
     });
+
     return await newPlaylist.save((err) => {
         if (err) {
             throw new ApiError(StatusCodes.BAD_REQUEST, err.message);
@@ -40,11 +41,11 @@ const getMusicPlaylistById = async (userId, playlistId) => {
 };
 
 const getAllMusicPlaylistsAsQuery = async (filter) => {
-    const customPlaylist = await MusicPlaylist.find(filter);
-    if (!customPlaylist) {
-        throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+    const musicPlaylists = await MusicPlaylist.find(filter);
+    if (!musicPlaylists) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Music playlists not found");
     }
-    return customPlaylist;
+    return musicPlaylists;
 };
 
 const updateMusicPlaylist = async (id, playlistData) => {
@@ -52,7 +53,7 @@ const updateMusicPlaylist = async (id, playlistData) => {
 };
 
 const deleteMusicPlaylist = async (id) => {
-    return await Menu.findByIdAndRemove(id);
+    return await MusicPlaylist.findByIdAndRemove(id);
 };
 
 module.exports = {

@@ -1,4 +1,4 @@
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 const catchAsync = require("../utils/catchAsync");
 const authService = require("../services/authentication");
 const invitationService = require("../services/invitations");

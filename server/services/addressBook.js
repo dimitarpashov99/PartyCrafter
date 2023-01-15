@@ -93,25 +93,50 @@ const createAddress = async (addressbookId, data) => {
     return userAddressBook;
 };
 
-const updateAddress = async (addressbookId, addressId) => {
-    const userAddressBook = AddressBook.findById(addressbookId, (err, doc) => {
-        if (err) {
-            throw new ApiError(StatusCodes.NOT_FOUND, err.message);
-        } else {
-            return doc;
+const updateAddress = async (addressbookId, addressId, data) => {
+    const userAddressBook = await AddressBook.findById(
+        addressbookId,
+        (err, doc) => {
+            if (err) {
+                throw new ApiError(StatusCodes.BAD_REQUEST, err.message);
+            } else {
+                if (!doc) {
+                    throw new ApiError(
+                        StatusCodes.NOT_FOUND,
+                        "Address book not found"
+                    );
+                }
+                const address = doc.addresses.id(addressId);
+                if (!doc) {
+                    throw new ApiError(
+                        StatusCodes.NOT_FOUND,
+                        "Address not found"
+                    );
+                }
+                address.set(data);
+                return doc.save();
+            }
         }
-    });
+    );
     return userAddressBook;
 };
 
 const deleteAddress = async (addressbookId, addressId) => {
-    const userAddressBook = AddressBook.findById(addressbookId, (err, doc) => {
-        if (err) {
-            throw new ApiError(StatusCodes.NOT_FOUND, err.message);
-        } else {
-            return doc;
+    const userAddressBook = await AddressBook.findById(
+        addressbookId,
+        (err, doc) => {
+            if (err) {
+                throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+            } else {
+                const address = doc.addresses.id(addressId);
+                if (!address) {
+                    throw new ApiError(StatusCodes.NOT_FOUND, err.message);
+                }
+                address.remove();
+                return doc;
+            }
         }
-    });
+    );
     return userAddressBook;
 };
 

@@ -6,6 +6,7 @@ const Address = mongoose.Schema({
     address2: { type: String, required: true },
     city: { type: Date, required: true },
     country: { type: String, required: true },
+    location: { type: Object },
 });
 
 const AddressBook = mongoose.Schema({

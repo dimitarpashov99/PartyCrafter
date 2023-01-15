@@ -3,8 +3,8 @@ const partyEventsService = require("../services/party-events");
 
 const getById = [
     catchAsync(async (req, res) => {
-        var partyEventId = req.params.id;
-        const result = await partyEventsService.getById(requestedId);
+        const partyEventId = req.params.id;
+        const result = await partyEventsService.getById(partyEventId);
         res.json(result);
     }),
 ];
@@ -12,7 +12,7 @@ const getById = [
 const create = [
     catchAsync(async (req, res) => {
         const data = req.body?.partyEventData;
-        const result = await partyEventsService.create(data, req.currentUser);
+        const result = await partyEventsService.create(data);
         res.json(result);
     }),
 ];
@@ -21,7 +21,7 @@ const update = [
     catchAsync(async (req, res) => {
         const eventId = req.params.id;
         const data = req.body?.partyEventData;
-        const result = await partyEventsService.create(data, req.currentUser);
+        const result = await partyEventsService.updatePartyEvent(eventId, data);
         res.json(result);
     }),
 ];
@@ -29,7 +29,7 @@ const update = [
 const remove = [
     catchAsync(async (req, res) => {
         const id = req.body.id;
-        const result = await partyEventsService.deleteEvent(id);
+        const result = await partyEventsService.deletePartyEvent(id);
         res.json(result);
     }),
 ];
@@ -37,7 +37,6 @@ const remove = [
 module.exports = {
     getById,
     create,
-    remove,
     update,
-    
+    remove,
 };
