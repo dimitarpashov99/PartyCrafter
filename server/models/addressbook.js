@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const address = mongoose.Schema({
-    userId: { type: mongoose.Types.ObjectId, required: true },
+const Address = mongoose.Schema({
     name: { type: String, required: true },
     address1: { type: String, required: true },
     address2: { type: String, required: true },
@@ -9,4 +8,9 @@ const address = mongoose.Schema({
     country: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Address", address);
+const AddressBook = mongoose.Schema({
+    userId: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
+    addresses: [Address],
+});
+
+module.exports = mongoose.model("AddressBook", AddressBook);

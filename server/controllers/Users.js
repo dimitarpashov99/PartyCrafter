@@ -1,16 +1,29 @@
 const catchAsync = require("../utils/catchAsync");
 
 const userService = require("../services/users");
-const addressService = require("../services/address");
+const addressService = require("../services/addressBook");
 const ApiError = require("../utils/APIError");
 const { StatusCodes } = require("http-status-codes");
 
 const get = catchAsync(async (req, res) => {
     const userId = req.params.id;
-    if (!userId) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Missing id parameter");
-    }
-    const result = await userService.getUserProfile(userId);
+    const result = await userService.getUserById(userId);
+    res.json({
+        profile: result,
+    });
+});
+
+// const create = catchAsync(async (req, res) => {
+//     const userData = req.body.userData;
+//     const result = await userService.c(userId);
+//     res.json({
+//         profile: result,
+//     });
+// });
+
+const update = catchAsync(async (req, res) => {
+    const userData = req.body.userData;
+    const result = await userService.update(userId);
     res.json({
         profile: result,
     });

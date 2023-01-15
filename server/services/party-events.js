@@ -32,7 +32,6 @@ const createPartyEvent = async (data, host) => {
             foodMenu: data.preferences.foodMenu,
             allowRequests: data.preferences.allowRequests,
             allowPhotoUploads: data.preferences.allowPhotoUploads,
-            allowChat: data.preferences.allowChat,
             allowGuestInvites: data.preferences.allowGuestInvites,
             assignGuestTables: data.preferences.assignGuestTables,
         },

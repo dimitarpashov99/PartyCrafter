@@ -13,7 +13,7 @@ const getInvitations = async (userId) => {
     return invitations;
 };
 
-const getInvitation = async (inviteId) => {
+const getInvitationById = async (inviteId) => {
     const invitation = await Invitation.findOneById(inviteId);
     if (!invitation) {
         throw new ApiError(
@@ -96,7 +96,7 @@ const removeInvitation = async (invitationId) => {
 };
 module.exports = {
     getInvitations,
-    getInvitation,
+    getInvitationById,
     findInvitationByGuestName,
     findInvitationByGuestEmail,
     findInvitationByGuestPhone,

@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 
+const guestSchema = mongoose.Schema({
+    name: { type: String },
+    email: { type: String },
+    phone: { type: String },
+    status: { type: String },
+});
+
 const eventSchema = mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String },
@@ -8,7 +15,7 @@ const eventSchema = mongoose.Schema({
     privateAccess: { type: Boolean, required: true },
     date: { type: Date, required: true },
     hostId: { type: String, required: true },
-    guestList: { type: Array, required: true },
+    guestList: [guestSchema],
     foodMenu: { type: Object },
     imageURL: { type: String },
     rating: { type: Number, default: 0 },
@@ -17,4 +24,4 @@ const eventSchema = mongoose.Schema({
     preferences: { type: Object },
 });
 
-module.exports = mongoose.model("Event", eventSchema);
+module.exports = mongoose.model("Event", eventSchema, "party-events");

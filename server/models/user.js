@@ -12,7 +12,6 @@ const userSchema = mongoose.Schema({
     role: { type: String, enum: roles, default: "user" },
     lastSignedIn: { type: Date },
     registeredOn: { type: Date },
-    inviteCode: { type: String, required: true },
     status: { type: String, enum: status, default: "inactive" },
 });
 

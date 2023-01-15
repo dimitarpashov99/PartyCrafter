@@ -39,8 +39,8 @@ const getMusicPlaylistById = async (userId, playlistId) => {
     return playlist;
 };
 
-const getAllMusicPlaylistsAsQuery = async (userId) => {
-    const customPlaylist = await MusicPlaylist.find({ createdBy: userId });
+const getAllMusicPlaylistsAsQuery = async (filter) => {
+    const customPlaylist = await MusicPlaylist.find(filter);
     if (!customPlaylist) {
         throw new ApiError(StatusCodes.NOT_FOUND, err.message);
     }

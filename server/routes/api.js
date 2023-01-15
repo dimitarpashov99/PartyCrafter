@@ -8,7 +8,7 @@ const commentRouter = require("./comment");
 const invitationsRouter = require("./invitations");
 const menusRouter = require("./menus");
 const playlistRouter = require("./menus");
-const usersRouter = require('./us')
+const usersRouter = require("./users");
 
 /**
  * Initialize Authorization API routes
@@ -19,11 +19,6 @@ app.use("/auth", authRouter);
  * Initialize Party Events API routes
  */
 app.use("/events", eventsRouter);
-
-// /**
-//  * Initialize User Account API routes
-//  */
-// app.use("/account", accuntRouter);
 
 /**
  * Initialize Comments API routes
@@ -36,12 +31,19 @@ app.use("/comments", commentRouter);
 app.use("/invitations", invitationsRouter);
 
 /**
- * Initialize Invitations API routes
+ * Initialize Food menus API routes
  */
-app.use("/invitations", invitationsRouter);
+app.use("/menus", menusRouter);
 
 /**
- * Initialize Invitations API routes
+ * Initialize Music playlists API routes
  */
-app.use("/invitations", invitationsRouter);
+app.use("/playlist", playlistRouter);
+
+/**
+ * Initialize Music playlists API routes
+ */
+app.use("/users", usersRouter);
+
+
 module.exports = app;

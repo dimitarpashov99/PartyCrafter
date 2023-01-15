@@ -12,10 +12,11 @@ const create = [
         res.json(result);
     }),
 ];
+
 const getById = [
     catchAsync(async (req, res) => {
         const id = req.params?.id;
-        const result = await invitationsService.getInvitation(id);
+        const result = await invitationsService.getInvitationById(id);
         res.json(result);
     }),
 ];
@@ -32,7 +33,7 @@ const update = [
     catchAsync(async (req, res) => {
         const menuId = req.params.id;
         const data = req.body.menuData;
-        const result = await invitationsService.updateCustomMenu(menuId, data);
+        const result = await invitationsService.updateInvitation(menuId, data);
         res.json(result);
     }),
 ];
@@ -40,7 +41,7 @@ const update = [
 const remove = [
     catchAsync(async (req, res) => {
         const menuId = req.params.id;
-        const result = await invitationsService.removeCustomFoodMenu(menuId);
+        const result = await invitationsService.removeInvitation(menuId);
         res.json(result);
     }),
 ];

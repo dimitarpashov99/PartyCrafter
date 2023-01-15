@@ -13,7 +13,7 @@ const FoodMenuSchema = mongoose.Schema({
     createdBy: { type: String, required: true },
     menuItems: { type: [MenuItem], required: true },
     createdOn: { type: Date, required: true },
-    userId: {type: mongoose.Types.ObjectId, required: true},
+    userId: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
     likes: { type: Number, default: 0 },
 });
 

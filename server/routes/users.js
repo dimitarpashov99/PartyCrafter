@@ -27,6 +27,28 @@ router
     .put(requireToken, controller.editCustomAddress)
     .delete(requireToken, controller.removeCustomAddress);
 
+router
+    .route("/:userId/playlists")
+    .get(requireToken, controller.getAddressBook)
+    .post(requireToken, controller.createAddress);
+
+router
+    .route("/:userId/playlists/:id")
+    .get(requireToken, controller.getAddressById)
+    .put(requireToken, controller.editCustomAddress)
+    .delete(requireToken, controller.removeCustomAddress);
+
+router
+    .route("/:userId/menus")
+    .get(requireToken, controller.getAddressBook)
+    .post(requireToken, controller.createAddress);
+
+router
+    .route("/:userId/menus/:id")
+    .get(requireToken, controller.getAddressById)
+    .put(requireToken, controller.editCustomAddress)
+    .delete(requireToken, controller.removeCustomAddress);
+
 // router
 //     .route("/:userId/playlists")
 //     .get(requireToken, controller.getMusicPlaylistsByUserId)
