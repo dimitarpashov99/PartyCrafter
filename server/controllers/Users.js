@@ -2,7 +2,15 @@ const catchAsync = require("../utils/catchAsync");
 
 const userService = require("../services/users");
 
-const get = catchAsync(async (req, res) => {
+const getAll = catchAsync(async (req, res) => {
+    const userId = req.params.id;
+    const result = await userService.getUserById(userId);
+    res.json({
+        profile: result,
+    });
+});
+
+const getById = catchAsync(async (req, res) => {
     const userId = req.params.id;
     const result = await userService.getUserById(userId);
     res.json({
@@ -78,14 +86,9 @@ const remove = catchAsync(async (req, res) => {
 // });
 
 module.exports = {
-    get,
+    getAll,
+    getById,
     create,
     update,
     remove,
-
-    // getAddressBook,
-    // createAddress,
-    // getAddressById,
-    // editCustomAddress,
-    // removeCustomAddress,
 };

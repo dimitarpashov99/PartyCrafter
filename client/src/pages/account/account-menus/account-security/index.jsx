@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import accountService from "../../../../services/accountService";
+import userService from "../../../../services/userService";
 
 const AccountSecurity = () => {
     const [formValues, setValues] = useState({});

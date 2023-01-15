@@ -24,4 +24,4 @@ const eventSchema = mongoose.Schema({
     preferences: { type: Object },
 });
 
-module.exports = mongoose.model("Event", eventSchema, "party-events");
+module.exports = mongoose.model("PartyEvent", eventSchema, "party-events");

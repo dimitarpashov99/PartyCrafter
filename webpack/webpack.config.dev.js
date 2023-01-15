@@ -11,7 +11,13 @@ const config = {
     entry: {
         app: ["webpack-hot-middleware/client", "./index.js"],
     },
-
+    // devServer: {
+    //     // host: process.env.HOST || "localhost",
+    //     // port: process.env.PORT || 3000,
+    //     historyApiFallback: { index: "dist/index.html" },
+    //     hot: true,
+    //     contentBase: path.resolve(__dirname, "dist"),
+    // },
     mode: "development",
     output: {
         path: path.resolve(CURRENT_WORKING_DIR, "dist"),
@@ -19,13 +25,13 @@ const config = {
         publicPath: "/",
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new Dotenv(),
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "../public/index.html",
         }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        new Dotenv(),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].[contenthash].css",
@@ -61,7 +67,7 @@ const config = {
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules: false
+                            modules: false,
                         },
                     },
                 ],
@@ -79,7 +85,7 @@ const config = {
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules: false
+                            modules: false,
                         },
                     },
                     "sass-loader",
@@ -88,16 +94,9 @@ const config = {
         ],
     },
     resolve: {
-        extensions: ['*', ".js", ".jsx"],
+        extensions: ["*", ".js", ".jsx"],
     },
     devtool: "inline-source-map",
-    devServer: {
-        host: process.env.HOST || "localhost",
-        port: process.env.PORT || 3000,
-        historyApiFallback: true,
-        hot: true,
-        static: path.resolve(__dirname, "./dist"),
-    },
 };
 
 module.exports = config;

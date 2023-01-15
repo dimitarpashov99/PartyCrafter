@@ -17,11 +17,12 @@ app.set("host", process.env.APP_HOST || "localhost");
 
 // enable webpack hot module replacement for development
 if (process.env.NODE_ENV === "development") {
+    console.log(webpackConfig.output.publicPath);
     const compiler = webpack(webpackConfig);
     app.use(
         webpackDevMiddleware(compiler, {
             noInfo: true,
-            publicPath: webpackConfig.output.publicPath + "dist/",
+            publicPath: webpackConfig.output.publicPath,
         })
     );
     app.use(webpackHotMiddleware(compiler));
@@ -30,13 +31,8 @@ if (process.env.NODE_ENV === "development") {
 // Request logger
 app.use(requestLogger);
 
-// Wraps all routes into API route
+// Wraps all routes into API router
 app.use("/api", apiRouter);
-
-// Landing page
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-});
 
 // Error Handler Middleware
 app.use(errorHandler);

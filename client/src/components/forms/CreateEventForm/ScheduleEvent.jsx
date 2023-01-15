@@ -9,7 +9,6 @@ import {
     TextField,
     Button,
     Stack,
-    Icon,
     IconButton,
 } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import GuestList from "../../partyevent/GuestListGrid";
+import { AuthConsumer } from "../../../contexts";
 
 const Guests = ({
     guestList,
@@ -21,13 +22,15 @@ const Guests = ({
     handleTableCountChange,
     handleAssignTablePrefChange,
 }) => {
+    const { auth } = AuthConsumer();
+
     const [guests, setGuests] = useState(
         guestList || [
             {
                 id: uuidv4(),
-                name: "Host",
-                email: "partyhost@mail.com",
-                phone: "+359 999 9999",
+                name: auth?.profile?.fullName,
+                email: auth?.profile?.email,
+                phone: auth?.profile?.phone,
                 table: 1,
             },
         ]
@@ -39,6 +42,7 @@ const Guests = ({
         email: "",
         phone: "",
     });
+
     const clearNewGuestInput = () => {
         setNewGuest({
             id: uuidv4(),
@@ -47,6 +51,7 @@ const Guests = ({
             phone: "",
         });
     };
+
     const handleAddGuest = () => {
         if (newGuest.name !== "") {
             setGuests((list) => [...list, newGuest]);

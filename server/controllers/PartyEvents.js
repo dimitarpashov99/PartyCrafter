@@ -1,10 +1,20 @@
 const catchAsync = require("../utils/catchAsync");
 const partyEventsService = require("../services/party-events");
 
+const getAll = [
+    catchAsync(async (req, res) => {
+        const filterEvents = req.query.filter;
+        const result = await partyEventsService.getPartyEventsAsQuery(
+            filterEvents
+        );
+        res.json(result);
+    }),
+];
+
 const getById = [
     catchAsync(async (req, res) => {
         const partyEventId = req.params.id;
-        const result = await partyEventsService.getById(partyEventId);
+        const result = await partyEventsService.getPartyEventById(partyEventId);
         res.json(result);
     }),
 ];
@@ -12,7 +22,10 @@ const getById = [
 const create = [
     catchAsync(async (req, res) => {
         const data = req.body?.partyEventData;
-        const result = await partyEventsService.create(data);
+        const result = await partyEventsService.createPartyEvent(
+            data,
+            req.currentUser
+        );
         res.json(result);
     }),
 ];
@@ -36,6 +49,7 @@ const remove = [
 
 module.exports = {
     getById,
+    getAll,
     create,
     update,
     remove,

@@ -1,10 +1,10 @@
 const catchAsync = require("../utils/catchAsync");
-const musitPlaylistsService = require("../services/playlists");
+const musicPlaylistsService = require("../services/playlists");
 
 const create = [
     catchAsync(async (req, res) => {
         const data = req.body?.musicPlaylistData;
-        const result = await musitPlaylistsService.create(data);
+        const result = await musicPlaylistsService.create(data);
         res.json(result);
     }),
 ];
@@ -12,7 +12,7 @@ const create = [
 const getById = [
     catchAsync(async (req, res) => {
         const playlistId = req.params?.id;
-        const result = await musitPlaylistsService.getPlaylistById(playlistId);
+        const result = await musicPlaylistsService.getPlaylistById(playlistId);
         res.json(result);
     }),
 ];
@@ -20,7 +20,7 @@ const getById = [
 const getAll = [
     catchAsync(async (req, res) => {
         const filter = req.query.filter;
-        const result = await musitPlaylistsService.getAllMusicPlaylistsAsQuery(
+        const result = await musicPlaylistsService.getAllMusicPlaylistsAsQuery(
             filter
         );
         res.json(result);
@@ -31,7 +31,7 @@ const update = [
     catchAsync(async (req, res) => {
         const playlistId = req.params.id;
         const data = req.body.playlistData;
-        const result = await musitPlaylistsService.updateMusicPlaylist(
+        const result = await musicPlaylistsService.updateMusicPlaylist(
             playlistId,
             data
         );
@@ -42,7 +42,7 @@ const update = [
 const remove = [
     catchAsync(async (req, res) => {
         const playlistId = req.params.id;
-        const result = await musitPlaylistsService.deleteMusicPlaylist(
+        const result = await musicPlaylistsService.deleteMusicPlaylist(
             playlistId
         );
         res.json(result);

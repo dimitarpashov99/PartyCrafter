@@ -29,7 +29,7 @@ mongoose
         useUnifiedTopology: true,
     })
     .then(() => {
-       if (process.env.NODE_ENV !== "test") {
+        if (process.env.NODE_ENV !== "test") {
             console.log("Connected to " + process.env.MONGODB_URL);
             console.log("App is running ... \n");
             console.log("Press CTRL + C to stop the process. \n");

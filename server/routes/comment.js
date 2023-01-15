@@ -3,14 +3,12 @@ const router = express.Router();
 
 const controller = require("../controllers/Comments");
 
+router.route("/").get(controller.getAll).post(controller.create);
+
 router
-    .route("/")
-    .get(controller.getAllComments)
-    .post(controller.create)
-    .put(controller.edit);
-
-router.get("/:eventId", controller.getEventComments);
-
-router.delete("/remove", controller.remove);
+    .route("/:id")
+    .get(controller.getById)
+    .put(controller.update)
+    .delete(controller.remove);
 
 module.exports = router;

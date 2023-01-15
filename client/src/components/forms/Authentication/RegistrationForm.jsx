@@ -4,10 +4,10 @@ import {
     Box,
     Button,
     Grid,
-    Link,
     TextField,
     Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { LockOutlined } from "@mui/icons-material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import AuthService from "../../../services/authService";
@@ -16,26 +16,44 @@ export default class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstname: null,
-            lastname: null,
+            firstName: null,
+            lastName: null,
             email: null,
             password: null,
+            confirmPassword: null,
             success: false,
             successMsg: null,
+            alert: false,
+            alertMsg: "",
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggleAlert = this.toggleAlert.bind(this);
     }
+
+    toggleAlert = (message) => {
+        this.setState({ alert: true, alertMsg: message });
+    };
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const formData = new FormData(event.target);
-        AuthService.register(formData).then((response) => {
-            if (response.status === 1) {
-                this.setState({ success: true });
-                this.setState({ successMsg: response.message });
-            }
-        });
+        if (this.state.password === this.state.confirmPassword) {
+            const formData = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+            };
+            AuthService.register(formData).then((response) => {
+                if (response.status === 1) {
+                    this.setState({ success: true });
+                    this.setState({ successMsg: response.message });
+                }
+            });
+        } else {
+            this.toggleAlert("Password confirmation must match");
+        }
     };
+
     render() {
         return (
             <Box sx={{ backgroundColor: "background.default", height: "100%" }}>
@@ -70,6 +88,11 @@ export default class RegisterForm extends React.Component {
                                             fullWidth
                                             id="firstName"
                                             label="First Name"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    firstName: e.target.value,
+                                                });
+                                            }}
                                             autoFocus
                                         />
                                     </Grid>
@@ -81,6 +104,11 @@ export default class RegisterForm extends React.Component {
                                             label="Last Name"
                                             name="lastname"
                                             autoComplete="family-name"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    lastName: e.target.value,
+                                                });
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -91,6 +119,11 @@ export default class RegisterForm extends React.Component {
                                             label="Email Address"
                                             name="email"
                                             autoComplete="email"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    email: e.target.value,
+                                                });
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -101,6 +134,11 @@ export default class RegisterForm extends React.Component {
                                             label="Password"
                                             type="password"
                                             id="password"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    password: e.target.value,
+                                                });
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -110,6 +148,12 @@ export default class RegisterForm extends React.Component {
                                             label="Confirm Password"
                                             type="password"
                                             id="confirm-password"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    confirmPassword:
+                                                        e.target.value,
+                                                });
+                                            }}
                                         />
                                     </Grid>
                                 </Grid>
@@ -123,7 +167,7 @@ export default class RegisterForm extends React.Component {
                                 </Button>
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>
-                                        <Link href="/login" variant="body2">
+                                        <Link to="/login">
                                             Already have an account? Sign in
                                         </Link>
                                     </Grid>

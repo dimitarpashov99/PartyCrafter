@@ -2,16 +2,17 @@ import { apiCall } from "./utils";
 
 const uri = "events";
 
-const getEvent = async (eventCode) => {
-    const service = `${uri}/${eventCode}`;
+const getEvent = async (eventId) => {
+    const service = `${uri}/${eventId}`;
     return await apiCall().get(service);
 };
 
 const getOpenPartyEvents = async (city) => {
-    const service = `${uri}/public`;
+    const filter = { "address.city": city, privateAccess: false };
+    const service = `${uri}`;
     return await apiCall().get(service, {
         params: {
-            city: city,
+            filter: filter,
         },
     });
 };
@@ -23,50 +24,21 @@ const createPartyEvent = async (partyEventData) => {
     });
 };
 
-const updatePartyEvent = async (eventCode, partyEventData) => {
-    const service = `${uri}`;
+const updatePartyEvent = async (id, partyEventData) => {
+    const service = `${uri}/${id}`;
     return await apiCall().put(service, {
-        params: {
-            code: eventCode,
-        },
         partyEventData: partyEventData,
     });
 };
 
-const cancelPartyEvent = async (eventCode) => {
-    const service = `${uri}`;
-    return await apiCall().put(service, {
-        params: {
-            code: eventCode,
-        },
-    });
-};
-
-const deletePartyEvent = async (eventCode) => {
-    const service = `${uri}`;
-    return await apiCall().delete(service, {
-        params: {
-            code: eventCode,
-        },
-    });
+const deletePartyEvent = async (id) => {
+    const service = `${uri}/${id}`;
+    return await apiCall().delete(service);
 };
 
 const getTopPublicEvents = async (city) => {
-    const service = `${uri}/topevents`;
+    const service = `${uri}`;
     return await apiCall().get(service, { params: { city: city } });
-};
-
-const joinEvent = async (data) => {
-    const service = `${uri}/join`;
-    return await apiCall().post(service, data);
-};
-
-const sendRequest = async (eventCode, request) => {
-    const service = `${uri}/${eventCode}/request"`;
-    return await apiCall().post(service, {
-        eventCode: eventCode,
-        request: request,
-    });
 };
 
 export default {
@@ -74,9 +46,6 @@ export default {
     getOpenPartyEvents,
     createPartyEvent,
     updatePartyEvent,
-    cancelPartyEvent,
     deletePartyEvent,
     getTopPublicEvents,
-    sendRequest,
-    joinEvent,
 };

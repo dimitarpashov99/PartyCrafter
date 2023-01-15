@@ -6,10 +6,11 @@ const requireUserToken = require("../middlewares/authenticate");
 router
     .route("/")
     .post(requireUserToken, controller.create)
+    .get(requireUserToken, controller.getAll);
+
+router
+    .route("/:Id")
     .get(requireUserToken, controller.getById)
     .delete(requireUserToken, controller.remove);
-
-router.route("/:code").get(requireUserToken, controller.getByCode);
-
 
 module.exports = router;

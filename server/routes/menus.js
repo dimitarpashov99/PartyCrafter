@@ -7,11 +7,13 @@ const requireToken = require("../middlewares/authenticate");
 
 router
     .route("/menus/")
-    .get(requireToken, controller.getFoodMenusByUserId)
-    .post(requireToken, controller.createCustomFoodMenu);
+    .get(requireToken, controller.getAll)
+    .post(requireToken, controller.create);
 
 router
     .route("/menus/:id")
-    .get(requireToken, controller.getFoodMenuById)
-    .put(requireToken, controller.updateCustomFoodMenu)
-    .delete(requireToken, controller.removeCustomFoodMenu);
+    .get(requireToken, controller.getById)
+    .put(requireToken, controller.update)
+    .delete(requireToken, controller.remove);
+
+module.exports = router;

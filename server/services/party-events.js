@@ -1,24 +1,9 @@
 const { StatusCodes } = require("http-status-codes");
 const PartyEvent = require("../models/partyEvent");
 const ApiError = require("../utils/APIError");
-const crypto = require("crypto");
 const Invitation = require("../models/invitation");
 
 const createPartyEvent = async (data, host) => {
-    const eventCode = crypto.randomBytes(7).toString("hex");
-    const guestList = data.guestList?.map((guest) => {
-        const guestInvitation = new Invitation({
-            guestId: guest.id,
-            eventCode: eventCode,
-            guestName: guest.name,
-            guestEmail: guest.email,
-            guestPhone: guest.phone,
-            createdOn: new Date(),
-            status: "pending",
-        });
-        guestInvitation.save();
-        return { ...guest, status: "invited" };
-    });
     const newEvent = new PartyEvent({
         title: data.title,
         description: data.description,
@@ -38,12 +23,27 @@ const createPartyEvent = async (data, host) => {
         musicPlaylist: data.musicPlaylist,
         foodMenu: data.foodMenu,
         tableCount: data.tableCount,
-        guestList: guestList,
-        code: eventCode,
+        guestList: [],
     });
 
     try {
-        await newEvent.save();
+        await newEvent.save().then((event) => {
+            const guestList = data.guestList?.map((guest) => {
+                const guestInvitation = new Invitation({
+                    guestId: guest.id,
+                    eventId: event._id,
+                    guestName: guest.name,
+                    guestEmail: guest.email,
+                    guestPhone: guest.phone,
+                    createdOn: new Date(),
+                    status: "pending",
+                });
+                guestInvitation.save();
+                return { ...guest, status: "invited" };
+            });
+            event.guestList = guestList;
+            event.save();
+        });
         return { success: true, message: "Party Event created" };
     } catch (e) {
         throw new ApiError(

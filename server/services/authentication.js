@@ -20,6 +20,7 @@ const login = async (email, password) => {
     if (!user) {
         throw new ApiError(StatusCodes.NOT_FOUND, "User Doesn't Exist");
     }
+
     const match = await bcrypt.compare(password, user.passwordHash);
     if (!match) {
         throw new ApiError(
@@ -28,6 +29,7 @@ const login = async (email, password) => {
             false
         );
     }
+
     const accessToken = generateToken(user);
     return {
         profile: {
@@ -41,32 +43,30 @@ const login = async (email, password) => {
 
 const register = async (data) => {
     const creationDate = new Date();
-    if (await User.isEmailTaken(data.email)) {
+    const emailTaken = await User.isEmailTaken(data.email);
+    if (emailTaken) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Email is taken");
     }
     // Creates password hash
     const hash = await bcrypt.hash(data.password, 10);
     const newUser = new User({
-        firstName: data.firstname,
-        lastName: data.lastname,
+        firstName: data.firstName,
+        lastName: data.lastName,
         email: data.email,
         passwordHash: hash,
         registeredOn: creationDate,
     });
 
-    return await newUser.save(function (err, user) {
+    return await newUser.save(function (err) {
         if (err) {
-            throw new ApiError(
-                StatusCodes.BAD_REQUEST,
-                "Couldn't register new user"
-            );
+            throw new ApiError(StatusCodes.BAD_REQUEST, err.message);
         }
-        return user;
+        return { success: true };
     });
 };
 
 const changePassword = async (userId, oldPassword, newPassword) => {
-    const user = User.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "User not found");
     }

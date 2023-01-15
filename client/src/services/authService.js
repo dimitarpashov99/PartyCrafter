@@ -2,7 +2,7 @@ import { apiCall, urlencodeFormData } from "./utils";
 
 const register = async (formData) => {
     return await apiCall()
-        .post("signup", urlencodeFormData(formData))
+        .post("auth/signup", formData)
         .then((response) => {
             return response.data;
         });

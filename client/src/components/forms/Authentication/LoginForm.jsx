@@ -8,7 +8,6 @@ import {
     Checkbox,
     FormControlLabel,
     Grid,
-    Link,
     Paper,
     TextField,
     Typography,
@@ -16,6 +15,7 @@ import {
 
 import { LoginOutlined } from "@mui/icons-material";
 import AuthService from "../../../services/authService";
+import { Link } from "react-router-dom";
 
 export default class LoginForm extends React.Component {
     constructor(props) {
@@ -81,9 +81,7 @@ export default class LoginForm extends React.Component {
                 <Typography component="h2" variant="h5">
                     Sign in
                 </Typography>
-                <Box
-                    sx={{ mt: 1, px: 4 }}
-                >
+                <Box sx={{ mt: 1, px: 4 }}>
                     {this.state.validationError && (
                         <Alert severity="error">
                             <AlertTitle>Error</AlertTitle>
@@ -132,14 +130,9 @@ export default class LoginForm extends React.Component {
                     >
                         Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
+                    <Grid container justifyContent="end">
                         <Grid item>
-                            <Link href="/register" variant="body2">
+                            <Link to="/register" variant="body2">
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

@@ -1,25 +1,35 @@
 import { apiCall } from "./utils";
 
-const serviceURL = "/custom/playlists";
+const uri = "playlists";
 
-const getAllCustomPlaylists = () => {
-    return apiCall().get(serviceURL);
+const getAllCustomPlaylists = (userId) => {
+    const filter = { userId: userId };
+    const service = `${uri}`;
+    return apiCall().get(service, {
+        params: {
+            filter: filter,
+        },
+    });
 };
 
-const getCustomPlaylistById = (menuId) => {
-    return apiCall().get(serviceURL + "/" + menuId);
+const getCustomPlaylistById = (id) => {
+    const service = `${uri}/${id}`;
+    return apiCall().get(service);
 };
 
-const createCustomPlaylist = (menuData) => {
-    return apiCall().post(serviceURL, menuData);
+const createCustomPlaylist = (data) => {
+    const service = `${uri}`;
+    return apiCall().post(service, data);
 };
 
-const updateCustomPlaylist = (menuId, menuData) => {
-    return apiCall().put("/custom/playlists/" + menuId, menuData);
+const updateCustomPlaylist = (id, data) => {
+    const service = `${uri}/${id}`;
+    return apiCall().put(service, data);
 };
 
-const deleteCustomPlaylist = (menuId) => {
-    return apiCall().delete(serviceURL + menuId);
+const deleteCustomPlaylist = (id) => {
+    const service = `${uri}/${id}`;
+    return apiCall().delete(service);
 };
 
 export {
