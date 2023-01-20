@@ -9,7 +9,7 @@ export default function GuestList(props) {
     const handleTableChange = props.handleTableChange;
     const tableChange = (ev, params) => {
         const newGuestList = guests?.map((guest) => {
-            if (guest.id === params.row.id) {
+            if (guest._id === params.row.id) {
                 return {
                     ...guest,
                     table: ev.target.value,
@@ -25,6 +25,7 @@ export default function GuestList(props) {
                 pageSize={20}
                 rowsPerPageOptions={[20]}
                 rows={guests}
+                getRowId={(row) => row._id}
                 columns={[
                     {
                         field: "name",
@@ -65,7 +66,9 @@ export default function GuestList(props) {
                                                 paddingTop: 6,
                                             },
                                         }}
-                                        onChange={(ev) => {tableChange(ev, params)}}
+                                        onChange={(ev) => {
+                                            tableChange(ev, params);
+                                        }}
                                     />
                                 );
                             } else {

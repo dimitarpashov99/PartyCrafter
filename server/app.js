@@ -15,15 +15,11 @@ require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 app.set("port", process.env.APP_PORT || 3000);
 app.set("host", process.env.APP_HOST || "localhost");
 
-// enable webpack hot module replacement for development
+// enable webpack hot middleware replacement for development
 if (process.env.NODE_ENV === "development") {
-    console.log(webpackConfig.output.publicPath);
     const compiler = webpack(webpackConfig);
     app.use(
-        webpackDevMiddleware(compiler, {
-            noInfo: true,
-            publicPath: webpackConfig.output.publicPath,
-        })
+        webpackDevMiddleware(compiler, webpackConfig.devServer)
     );
     app.use(webpackHotMiddleware(compiler));
 }
@@ -33,6 +29,7 @@ app.use(requestLogger);
 
 // Wraps all routes into API router
 app.use("/api", apiRouter);
+
 
 // Error Handler Middleware
 app.use(errorHandler);

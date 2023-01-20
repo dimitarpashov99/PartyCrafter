@@ -9,7 +9,7 @@ router
     .get(requireUserToken, controller.getAll);
 
 router
-    .route("/:Id")
+    .route("/:id")
     .get(requireUserToken, controller.getById)
     .delete(requireUserToken, controller.remove);
 

@@ -25,7 +25,6 @@ const userSchema = mongoose.Schema(
                     .catch(() => {
                         return true;
                     });
-                console.log(result);
                 return result;
             },
         },

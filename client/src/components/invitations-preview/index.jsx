@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Box, Button, List, ListItem } from "@mui/material";
+import { Box, Paper, Button, List, ListItem } from "@mui/material";
 
 const InvitationsPreview = (props) => {
     const userInvites = props?.invitations;
-    const handleJoinEvent = props?.handleJoinEvent;
     return (
         <Paper
             sx={{

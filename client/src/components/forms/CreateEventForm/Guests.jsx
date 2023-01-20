@@ -37,7 +37,7 @@ const Guests = ({
     );
 
     const [newGuest, setNewGuest] = React.useState({
-        id: uuidv4(),
+        _id: uuidv4(),
         name: "",
         email: "",
         phone: "",
@@ -45,7 +45,7 @@ const Guests = ({
 
     const clearNewGuestInput = () => {
         setNewGuest({
-            id: uuidv4(),
+            _id: uuidv4(),
             name: "",
             email: "",
             phone: "",

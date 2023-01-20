@@ -2,13 +2,10 @@ const { StatusCodes } = require("http-status-codes");
 const ApiError = require("../utils/APIError");
 const Invitation = require("../models/invitation");
 
-const getInvitations = async (userId) => {
-    const invitations = await Invitation.find({ guestId: userId });
+const getInvitations = async (filter) => {
+    const invitations = await Invitation.find(filter);
     if (!invitations) {
-        throw new ApiError(
-            StatusCodes.NOT_FOUND,
-            "No invitations found for user"
-        );
+        throw new ApiError(StatusCodes.NOT_FOUND, "No invitations found");
     }
     return invitations;
 };
@@ -18,7 +15,7 @@ const getInvitationById = async (inviteId) => {
     if (!invitation) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
-            "No invitations found for user"
+            `Invitation with id ${inviteId} was not found`
         );
     }
     return invitation;
@@ -85,7 +82,7 @@ const updateInvitation = async (eventCode, guestData) => {
 };
 
 const removeInvitation = async (invitationId) => {
-    const invitation = await Invitation.findByIdAndDelete(invitationId)
+    const invitation = await Invitation.findByIdAndDelete(invitationId);
     if (!invitation) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,

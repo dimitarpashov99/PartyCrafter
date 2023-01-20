@@ -45,9 +45,9 @@ const login = [
     catchAsync(async (req, res) => {
         const { email, password } = req.body;
         const userData = await authService.login(email, password);
-        const userInvitations = await invitationService.getInvitations(
-            userData.inviteCode
-        );
+        const userInvitations = await invitationService.getInvitations({
+            guestEmail: userData.profile.email,
+        });
         if (userInvitations && userInvitations.length) {
             userData.invitations = userInvitations;
         }

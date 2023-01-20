@@ -5,7 +5,7 @@ import { AuthConsumer } from "../../../contexts";
 import InvitationsPreview from "../../invitations-preview";
 import LoginForm from "../Authentication/LoginForm";
 
-const JoinEvent = () => {
+const JoinEvent = ({ handleJoinEvent }) => {
     const { auth } = AuthConsumer();
     const [userInvitations, setUserInvitations] = useState([]);
     const handleLogin = (result) => {
@@ -21,6 +21,9 @@ const JoinEvent = () => {
             setUserInvitations(result.data.invitations);
         }
     };
+    const handleInvitationSelect = (eventId) => {
+        handleJoinEvent(eventId);
+    };
     return (
         <React.Fragment>
             {auth.authenticated ? (
@@ -28,7 +31,10 @@ const JoinEvent = () => {
                     <Typography component="h4" variant="h5">
                         Your invitations
                     </Typography>
-                    <InvitationsPreview invitations={userInvitations} />
+                    <InvitationsPreview
+                        invitations={userInvitations}
+                        handleInvitationSelect={handleInvitationSelect}
+                    />
                 </Box>
             ) : (
                 <LoginForm handleLogin={handleLogin} />

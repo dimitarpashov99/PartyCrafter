@@ -1,40 +1,57 @@
-import {
-    Alert,
-    Box,
-    Button,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Paper,
-    Select,
-    Stack,
-    TextField,
-} from "@mui/material";
-import React, { useState, useRef } from "react";
-import partyEventsSevice from "../../../services/partyEventsService";
+import { Box, Button, MenuItem, Paper, Stack, TextField } from "@mui/material";
+import React, { useState } from "react";
+import invitationsService from "../../../services/invitationsService";
 import CustomizedAlert from "../../alert";
 
 const JoinEventAsGuest = ({ handleJoinEvent }) => {
     const [formState, setFormState] = useState({
-        eventCode: undefined,
+        eventId: undefined,
         guestIdentifier: undefined,
         guestIdentifierType: "name",
     });
     const [alert, setAlert] = useState({ open: false });
     const submitJoinEvent = async () => {
-        const result = await partyEventsSevice.joinEvent(formState);
-        if (!result || result.data.error) {
+        let invitaion;
+        switch (formState.guestIdentifierType) {
+            case "name":
+                invitaion = await invitationsService.getGuestInvitationByName(
+                    formState.eventId,
+                    formState.guestIdentifier
+                );
+                break;
+            case "email":
+                invitaion = await invitationsService.getGuestInvitationByEmail(
+                    formState.eventId,
+                    formState.guestIdentifier
+                );
+                break;
+            case "phone":
+                invitaion = await invitationsService.getGuestInvitationByPhone(
+                    formState.eventId,
+                    formState.guestIdentifier
+                );
+                break;
+            default:
+                return setAlert({
+                    open: true,
+                    type: "error",
+                    title: "Correct identifier must be provided",
+                    message: "",
+                });
+        }
+
+        if (!invitaion || invitaion.error) {
             return setAlert({
                 open: true,
-                type: error,
-                title: result.title,
-                message: result.message,
+                type: "error",
+                title: invitaion.title,
+                message: invitaion.message,
             });
         }
-        if (result.data.accessToken) {
-            localStorage.setItem("access_token", result?.accessToken);
-        }
-        handleJoinEvent(result.data);
+        // if (result.data.accessToken) {
+        //     localStorage.setItem("access_token", result?.accessToken);
+        // }
+        handleJoinEvent({ eventId: invitaion.eventId });
     };
     return (
         <>
@@ -61,7 +78,7 @@ const JoinEventAsGuest = ({ handleJoinEvent }) => {
                             onChange={(e) => {
                                 setFormState((current) => ({
                                     ...current,
-                                    eventCode: e.target.value,
+                                    eventId: e.target.value,
                                 }));
                             }}
                         />

@@ -33,8 +33,10 @@ const login = async (email, password) => {
     const accessToken = generateToken(user);
     return {
         profile: {
+            id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
+            email: user.email,
         },
         inviteCode: user.inviteCode,
         accessToken: accessToken,
@@ -84,11 +86,11 @@ const changePassword = async (userId, oldPassword, newPassword) => {
     return await user.save();
 };
 
-const generateGuestToken = (guestId, eventCode) => {
+const generateGuestToken = (guestId, eventId) => {
     return jwt.sign(
         {
             guestId: guestId,
-            eventCode: eventCode,
+            eventId: eventId,
             isGuestToken: true,
         },
         process.env.TOKEN_SECRET_KEY

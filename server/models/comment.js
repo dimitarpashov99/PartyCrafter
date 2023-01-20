@@ -6,7 +6,8 @@ const commentSchema = mongoose.Schema({
     body: { type: String, required: false },
     senderId: { type: String, required: true },
     date: { type: Date },
-    likes: { type: Number },
+    rate: { type: Number, default: 0 },
+    likes: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model("Event", commentSchema);

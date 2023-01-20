@@ -11,31 +11,29 @@ const config = {
     entry: {
         app: ["webpack-hot-middleware/client", "./index.js"],
     },
-    // devServer: {
-    //     // host: process.env.HOST || "localhost",
-    //     // port: process.env.PORT || 3000,
-    //     historyApiFallback: { index: "dist/index.html" },
-    //     hot: true,
-    //     contentBase: path.resolve(__dirname, "dist"),
-    // },
     mode: "development",
     output: {
         path: path.resolve(CURRENT_WORKING_DIR, "dist"),
         filename: "client.bundle.js",
         publicPath: "/",
     },
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        contentBase: path.resolve(__dirname, "dist"),
+    },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "../public/index.html",
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
         new Dotenv(),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].[contenthash].css",
-        }),
+        // new MiniCssExtractPlugin({
+        //     filename: "[name].css",
+        //     chunkFilename: "[id].[contenthash].css",
+        // }),
     ],
     module: {
         rules: [
@@ -58,10 +56,10 @@ const config = {
                 test: /\.css$/i,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: "",
-                        },
+                        loader: "style-loader",
+                        // options: {
+                        //     publicPath: "",
+                        // },
                     },
                     {
                         loader: "css-loader",
@@ -76,10 +74,10 @@ const config = {
                 test: /\.s[c]ss$/i,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: "",
-                        },
+                        loader: "style-loader", //MiniCssExtractPlugin.loader,
+                        // options: {
+                        //     publicPath: "",
+                        // },
                     },
                     {
                         loader: "css-loader",

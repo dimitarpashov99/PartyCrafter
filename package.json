@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "start": "babel-node server/app.js",
+        "dev": "webpack serve --config ./webpack.config.dev.js",
         "clean": "rimraf node_modules && rimraf dist && npm install",
         "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
         "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",

@@ -7,8 +7,8 @@ module.exports = {
     overrides: [],
     parserOptions: {
         ecmaVersion: "latest",
+        sourceType: "module",
     },
     plugins: ["react"],
     rules: {},
-    sourceType: "module",
 };
