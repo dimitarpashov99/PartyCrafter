@@ -27,8 +27,8 @@ const Guests = ({
     const [guests, setGuests] = useState(
         guestList || [
             {
-                id: uuidv4(),
-                name: auth?.profile?.fullName,
+                _id: uuidv4(),
+                name: auth?.profile?.firstName + " " + auth?.profile?.lastName,
                 email: auth?.profile?.email,
                 phone: auth?.profile?.phone,
                 table: 1,

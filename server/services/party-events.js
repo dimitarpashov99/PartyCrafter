@@ -30,7 +30,7 @@ const createPartyEvent = async (data, host) => {
         await newEvent.save().then((event) => {
             const guestList = data.guestList?.map((guest) => {
                 const guestInvitation = new Invitation({
-                    guestId: guest.id,
+                    guestId: guest._id,
                     eventId: event._id,
                     guestName: guest.name,
                     guestEmail: guest.email,

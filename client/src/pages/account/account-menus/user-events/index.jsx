@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
     Box,
+    Button,
     Card,
     CardActionArea,
+    CardActions,
     CardContent,
     CardMedia,
     Grid,
@@ -31,42 +33,54 @@ const UserEvents = () => {
                 Your Events
             </Typography>
             <Grid container>
-                <Grid item xs={12} md={6}>
-                    <List>
-                        {userPartyEvents.map((partyEvent) => (
-                            <Card key={partyEvent._id}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={partyEvent.imageURL}
-                                        alt="Event Image"
-                                    />
-                                    <CardContent>
-                                        <Typography
-                                            gutterBottom
-                                            variant="h5"
-                                            component="div"
-                                        >
-                                            {partyEvent.title}
-                                        </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            Date:{" "}
-                                            {new Date(
-                                                partyEvent.date
-                                            ).toLocaleString()}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        ))}
-                    </List>
+                <Grid item xs={12} md={6} sx={{ overflowY: "scroll" }}>
+                    {userPartyEvents && userPartyEvents.length ? (
+                        <List>
+                            {userPartyEvents?.map((partyEvent) => (
+                                <Card key={partyEvent._id}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component="img"
+                                            height="30"
+                                            image={partyEvent.imageURL}
+                                            alt="Event Image"
+                                        />
+                                        <CardContent>
+                                            <Typography
+                                                gutterBottom
+                                                variant="h5"
+                                                component="div"
+                                            >
+                                                {partyEvent.title}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                            >
+                                                Date:{" "}
+                                                {new Date(
+                                                    partyEvent.date
+                                                ).toLocaleString()}
+                                            </Typography>
+                                            <CardActions>
+                                                <Button
+                                                    variant="contained"
+                                                    size="small"
+                                                >
+                                                    Preview
+                                                </Button>
+                                            </CardActions>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            ))}
+                        </List>
+                    ) : (
+                        <Box>No Events found</Box>
+                    )}
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <PartyEventsCalendar partyEvents={userPartyEvents} />
+                    <PartyEventsCalendar events={userPartyEvents} />
                 </Grid>
             </Grid>
         </Box>

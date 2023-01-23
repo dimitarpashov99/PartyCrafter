@@ -5,7 +5,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 const PartyEventsCalendar = (props) => {
     const { events } = props;
     return (
-        <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
+        <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            events={events}
+        />
     );
 };
 export default PartyEventsCalendar;
