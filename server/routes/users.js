@@ -8,7 +8,7 @@ const requireToken = require("../middlewares/authenticate");
 /**
  * Users API routes
  */
-router.get("/", requireToken, controller.getAll);
+// router.get("/", requireToken, controller.getAll);
 
 router
     .route("/:id")

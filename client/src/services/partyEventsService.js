@@ -41,6 +41,11 @@ const getTopPublicEvents = async (city) => {
     return await apiCall().get(service, { params: { city: city } });
 };
 
+const getUserEvents = async (userId) => {
+    const service = `${uri}`;
+    const filter = { hostId: userId };
+    return await apiCall().get(service, { params: { filter: filter } });
+};
 export default {
     getEvent,
     getOpenPartyEvents,
@@ -48,4 +53,5 @@ export default {
     updatePartyEvent,
     deletePartyEvent,
     getTopPublicEvents,
+    getUserEvents,
 };

@@ -19,7 +19,7 @@ const getById = [
 
 const getAll = [
     catchAsync(async (req, res) => {
-        const filter = req.query.filter;
+        const filter = req.query.filter ? JSON.parse(req.query.filter) : {};
         const result = await musicPlaylistsService.getAllMusicPlaylistsAsQuery(
             filter
         );

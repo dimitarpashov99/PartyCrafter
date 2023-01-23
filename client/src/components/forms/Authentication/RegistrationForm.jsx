@@ -44,9 +44,9 @@ export default class RegisterForm extends React.Component {
                 password: this.state.password,
             };
             AuthService.register(formData).then((response) => {
-                if (response.status === 1) {
+                if (response) {
                     this.setState({ success: true });
-                    this.setState({ successMsg: response.message });
+                    this.setState({ successMsg: "User registered successfuly" });
                 }
             });
         } else {
@@ -76,7 +76,6 @@ export default class RegisterForm extends React.Component {
                             </Typography>
                             <Box
                                 component="form"
-                                onSubmit={this.handleSubmit}
                                 sx={{ mt: 3, marginX: 16 }}
                             >
                                 <Grid container spacing={2}>
@@ -158,9 +157,9 @@ export default class RegisterForm extends React.Component {
                                     </Grid>
                                 </Grid>
                                 <Button
-                                    type="submit"
                                     fullWidth
                                     variant="contained"
+                                    onClick={this.handleSubmit}
                                     sx={{ mt: 3, mb: 2 }}
                                 >
                                     Sign Up
@@ -184,7 +183,7 @@ export default class RegisterForm extends React.Component {
                             <Typography component="h1" variant="h5">
                                 {this.state.successMsg}
                             </Typography>
-                            <Link href="/login" variant="body2">
+                            <Link to="/login" variant="body2">
                                 Continue to Sign in
                             </Link>
                         </React.Fragment>

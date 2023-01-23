@@ -20,7 +20,6 @@ const login = async (email, password) => {
     if (!user) {
         throw new ApiError(StatusCodes.NOT_FOUND, "User Doesn't Exist");
     }
-
     const match = await bcrypt.compare(password, user.passwordHash);
     if (!match) {
         throw new ApiError(
@@ -49,6 +48,7 @@ const register = async (data) => {
     if (emailTaken) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Email is taken");
     }
+
     // Creates password hash
     const hash = await bcrypt.hash(data.password, 10);
     const newUser = new User({
@@ -59,12 +59,8 @@ const register = async (data) => {
         registeredOn: creationDate,
     });
 
-    return await newUser.save(function (err) {
-        if (err) {
-            throw new ApiError(StatusCodes.BAD_REQUEST, err.message);
-        }
-        return { success: true };
-    });
+    await newUser.save();
+    return { success: true };
 };
 
 const changePassword = async (userId, oldPassword, newPassword) => {

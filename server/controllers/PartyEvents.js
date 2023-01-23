@@ -3,7 +3,7 @@ const partyEventsService = require("../services/party-events");
 
 const getAll = [
     catchAsync(async (req, res) => {
-        const filterEvents = req.query.filter;
+        const filterEvents = req.query.filter ? JSON.parse(req.query.filter) : {};
         const result = await partyEventsService.getPartyEventsAsQuery(
             filterEvents
         );

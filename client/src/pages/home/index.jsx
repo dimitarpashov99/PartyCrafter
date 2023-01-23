@@ -137,10 +137,6 @@ const Home = () => {
                             <Paper
                                 elevation={6}
                                 sx={{
-                                    backgroundColor: (theme) =>
-                                        theme.palette.mode === "light"
-                                            ? "#fceaaa"
-                                            : "#f7c310",
                                     borderRadius: "16px",
                                     flexGrow: 1,
                                     display: "flex",
@@ -180,10 +176,6 @@ const Home = () => {
                             <Paper
                                 elevation={6}
                                 sx={{
-                                    backgroundColor: (theme) =>
-                                        theme.palette.mode === "light"
-                                            ? "#72ecff"
-                                            : "#006E7F",
                                     borderRadius: "16px",
                                     flexGrow: 1,
                                     display: "flex",

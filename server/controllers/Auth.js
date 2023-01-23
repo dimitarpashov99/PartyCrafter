@@ -33,7 +33,7 @@ const register = [
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: req.body.email,
+            password: req.body.password,
         };
         const result = await authService.register(data);
         res.json(result);
