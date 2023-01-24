@@ -2,7 +2,15 @@ const AddressBook = require("../models/addressbook");
 const ApiError = require("../utils/APIError");
 const { StatusCodes } = require("http-status-codes");
 
-const getAddressBook = async (id) => {
+const getAddressBooks = async (filter) => {
+    const addressBooks = await AddressBook.find(filter);
+    if (!addressBooks) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "AddressBook not found");
+    }
+    return addressBooks;
+};
+
+const getAddressBookById = async (id) => {
     return await AddressBook.findOneById(id, (err, doc) => {
         if (err) {
             throw new ApiError(StatusCodes.NOT_FOUND, err.message);
@@ -141,7 +149,8 @@ const deleteAddress = async (addressbookId, addressId) => {
 };
 
 module.exports = {
-    getAddressBook,
+    getAddressBooks,
+    getAddressBookById,
     updateAddressBook,
     deleteAddressBook,
     getAddressById,

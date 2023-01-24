@@ -3,19 +3,15 @@ const catchAsync = require("../utils/catchAsync");
 const addressBookService = require("../services/addressBook");
 
 const getById = catchAsync(async (req, res) => {
-    const userId = req.params.id;
-    const result = await addressBookService.getAddressBook(userId);
-    res.json({
-        profile: result,
-    });
+    const id = req.params.id;
+    const result = await addressBookService.getAddressBookById(id);
+    res.json(result);
 });
 
 const getAll = catchAsync(async (req, res) => {
-    const userId = req.params.id;
-    const result = await addressBookService.getAddressBook(userId);
-    res.json({
-        profile: result,
-    });
+    const filter = req.query.filter ? JSON.parse(req.query.filter) : {};
+    const result = await addressBookService.getAddressBooks(filter);
+    res.json(result);
 });
 
 const create = catchAsync(async (req, res) => {

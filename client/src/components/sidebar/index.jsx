@@ -12,8 +12,10 @@ import ContactPageIcon from "@mui/icons-material/ContactPage";
 
 import HomeIcon from "@mui/icons-material/Home";
 import EventIcon from "@mui/icons-material/Event";
+import { Person2Outlined } from "@mui/icons-material";
 
 import { NavLink } from "react-router-dom";
+import { AuthConsumer } from "../../contexts";
 
 const navLinks = [
     {
@@ -28,15 +30,23 @@ const navLinks = [
         label: "Events",
         link: "/events",
     },
+    // {
+    //     id: "contactus",
+    //     icon: ContactPageIcon,
+    //     label: "Contact us",
+    //     link: "/contactus",
+    // },
     {
-        id: "contactus",
-        icon: ContactPageIcon,
-        label: "Contact us",
-        link: "/contactus",
+        id: "account",
+        icon: Person2Outlined,
+        label: "Account",
+        link: "/account",
+        protected: true,
     },
 ];
 
 const SideBar = () => {
+    const { auth } = AuthConsumer();
     return (
         <Toolbar
             variant="regular"
@@ -71,6 +81,9 @@ const SideBar = () => {
                 }}
             >
                 {navLinks.map((navLink) => {
+                    if (navLink.protected && !auth.authenticated) {
+                        return "";
+                    }
                     return (
                         <Box key={navLink.id}>
                             <Tooltip

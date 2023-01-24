@@ -1,9 +1,10 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthConsumer } from "../../../contexts";
 import InvitationsPreview from "../../invitations-preview";
 import LoginForm from "../Authentication/LoginForm";
+import invitationsService from "../../../services/invitationsService";
 
 const JoinEvent = ({ handleJoinEvent }) => {
     const { auth } = AuthConsumer();
@@ -16,11 +17,24 @@ const JoinEvent = ({ handleJoinEvent }) => {
             setAuth({
                 authenticated: true,
                 profile: data?.profile,
-                invitations: data?.invitations,
             });
-            setUserInvitations(result.data.invitations);
         }
     };
+    useEffect(() => {
+        if (auth.authenticated) {
+            invitationsService
+                .getAllPartyInvitationsForUser(auth?.profile.id)
+                .then((result) => {
+                    setUserInvitations(result.data);
+                })
+                .catch(() => {
+                    setUserInvitations([]);
+                });
+        } else {
+            setUserInvitations([]);
+        }
+    }, [auth.authenticated]);
+
     const handleInvitationSelect = (eventId) => {
         handleJoinEvent(eventId);
     };

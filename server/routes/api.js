@@ -19,7 +19,7 @@ app.use("/auth", authRouter);
 /**
  * Initialize Address books API routes
  */
-app.use("/addressBooks", addressBooksRouter);
+app.use("/addressbooks", addressBooksRouter);
 
 /**
  * Initialize Comments API routes

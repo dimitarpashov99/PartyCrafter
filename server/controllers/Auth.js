@@ -41,6 +41,13 @@ const register = [
 ];
 
 const login = [
+    // body("email")
+    //     .isLength({ min: 1 })
+    //     .trim()
+    //     .withMessage("Email must be specified.")
+    //     .isEmail()
+    //     .withMessage("Email must be a valid email address."),
+    // body("password").isEmpty().withMessage("Password must be provided"),
     handleValidation,
     catchAsync(async (req, res) => {
         const { email, password } = req.body;

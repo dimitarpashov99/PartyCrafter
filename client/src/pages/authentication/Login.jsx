@@ -15,7 +15,6 @@ export default function Login() {
             setAuth({
                 authenticated: true,
                 profile: data?.profile,
-                invitations: data?.invitations,
             });
             navigation("/home");
         }

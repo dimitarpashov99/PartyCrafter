@@ -43,7 +43,7 @@ const LogoutDiag = ({ isOpen, setOpen }) => {
         setOpen(false);
     };
     const handleLogout = () => {
-        setAuth({ authenticated: false, profile: null, invitations: [] });
+        setAuth({ authenticated: false, profile: null });
         setOpen(false);
         navigate("/home");
     };

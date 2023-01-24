@@ -2,6 +2,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -25,10 +27,11 @@ const config = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        new HtmlWebpackPlugin({
-            filename: "index.html",
-            template: "../public/index.html",
-        }),
+        // new HtmlWebpackPlugin({
+        //     filename: "index.html",
+        //     template: "../public/index.html",
+        // }),
+        new ReactRefreshWebpackPlugin(),
         new Dotenv(),
         // new MiniCssExtractPlugin({
         //     filename: "[name].css",
@@ -49,6 +52,7 @@ const config = {
                         "@babel/plugin-proposal-function-bind",
                         "@babel/plugin-proposal-class-properties",
                         "@babel/plugin-transform-runtime",
+                        require.resolve("react-refresh/babel"),
                     ],
                 },
             },

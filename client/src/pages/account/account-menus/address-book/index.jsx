@@ -5,11 +5,13 @@ import {
     Typography,
     Box,
     List,
-    ListItem,
     ListItemText,
     ListItemButton,
 } from "@mui/material";
+import { getAddressBook } from "../../../../services/addressBookService";
 import LocationMap from "../../../../components/location-map";
+import { useEffect } from "react";
+import { AuthConsumer } from "../../../../contexts";
 
 const Address = (props) => {
     const { data, active, onSelect } = props;
@@ -27,9 +29,26 @@ const Address = (props) => {
 };
 
 const AddressBook = () => {
-    const [addresses, setAddresses] = useState([]);
+    const { auth } = AuthConsumer();
+    const [addresses, setAddresses] = useState(undefined);
     const [selected, setSelected] = useState(undefined);
 
+    useEffect(() => {
+        if (!addresses) {
+            console.log(auth.profile);
+            getAddressBook(auth.profile?.id)
+                .then((response) => {
+                    if (response.data) {
+                        setAddresses(response.data.addresses);
+                    } else {
+                        setAddresses([]);
+                    }
+                })
+                .catch(() => {
+                    setAddresses([]);
+                });
+        }
+    });
     return (
         <Paper>
             <Typography component="h3" variant="h5">

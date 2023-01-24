@@ -1,29 +1,30 @@
 import { apiCall } from "./utils";
 
-const uri = "addressBook";
+const uri = "addressbooks";
 
-const getAddressBook = (id) => {
+const getAddressBook = (userId) => {
+    const service = `${uri}`;
+    const filter = { userId: userId };
+    return apiCall().get(service, { params: { filter: filter } });
+};
+
+const addAddressToAddressBook = (id) => {
     const service = `${uri}/${id}`;
     return apiCall().get(service);
 };
 
-const addAddressToAddressBook = (menuId) => {
-    const service = `${uri}/${menuId}`;
-    return apiCall().get(service);
-};
-
-const getAddressFromAddressBook = (menuId, data) => {
-    const service = `${uri}/${menuId}`;
+const getAddressFromAddressBook = (id, data) => {
+    const service = `${uri}/${id}`;
     return apiCall().get(service, data);
 };
 
-const updateAddressFromAddressBook = (menuId, data) => {
-    const service = `${uri}/${menuId}`;
+const updateAddressFromAddressBook = (id, data) => {
+    const service = `${uri}/${id}`;
     return apiCall().put(service, data);
 };
 
-const removeAddressFromAddressBook = (menuId) => {
-    const service = `${uri}/${menuId}`;
+const removeAddressFromAddressBook = (id) => {
+    const service = `${uri}/${id}`;
     return apiCall().delete(service);
 };
 
